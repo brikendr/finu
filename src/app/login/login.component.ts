@@ -43,7 +43,7 @@ export class LoginComponent {
 
   private navigateHome() {
     this.zone.run(() => {
-      this._routerExtensions.navigate(["cars"], {
+      this._routerExtensions.navigate(["home"], {
         clearHistory: true,
         animated: true,
         transition: {

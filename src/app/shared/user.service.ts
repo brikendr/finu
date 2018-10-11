@@ -6,6 +6,7 @@ import { User } from "~/app/shared/user.model";
 @Injectable()
 export class UserService {
   register(user: User) {
+    const NOKCurrnecyID = '5bbe573985211d5682fae941';
     return new Promise((resolve, reject) => {
       Kinvey.User.logout()
         .then(() => {
@@ -13,7 +14,7 @@ export class UserService {
             username: user.email,
             password: user.password,
             email: user.email,
-            currencyId: user.currencyId,
+            currencyId: NOKCurrnecyID,
           })
             .then(resolve)
             .catch((error) => { this.handleErrors(error); reject(); })
