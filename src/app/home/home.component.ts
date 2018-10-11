@@ -1,8 +1,6 @@
 import { Component, OnInit } from "@angular/core";
-import { RouterExtensions } from "nativescript-angular/router";
-import { NgZone } from "@angular/core";
-import { Page } from "tns-core-modules/ui/page"
 
+import { Page } from "tns-core-modules/ui/page";
 
 @Component({
   selector: "Home",
@@ -21,5 +19,6 @@ export class HomeComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    /* Implement on component init logic */
   }
 }

@@ -5,6 +5,7 @@ import { ObservableArray } from "tns-core-modules/data/observable-array";
 
 import { Car } from "./shared/car.model";
 import { CarService } from "./shared/car.service";
+
 import { Kinvey } from "kinvey-nativescript-sdk";
 
 /* ***********************************************************
@@ -79,7 +80,6 @@ export class CarListComponent implements OnInit {
     }
 
     logout() {
-      console.log('--------------- logging out--------');
       Kinvey.User.logout()
         .then(() => {
           this._routerExtensions.navigate(["login"],

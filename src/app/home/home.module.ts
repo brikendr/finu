@@ -6,7 +6,7 @@ import { HomeComponent } from "~/app/home/home.component";
 @NgModule({
   imports: [
     HomeRoutingModule,
-    NativeScriptCommonModule,
+    NativeScriptCommonModule
   ],
   declarations: [
     HomeComponent

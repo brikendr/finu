@@ -1,10 +1,10 @@
-import { Component, ElementRef, ViewChild } from "@angular/core";
+import { Component, ElementRef, NgZone, ViewChild } from "@angular/core";
+
 import { RouterExtensions } from "nativescript-angular/router";
 import { alert, prompt } from "tns-core-modules/ui/dialogs";
 import { Page } from "tns-core-modules/ui/page";
-import { Kinvey } from 'kinvey-nativescript-sdk';
-import { NgZone } from "@angular/core";
 
+import { Kinvey } from "kinvey-nativescript-sdk";
 import { User } from "../shared/user.model";
 import { UserService } from "../shared/user.service";
 
@@ -12,7 +12,7 @@ import { UserService } from "../shared/user.service";
   selector: "app-login",
   moduleId: module.id,
   templateUrl: "./login.component.html",
-  styleUrls: ['./login.component.css']
+  styleUrls: ["./login.component.css"]
 })
 export class LoginComponent {
   isLoggingIn = true;
@@ -25,7 +25,7 @@ export class LoginComponent {
     private page: Page,
     private userService: UserService,
     private zone: NgZone,
-    private _routerExtensions: RouterExtensions,) {
+    private _routerExtensions: RouterExtensions) {
     this.page.actionBarHidden = true;
     this.user = new User();
     // this.user.email = "foo2@foo.com";
@@ -34,25 +34,11 @@ export class LoginComponent {
   }
 
   ngOnInit(): void {
-    //Called after the constructor, initializing input properties, and the first call to ngOnChanges.
-    //Add 'implements OnInit' to the class.
+    // Called after the constructor, initializing input properties, and the first call to ngOnChanges.
+    // Add 'implements OnInit' to the class.
     if (Kinvey.User.getActiveUser() !== null) {
-      this.navigateHome()
+      this.navigateHome();
     }
-  }
-
-  private navigateHome() {
-    this.zone.run(() => {
-      this._routerExtensions.navigate(["home"], {
-        clearHistory: true,
-        animated: true,
-        transition: {
-          name: "slideTop",
-          duration: 350,
-          curve: "ease"
-        }
-      });
-    });
   }
 
   toggleForm() {
@@ -62,6 +48,7 @@ export class LoginComponent {
   submit() {
     if (!this.user.email || !this.user.password) {
       this.alert("Please provide both an email address and password.");
+
       return;
     }
 
@@ -77,7 +64,7 @@ export class LoginComponent {
     this.userService.login(this.user)
       .then(() => {
         this.processing = false;
-        this.navigateHome()
+        this.navigateHome();
       })
       .catch(() => {
         this.processing = false;
@@ -86,8 +73,9 @@ export class LoginComponent {
   }
 
   register() {
-    if (this.user.password != this.user.confirmPassword) {
+    if (this.user.password !== this.user.confirmPassword) {
       this.alert("Your passwords do not match.");
+
       return;
     }
     this.userService.register(this.user)
@@ -114,7 +102,8 @@ export class LoginComponent {
       if (data.result) {
         this.userService.resetPassword(data.text.trim())
           .then(() => {
-            this.alert("Your password was successfully reset. Please check your email for instructions on choosing a new password.");
+            this.alert(`Your password was successfully reset.
+            Please check your email for instructions on choosing a new password.`);
           }).catch(() => {
             this.alert("Unfortunately, an error occurred resetting your password.");
           });
@@ -135,8 +124,21 @@ export class LoginComponent {
     return alert({
       title: "APP NAME",
       okButtonText: "OK",
-      message: message
+      message
+    });
+  }
+
+  private navigateHome() {
+    this.zone.run(() => {
+      this._routerExtensions.navigate(["home"], {
+        clearHistory: true,
+        animated: true,
+        transition: {
+          name: "slideTop",
+          duration: 350,
+          curve: "ease"
+        }
+      });
     });
   }
 }
-
