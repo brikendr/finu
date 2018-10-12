@@ -1,5 +1,29 @@
-<FlexboxLayout class="page page-home">
+<!-- <FlexboxLayout class="page page-home">
   <StackLayout class="flexbox-item">
     <Label class="t-30" text="Welcome to HOME"></Label>
   </StackLayout>
-</FlexboxLayout>
+</FlexboxLayout> -->
+
+<ActionBar class="action-bar">
+  <NavigationButton ios:visibility="collapsed"></NavigationButton>
+  <Label class="action-bar-title" text="Home" horizontalAlignment="center"></Label>
+  <ActionItem ios.position="right" android.position="popup" (tap)="logout()">
+    <Button row="2" class="btn btn-rounded-sm btn-margin font-weight-bold t-18 flexbox-item logout-btn" text="Log out"></Button>
+  </ActionItem>
+</ActionBar>
+
+<GridLayout class="page page-content">
+  <ListView [items]="navigatable" (itemTap)="onNavigatableTap($event)" class="list-group">
+    <ng-template let-element="item" let-i="index" let-odd="odd" let-even="even">
+      <!-- The item template can only have a single root view container (e.g. GridLayout, StackLayout, etc.)-->
+      <StackLayout orientation="horizontal" class="list-group-item">
+        <Label [text]="element.name"></Label>
+        <Label col="2" horizontalAlignment="right" class="list-group-item-text m-r-5">
+          <FormattedString>
+            <Span [text]="element.icon" class="fa icon"></Span>
+          </FormattedString>
+        </Label>
+      </StackLayout>
+    </ng-template>
+  </ListView>
+</GridLayout>
