@@ -1,29 +1,91 @@
-<!-- <FlexboxLayout class="page page-home">
-  <StackLayout class="flexbox-item">
-    <Label class="t-30" text="Welcome to HOME"></Label>
-  </StackLayout>
-</FlexboxLayout> -->
-
 <ActionBar class="action-bar">
   <NavigationButton ios:visibility="collapsed"></NavigationButton>
-  <Label class="action-bar-title" text="Home" horizontalAlignment="center"></Label>
+  <Label class="action-bar-title" horizontalAlignment="center"></Label>
+  <ActionItem ios.position="left" android.position="popup" (tap)="logout()">
+    <Button row="2" class="btn btn-rounded-sm btn-margin font-weight-bold t-18 flexbox-item logout-btn" text="Menu"></Button>
+  </ActionItem>
   <ActionItem ios.position="right" android.position="popup" (tap)="logout()">
     <Button row="2" class="btn btn-rounded-sm btn-margin font-weight-bold t-18 flexbox-item logout-btn" text="Log out"></Button>
   </ActionItem>
 </ActionBar>
-
-<GridLayout class="page page-content">
-  <ListView [items]="navigatable" (itemTap)="onNavigatableTap($event)" class="list-group">
-    <ng-template let-element="item" let-i="index" let-odd="odd" let-even="even">
-      <!-- The item template can only have a single root view container (e.g. GridLayout, StackLayout, etc.)-->
-      <StackLayout orientation="horizontal" class="list-group-item">
-        <Label [text]="element.name"></Label>
+<!--
+<ScrollView class="page">
+  <ListView class="list-group" [items]="navigatable" (itemTap)="onNavigatableTap($event)">
+    <ng-template let-element="item">
+      <GridLayout class="list-group-item" rows="*" columns="auto, *">
         <Label col="2" horizontalAlignment="right" class="list-group-item-text m-r-5">
           <FormattedString>
             <Span [text]="element.icon" class="fa icon"></Span>
           </FormattedString>
         </Label>
-      </StackLayout>
+        <Label row="0" col="1" [text]="element.name"></Label>
+      </GridLayout>
     </ng-template>
   </ListView>
+</ScrollView> -->
+
+<GridLayout columns="*" rows="2*, *, 100, *, 2*" width="100%" height="95%" marginTop="5">
+  <!-- The declaration of the top tile -->
+  <GridLayout col="0" row="0" columns="*" rows="4*, *, 4*" width="95%" height="95%" class="statustile">
+    <Label text="&#xf09d;" col="0" row="0" class="fa icon center-text hometile-icon"></Label>
+    <Label text="October Status" col="0" row="1" class="center-text hometile-title"></Label>
+    <Label text="Stable" col="0" row="2" class="center-text hometile-status"></Label>
+  </GridLayout>
+  <!-- End of top tile -->
+
+  <!-- Balance ProgressBar Component -->
+  <GridLayout col="0" row="1" columns="*" rows="*, 2*" width="95%" marginTop="10" >
+    <Label text="- Your October Balance -" col="0" row="0" class="progressbar-text center-text"></Label>
+    <GridLayout col="0" row="1" [columns]="balanceProgressBar" class="progressbar">
+      <StackLayout col="0" class="progressbar-value"></StackLayout>
+      <Label [text]="balanceSpent" horizontalAlignment="left" class="progressbar-inner-text"></Label>
+      <Label [text]="balanceLeft" horizontalAlignment="right" class="progressbar-inner-text"></Label>
+    </GridLayout>
+  </GridLayout>
+  <!-- Balance Component -->
+  
+  <!-- Actions component -->
+  <GridLayout col="0" row="2" columns="*, *" rows="2*, *, *" width="95%" marginTop="10">
+    <StackLayout col="0" row="0" >
+      <Label text="&#xf09d;" width="50%" height="90%" margin="10" class="fa icon center-text action-icon"></Label>
+    </StackLayout>
+    <StackLayout col="1" row="0">
+      <Label text="&#xf09d;" width="50%" height="90%" margin="10" class="fa icon center-text action-icon"></Label>
+    </StackLayout>
+    <Label text="3 Pending Bills" col="0" row="1" class="center-text progressbar-text"></Label>
+    <Label text="New Expense" col="1" row="1" class="center-text progressbar-text"></Label>
+
+    <StackLayout col="0" row="2" colspan="2" class="hr-light hr-top m-t-20"></StackLayout>
+  </GridLayout>
+  
+  <!-- Actions component -->
+
+  <!-- Budget ProgressBar Component -->
+  <GridLayout col="0" row="3" columns="*" rows="*, 2*, *" width="95%" marginTop="10">
+    <Label text="- Your October Budget -" col="0" row="0" class="progressbar-text center-text"></Label>
+    <GridLayout col="0" row="1" [columns]="balanceProgressBar" class="progressbar">
+      <StackLayout col="0" class="progressbar-value"></StackLayout>
+      <Label [text]="balanceSpent" horizontalAlignment="left" class="progressbar-inner-text"></Label>
+      <Label [text]="balanceLeft" horizontalAlignment="right" class="progressbar-inner-text"></Label>
+    </GridLayout>
+    <StackLayout col="0" row="2" colspan="2" class="hr-light hr-top m-t-20"></StackLayout>
+  </GridLayout>
+  <!-- Budget Component -->
+
+  <!-- Budget Component -->
+  <GridLayout col="0" row="4" columns="*, *" rows="*" width="95%" marginTop="10">
+    <CardView col="0" row="0" class="whiteCard white" margin="10" elevation="40" radius="1">
+      <GridLayout rows="auto, auto" columns="auto" padding="8">
+        <Label text="Maintained Savings" textWrap="true" class="size16" row="0"></Label>
+        <Label text="123.4M" textWrap="true" class="title" row="1"></Label>
+      </GridLayout>
+    </CardView>
+    <CardView col="1" row="0" class="whiteCard white" margin="10" elevation="40" radius="1">
+      <GridLayout rows="auto, auto" columns="auto" padding="8">
+        <Label text="Daily Budget" textWrap="true" class="size16" row="0"></Label>
+        <Label text="123.4M" textWrap="true" class="title" row="1"></Label>
+      </GridLayout>
+    </CardView>
+  </GridLayout>
+  <!-- Budget Component -->
 </GridLayout>

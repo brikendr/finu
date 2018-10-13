@@ -1,1 +1,126 @@
 @import 'home.component.scss';
+
+.page {
+    /*background-image: url("~/images/bg.jpg");*/
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+}
+
+.center {
+    horizontal-align: center;
+}
+
+.center-text {
+  text-align: center;
+}
+
+/* Home TOP Tile Design */
+.statustile {
+  border-radius: 15;
+  background: #6EA7B3;
+}
+.icon {
+    font-size: 45;
+    color: $finu-background;
+}
+
+.hometile-icon {
+  padding-top: 10;
+}
+.hometile-title {
+  font-size: 20;
+  color: $finu-background;;
+  font-family:  "Varela", "varela-regular";
+}
+.hometile-status {
+  font-size: 30;
+  color: $finu-background;;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+.icon-text {
+    color: white;
+    font-family: "Varela", "varela-regular";
+}
+
+/* Home Top Tile Desing */
+
+.progressbar-text {
+  color: $finu-primary-dark;
+}
+
+.progressbar {
+    height: 30;
+    margin: 10;
+    border-radius: 10;
+    background: #6EA7B3;
+}
+.progressbar-value {
+    background: $finu-yellowish;
+}
+
+.progressbar-inner-text {
+  color: $finu-primary-dark;
+  font-size: 12;
+  padding: 10;
+}
+
+.action-icon {
+  font-size: 30;
+  color: $finu-primary-dark;
+}
+
+
+
+
+
+
+/***** CARDVIEW ****/
+.Material {
+  font-family: MaterialIcons-Regular, Material Icons;
+}
+
+button {
+  font-family: 'Roboto', Roboto;
+}
+
+.align-center {
+  vertical-align: center;
+  horizontal-align: center;
+}
+
+.title {
+  font-size: 30;
+  margin: 4;
+}
+
+.size16 {
+  font-size: 16;
+  margin: 2;
+}
+
+.blue {
+  color: #6a78c5;
+}
+
+.gray {
+  color: #666;
+}
+
+.white {
+  color: #fff;
+}
+
+.blackCard {
+  background-color: #333;
+  color: white;
+}
+
+.blueCard {
+  background-color: #3489db;
+  color: white;
+}
+
+.whiteCard {
+  background-color: #6EA7B3;
+}

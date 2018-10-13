@@ -5,6 +5,10 @@ import { RouterExtensions } from "nativescript-angular/router";
 import { Kinvey } from "kinvey-nativescript-sdk";
 import { ListViewEventData } from "nativescript-ui-listview";
 
+import { registerElement } from 'nativescript-angular/element-registry';
+import { CardView } from 'nativescript-cardview';
+registerElement('CardView', () => CardView);
+
 class NavigatableElement {
   constructor(
     public name: string,
@@ -36,6 +40,9 @@ let elements = [
 })
 export class HomeComponent implements OnInit {
   private _navigatable: Array<NavigatableElement>;
+  balanceProgressBar: string;
+  balanceSpent: string;
+  balanceLeft: string;
 
   constructor(
     private _routerExtensions: RouterExtensions,
@@ -54,8 +61,32 @@ export class HomeComponent implements OnInit {
 
   ngOnInit(): void {
     /* Implement on component init logic */
+    this.calculateBalance();
+    // this.calculateBudget();
   }
-  
+
+  calculateBalance() {
+    let percent = 0;
+    let progress = 50;
+    let intervalId = setInterval(() => {
+      this.animateBalanceProgressBar(percent);
+      percent++;
+      if (percent > 30) {
+        this.balanceSpent = "200 NOK";
+      }
+      if (percent >= progress) {
+        this.balanceLeft = "300 NOK";
+      }
+      if (percent > progress) {
+        clearInterval(intervalId);
+      }
+    }, 50);
+  }
+
+  animateBalanceProgressBar(percent) {
+    this.balanceProgressBar = percent + "*," + (100 - percent) + "*";
+  }
+
   get navigatable(): Array<NavigatableElement> {
     return this._navigatable;
   }
