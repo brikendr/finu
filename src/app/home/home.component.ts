@@ -41,8 +41,19 @@ let elements = [
 export class HomeComponent implements OnInit {
   private _navigatable: Array<NavigatableElement>;
   balanceProgressBar: string;
-  balanceSpent: string;
-  balanceLeft: string;
+  budgetProgressBar: string;
+
+  /* Collection Retrivable Data */
+  totalExpenses: number;
+  income: number;
+  _pendingBills: number;
+  savingsGoal: number;
+  _dailyBudget: number;
+  _maintainedSavings: number;
+
+  /* Progress bar values */
+  expensesOnBalance: string;
+  expensesOnBudget: string;
 
   constructor(
     private _routerExtensions: RouterExtensions,
@@ -60,24 +71,33 @@ export class HomeComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    /* Implement on component init logic */
-    this.calculateBalance();
-    // this.calculateBudget();
+    /* Initialize properties */
+    this.totalExpenses = 16500;
+    this.income = 25400;
+    this.savingsGoal = 10000;
+    this._pendingBills = 3;
+
+    const d = this.totalExpenses + this.savingsGoal;
+    this._maintainedSavings = d > this.income ? this.savingsGoal - (d - this.income): this.savingsGoal;
+
+    this.calculateMonthlyBalance();
+    this.calculateMonthlyBudget();
+    this.calculateDailyBudget();
   }
 
-  calculateBalance() {
+  calculateMonthlyBalance() {
     let percent = 0;
-    let progress = 50;
+    let progress = (this.totalExpenses / this.income) * 100;
+    progress = progress > 100 ? 100 : progress;
+    let incExpense = 0;
     let intervalId = setInterval(() => {
       this.animateBalanceProgressBar(percent);
       percent++;
-      if (percent > 30) {
-        this.balanceSpent = "200 NOK";
-      }
-      if (percent >= progress) {
-        this.balanceLeft = "300 NOK";
-      }
+      incExpense += (this.totalExpenses / progress);
+      this.expensesOnBalance = `${Math.round(incExpense)} NOK`;
+
       if (percent > progress) {
+        this.expensesOnBalance = `${Math.round(this.totalExpenses)} NOK`;
         clearInterval(intervalId);
       }
     }, 50);
@@ -87,8 +107,70 @@ export class HomeComponent implements OnInit {
     this.balanceProgressBar = percent + "*," + (100 - percent) + "*";
   }
 
+  calculateMonthlyBudget() {
+    let percent = 0;
+    const budget = this.income - this.savingsGoal; //15400
+    let progress = (this.totalExpenses / budget) * 100;
+    progress = progress > 100 ? 100 : progress;
+    let incExpense = 0;
+    let intervalId = setInterval(() => {
+      this.animateBudgetProgressBar(percent);
+      percent++;
+      incExpense += (this.totalExpenses / progress);
+      this.expensesOnBudget = `${Math.round(incExpense)} NOK`;
+
+      if (percent > progress) {
+        this.expensesOnBudget = `${Math.round(this.totalExpenses)} NOK`;
+        clearInterval(intervalId);
+      }
+    }, 50);
+  }
+
+  animateBudgetProgressBar(percent) {
+    this.budgetProgressBar = percent + "*," + (100 - percent) + "*";
+  }
+
+  calculateDailyBudget() {
+    const now = new Date();
+    const daysInCurrentMonth = new Date(now.getFullYear(), now.getMonth() + 1, 0).getDate()
+    const today = now.getDate();
+    const budgetTotal = Math.round(this.income - this.savingsGoal - this.totalExpenses);
+    const daysLeft = daysInCurrentMonth - today;
+    this._dailyBudget = Math.round(budgetTotal / daysLeft);
+  }
+
   get navigatable(): Array<NavigatableElement> {
     return this._navigatable;
+  }
+
+  get monthlyBalance(): string {
+    return  `Balance: ${this.income - this.totalExpenses} NOK`;
+  }
+
+  get monthlyBudget(): string {
+    const budgetTotal = Math.round(this.income - this.savingsGoal - this.totalExpenses);
+    return `Budget: ${budgetTotal} NOK`;
+  }
+
+  get pendingBills(): string {
+    return `${this._pendingBills} Pending Bills`;
+  }
+
+  get maintainedSavings(): string {
+    return `${this._maintainedSavings} / ${this.savingsGoal} NOK`;
+  }
+
+  get dailyBudget(): string {
+    return this._dailyBudget > 0 ? `${this._dailyBudget} NOK` : '0 NOK'
+  }
+ 
+  get currentDayMonth(): string {
+    const monthNames = ["January", "February", "March", "April", "May", "June",
+      "July", "August", "September", "October", "November", "December"
+    ];
+
+    const now = new Date();
+    return `${now.getDate()} ${monthNames[now.getMonth()]}`;
   }
 
   onNavigatableTap(args: ListViewEventData): void {

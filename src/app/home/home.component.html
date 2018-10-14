@@ -24,23 +24,29 @@
   </ListView>
 </ScrollView> -->
 
-<GridLayout columns="*" rows="2*, *, 100, *, 2*" width="100%" height="95%" marginTop="5">
+<GridLayout columns="*" rows="2*, *, 100, *, 2*, 30" width="100%" height="95%" marginTop="5">
   <!-- The declaration of the top tile -->
-  <GridLayout col="0" row="0" columns="*" rows="4*, *, 4*" width="95%" height="95%" class="statustile">
-    <Label text="&#xf09d;" col="0" row="0" class="fa icon center-text hometile-icon"></Label>
-    <Label text="October Status" col="0" row="1" class="center-text hometile-title"></Label>
-    <Label text="Stable" col="0" row="2" class="center-text hometile-status"></Label>
-  </GridLayout>
+  <CardView col="0" row="0" class="whiteCard white" margin="10" shadowRadius="3" shadowOpacity="0.5" elevation="40"
+    radius="10">
+    <GridLayout columns="*" rows="*, *">
+      <StackLayout col="0" row="0" marginTop="5%">
+        <Label text="&#xf09d;" col="0" row="0" class="fa icon center-text hometile-icon"></Label>
+        <Label text="October Status" col="0" row="1" class="center-text size16"></Label>
+      </StackLayout>
+      <Label text="- Stable -" col="0" row="1" class="center-text title"></Label>
+    </GridLayout>
+  </CardView>
   <!-- End of top tile -->
 
   <!-- Balance ProgressBar Component -->
-  <GridLayout col="0" row="1" columns="*" rows="*, 2*" width="95%" marginTop="10" >
+  <GridLayout col="0" row="1" columns="*" rows="2*, 2*, 2*, *" width="95%" marginTop="10">
     <Label text="- Your October Balance -" col="0" row="0" class="progressbar-text center-text"></Label>
     <GridLayout col="0" row="1" [columns]="balanceProgressBar" class="progressbar">
       <StackLayout col="0" class="progressbar-value"></StackLayout>
-      <Label [text]="balanceSpent" horizontalAlignment="left" class="progressbar-inner-text"></Label>
-      <Label [text]="balanceLeft" horizontalAlignment="right" class="progressbar-inner-text"></Label>
+      <Label [text]="expensesOnBalance" horizontalAlignment="right" class="progressbar-inner-text number"></Label>
     </GridLayout>
+    <Label [text]="monthlyBalance" col="0" row="2" class="progressbar-inner-text number"></Label>
+    <StackLayout col="0" row="3" class="hr-light hr-top"></StackLayout>
   </GridLayout>
   <!-- Balance Component -->
   
@@ -52,7 +58,7 @@
     <StackLayout col="1" row="0">
       <Label text="&#xf09d;" width="50%" height="90%" margin="10" class="fa icon center-text action-icon"></Label>
     </StackLayout>
-    <Label text="3 Pending Bills" col="0" row="1" class="center-text progressbar-text"></Label>
+    <Label [text]="pendingBills" col="0" row="1" class="center-text progressbar-text"></Label>
     <Label text="New Expense" col="1" row="1" class="center-text progressbar-text"></Label>
 
     <StackLayout col="0" row="2" colspan="2" class="hr-light hr-top m-t-20"></StackLayout>
@@ -61,31 +67,35 @@
   <!-- Actions component -->
 
   <!-- Budget ProgressBar Component -->
-  <GridLayout col="0" row="3" columns="*" rows="*, 2*, *" width="95%" marginTop="10">
+  <GridLayout col="0" row="3" columns="*" rows="*, 2*, *, *" width="95%" marginTop="10">
     <Label text="- Your October Budget -" col="0" row="0" class="progressbar-text center-text"></Label>
-    <GridLayout col="0" row="1" [columns]="balanceProgressBar" class="progressbar">
+    <GridLayout col="0" row="1" [columns]="budgetProgressBar" class="progressbar">
       <StackLayout col="0" class="progressbar-value"></StackLayout>
-      <Label [text]="balanceSpent" horizontalAlignment="left" class="progressbar-inner-text"></Label>
-      <Label [text]="balanceLeft" horizontalAlignment="right" class="progressbar-inner-text"></Label>
+      <Label [text]="expensesOnBudget" horizontalAlignment="right" class="progressbar-inner-text number"></Label>
     </GridLayout>
-    <StackLayout col="0" row="2" colspan="2" class="hr-light hr-top m-t-20"></StackLayout>
+    <Label [text]="monthlyBudget" col="0" row="2" class="progressbar-inner-text number"></Label>
+    <StackLayout col="0" row="3" class="hr-light hr-top"></StackLayout>
   </GridLayout>
   <!-- Budget Component -->
 
   <!-- Budget Component -->
-  <GridLayout col="0" row="4" columns="*, *" rows="*" width="95%" marginTop="10">
-    <CardView col="0" row="0" class="whiteCard white" margin="10" elevation="40" radius="1">
+  <GridLayout col="0" row="4" columns="*" rows="*, *" width="95%" marginTop="10">
+    <CardView col="0" row="0" class="whiteCard white" margin="10" shadowRadius="3" shadowOpacity="0.5" elevation="40" radius="10">
       <GridLayout rows="auto, auto" columns="auto" padding="8">
         <Label text="Maintained Savings" textWrap="true" class="size16" row="0"></Label>
-        <Label text="123.4M" textWrap="true" class="title" row="1"></Label>
+        <Label [text]="maintainedSavings" textWrap="true" class="title number" row="1"></Label>
       </GridLayout>
     </CardView>
-    <CardView col="1" row="0" class="whiteCard white" margin="10" elevation="40" radius="1">
+    <CardView col="0" row="1" class="whiteCard white" margin="10" shadowRadius="3" shadowOpacity="0.5" elevation="40" radius="10">
       <GridLayout rows="auto, auto" columns="auto" padding="8">
         <Label text="Daily Budget" textWrap="true" class="size16" row="0"></Label>
-        <Label text="123.4M" textWrap="true" class="title" row="1"></Label>
+        <Label [text]="dailyBudget" textWrap="true" class="title number" row="1"></Label>
       </GridLayout>
     </CardView>
   </GridLayout>
   <!-- Budget Component -->
+
+  <!-- Month -->
+  <Label [text]="currentDayMonth" textWrap="true" class="footer-date number" col="0" row="5"></Label>
+  <!-- Month -->
 </GridLayout>

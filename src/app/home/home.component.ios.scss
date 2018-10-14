@@ -20,34 +20,23 @@
   border-radius: 15;
   background: #6EA7B3;
 }
-.icon {
-    font-size: 45;
-    color: $finu-background;
-}
 
+.icon {
+  font-size: 45;
+  color: $finu-background;
+}
 .hometile-icon {
-  padding-top: 10;
-}
-.hometile-title {
-  font-size: 20;
-  color: $finu-background;;
-  font-family:  "Varela", "varela-regular";
-}
-.hometile-status {
-  font-size: 30;
-  color: $finu-background;;
-  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  font-size: 50;
 }
 .icon-text {
-    color: white;
-    font-family: "Varela", "varela-regular";
+  color: white;
+  font-family: "Varela", "varela-regular";
 }
 
+.m-top-5 {
+  margin-top: 5;
+}
 /* Home Top Tile Desing */
-
-.progressbar-text {
-  color: $finu-primary-dark;
-}
 
 .progressbar {
     height: 30;
@@ -70,8 +59,14 @@
   color: $finu-primary-dark;
 }
 
+.footer-date {
+  text-align: center;
+  color: white;
+}
 
-
+.number {
+  font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+}
 
 
 
@@ -90,7 +85,7 @@ button {
 }
 
 .title {
-  font-size: 30;
+  font-size: 25;
   margin: 4;
 }
 
