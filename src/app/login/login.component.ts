@@ -1,4 +1,4 @@
-import { Component, ElementRef, NgZone, ViewChild } from "@angular/core";
+import { Component, ElementRef, NgZone, OnInit, ViewChild } from "@angular/core";
 
 import { RouterExtensions } from "nativescript-angular/router";
 import { alert, prompt } from "tns-core-modules/ui/dialogs";
@@ -14,7 +14,7 @@ import { UserService } from "../shared/user.service";
   templateUrl: "./login.component.html",
   styleUrls: ["./login.component.css"]
 })
-export class LoginComponent {
+export class LoginComponent implements OnInit {
   isLoggingIn = true;
   user: User;
   processing = false;

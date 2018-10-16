@@ -1,4 +1,4 @@
-<ActionBar class="action-bar">
+<!-- <ActionBar class="action-bar">
   <NavigationButton ios:visibility="collapsed"></NavigationButton>
   <Label class="action-bar-title" horizontalAlignment="center"></Label>
   <ActionItem ios.position="left" android.position="popup" (tap)="logout()">
@@ -7,22 +7,16 @@
   <ActionItem ios.position="right" android.position="popup" (tap)="logout()">
     <Button row="2" class="btn btn-rounded-sm btn-margin font-weight-bold t-18 flexbox-item logout-btn" text="Log out"></Button>
   </ActionItem>
+</ActionBar> -->
+
+<ActionBar class="action-bar">
+	<ActionItem ios.position="left" android.position="popup">
+		<StackLayout>
+			<Button class="fa" text="Menu" fontSize="18" (tap)="onDrawerButtonTap()"></Button>
+		</StackLayout>
+	</ActionItem>
 </ActionBar>
-<!--
-<ScrollView class="page">
-  <ListView class="list-group" [items]="navigatable" (itemTap)="onNavigatableTap($event)">
-    <ng-template let-element="item">
-      <GridLayout class="list-group-item" rows="*" columns="auto, *">
-        <Label col="2" horizontalAlignment="right" class="list-group-item-text m-r-5">
-          <FormattedString>
-            <Span [text]="element.icon" class="fa icon"></Span>
-          </FormattedString>
-        </Label>
-        <Label row="0" col="1" [text]="element.name"></Label>
-      </GridLayout>
-    </ng-template>
-  </ListView>
-</ScrollView> -->
+
 
 <GridLayout columns="*" rows="2*, *, 100, *, 2*, 30" width="100%" height="95%" marginTop="5">
   <!-- The declaration of the top tile -->

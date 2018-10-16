@@ -1,11 +1,13 @@
-import { OnInit, Component } from "@angular/core";
+import { Component, OnInit } from "@angular/core";
+
 import { RouterExtensions } from "nativescript-angular/router";
 import { CategoryService } from "~/app/categories/shared/category.service";
 import { Category } from "~/app/categories/shared/cetegory.model";
+
 import { ObservableArray } from "tns-core-modules/data/observable-array";
 
 @Component({
-  selector: 'Category',
+  selector: "Category",
   moduleId: module.id,
   templateUrl: "./category-list.component.html"
 })

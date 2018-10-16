@@ -1,0 +1,15 @@
+<ActionBar title="Misc" class="action-bar">
+</ActionBar>
+
+<GridLayout>
+  <ScrollView class="page">
+    <StackLayout>
+      <CardView *ngFor="let item of data" class="card" elevation="40" radius="10" ios:shadowRadius="3" (tap)="navigate(item.path)">
+        <GridLayout class="card-layout" rows="*" columns="auto, *" >
+          <Label [text]="item.icon" class="fa misc-icon"></Label>
+          <Label row="0" col="1" [text]="item.name"></Label>
+        </GridLayout>
+      </CardView>
+    </StackLayout>
+  </ScrollView>
+</GridLayout>

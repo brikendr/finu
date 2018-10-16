@@ -18,7 +18,7 @@
 /* Home TOP Tile Design */
 .statustile {
   border-radius: 15;
-  background: #6EA7B3;
+  background: $finu-primary-dark;
 }
 
 .icon {
@@ -42,7 +42,7 @@
     height: 30;
     margin: 10;
     border-radius: 10;
-    background: #6EA7B3;
+    background: $finu-primary-dark;
 }
 .progressbar-value {
     background: $finu-yellowish;
@@ -117,5 +117,5 @@ button {
 }
 
 .whiteCard {
-  background-color: #6EA7B3;
+  background-color: $finu-primary-dark;
 }

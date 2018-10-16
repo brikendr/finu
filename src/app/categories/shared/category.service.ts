@@ -1,12 +1,13 @@
 import { Injectable } from "@angular/core";
 import { Category } from "~/app/categories/shared/cetegory.model";
+
 import { Kinvey } from "kinvey-nativescript-sdk";
 import { UtilService } from "~/app/shared/utils.service";
 
 @Injectable()
 export class CategoryService {
   private allCategories: Array<Category> = [];
-  private categoryStore = Kinvey.DataStore.collection('category', Kinvey.DataStoreType.Cache);
+  private categoryStore = Kinvey.DataStore.collection("category", Kinvey.DataStoreType.Cache);
 
   getCategoryById(id: string): Category {
     if (!id) {
