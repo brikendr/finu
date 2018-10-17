@@ -1,33 +1,46 @@
 // Place any CSS rules you want to apply on both iOS and Android here.
 // This is where the vast majority of your CSS code goes.
 
-//Font icon
-.fa {
-   font-family: "FontAwesome";
+/*** SIDE DRAWER */
+.sidedrawer {
+  margin-bottom: -100;
 }
-//Action bar
-.action-item,
-NavigationButton {
-    color: $ab-color;
+.sidedrawer-list-item-icon,.sidedrawer-list-item{
+  color: $japanese-indigo;
+}
+.sidedrawer.sidedrawer-left {
+  background-color: $japanese-indigo;
+}
+.sidedrawer.sidedrawer-left .sidedrawer-header-image {
+  color: $japanese-indigo;
+  height: 60;
+  width: 60;
+  font-size: 60;
+  padding: 0;
+  margin-bottom: 5;
+  margin-top: 20;
+}
+.sidedrawer.sidedrawer-left .footnote {
+  color: $ivory;
+}
+.sidedrawer .sidedrawer-header {
+  background-color: $japanese-indigo;
+}
+.sidedrawer .sidedrawer-header .sidedrawer-header-brand {
+  color: $ivory;
+}
+.sidedrawer .sidedrawer-content{ 
+  background-color: $ivory;
+}
+.sidedrawer .sidedrawer-content .sidedrawer-list-item{
+  padding-left: 15;
 }
 
-.action-item:disabled {
-    color: rgba($ab-color, 0.5);
+.sidedrawer .sidedrawer-content .sidedrawer-list-item Label {
+  vertical-align: center;
+  color: $japanese-indigo;
 }
-
-Slider {
-  background-color: $accent;
-  color: $accent;  
-}
-
-.text {
-    color: $blue-dark;
-}
-
-.text-primary {
-    color: $accent-dark;
-}
-
-.text-secondary {
-    color: $blue-50;
+.sidedrawer .sidedrawer-content .sidedrawer-list-item .fa {
+  width: 20;
+  margin-right: 10;
 }

@@ -1,1 +1,121 @@
 @import 'home.component.scss';
+
+.page {
+    /*background-image: url("~/images/bg.jpg");*/
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+}
+
+.center {
+    horizontal-align: center;
+}
+
+.center-text {
+  text-align: center;
+}
+
+/* Home TOP Tile Design */
+.statustile {
+  border-radius: 15;
+  background: $finu-primary-dark;
+}
+
+.icon {
+  font-size: 45;
+  color: $finu-background;
+}
+.hometile-icon {
+  font-size: 50;
+}
+.icon-text {
+  color: white;
+  font-family: "Varela", "varela-regular";
+}
+
+.m-top-5 {
+  margin-top: 5;
+}
+/* Home Top Tile Desing */
+
+.progressbar {
+    height: 30;
+    margin: 10;
+    border-radius: 10;
+    background: $finu-primary-dark;
+}
+.progressbar-value {
+    background: $finu-yellowish;
+}
+
+.progressbar-inner-text {
+  color: $finu-primary-dark;
+  font-size: 12;
+  padding: 10;
+}
+
+.action-icon {
+  font-size: 30;
+  color: $finu-primary-dark;
+}
+
+.footer-date {
+  text-align: center;
+  color: white;
+}
+
+.number {
+  font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+}
+
+
+
+/***** CARDVIEW ****/
+.Material {
+  font-family: MaterialIcons-Regular, Material Icons;
+}
+
+button {
+  font-family: 'Roboto', Roboto;
+}
+
+.align-center {
+  vertical-align: center;
+  horizontal-align: center;
+}
+
+.title {
+  font-size: 25;
+  margin: 4;
+}
+
+.size16 {
+  font-size: 16;
+  margin: 2;
+}
+
+.blue {
+  color: #6a78c5;
+}
+
+.gray {
+  color: #666;
+}
+
+.white {
+  color: #fff;
+}
+
+.blackCard {
+  background-color: #333;
+  color: white;
+}
+
+.blueCard {
+  background-color: #3489db;
+  color: white;
+}
+
+.whiteCard {
+  background-color: $finu-primary-dark;
+}

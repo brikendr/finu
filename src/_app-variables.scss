@@ -31,6 +31,8 @@ $midnight-light: #14418B !default;
 $night-dark: #023141 !default;
 $night-light: #01526C !default;
 
+$main-background: #01526C !default;
+
 // Sizes
 $base-font-size: 11;
 
@@ -76,3 +78,55 @@ $btn-color-outline-highlighted: lighten($btn-color, 10%);
 $headings-color: $blue-dark;
 $secondary: $blue-dark;
 $text-color: $blue-dark;
+
+/**** My Color Combos ******/
+$finu-background: #ADD2C2;
+$finu-background-rgb: rgb(173, 210, 194);
+$finu-secondary: #A7D3A6;
+$finu-secondary-rgb: rgb(167, 211, 166);
+$finu-combo1: #CFE795;
+$finu-combo1-rgb: rgb(207, 231, 149);
+$finu-combo2: #F7EF81;
+$finu-combo2-rgb: rgb(247, 239, 129);
+$finu-combo3: #D4C685;
+$finu-combo3-rgb: rgb(212, 198, 133);
+$finu-primary-dark: #4D6A6D;
+$finu-primary-dark-rgb: rgb(77, 106, 109);
+$finu-yellowish: #E1CE7A;
+
+$wild-blue-younder: #9FB4C7;
+$wild-blue-younder-rgb: rgb(159, 180, 199);
+$lavander-purple: #7F7CAF;
+$lavander-purple-rgb: rgb(127, 124, 175);
+$wild-blue-yonder: #9FB4C7;
+$wild-blue-yonder-rgb: rgb(159, 180, 199);
+$green-sheen: #75B09C;
+$green-sheen-rgb: rgb(117, 176, 156);
+
+
+/*** COMBO 1 Bright Colors*****/
+$bittersweet: #FF6F59;
+$bittersweet-rgb: rgb(255, 111, 89);
+$japanese-indigo: #254441;
+$japanese-indigo-rgb: rgb(37, 68, 65);
+$zomp: #43AA8B;
+$zomp: rgb(67, 170, 139);
+$laurel-green: #B2B09B;
+$laurel-green-rgb: rgb(178, 176, 155);
+$desire: #EF3054;
+$desire-rgb: rgb(239, 48, 84);
+/*** COMBO 1 Bright Colors*****/
+
+
+/*** COMBO 2 Bright Colors*****/
+$sunset-orange: #FF5E5B;
+$sunset-orange-rgb: rgb(255, 94, 91);
+$timberwolf: #D8D8D8;
+$timberwolf-rgb: rgb(216, 216, 216);
+$ivory: #FFFFEA;
+$ivory-rgb: rgb(255, 255, 234);
+$robin-egg-blue: #00CECB;
+$robin-egg-blue-rgb: rgb(0, 206, 203);
+$maize: #FFED66;
+$maize-rgb: rgb(255, 237, 102);
+/*** COMBO 2 Bright Colors*****/

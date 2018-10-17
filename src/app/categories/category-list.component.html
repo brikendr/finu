@@ -1,0 +1,14 @@
+<ActionBar class="action-bar">
+  <Label class="action-bar-title" text="Categories" horizontalAlignment="center"></Label>
+</ActionBar>
+
+<GridLayout class="page page-content">
+  <ListView [items]="categories" class="list-group">
+    <ng-template let-category="item" let-i="index" let-odd="odd" let-even="even">
+      <StackLayout orientation="horizontal" class="list-group-item">
+        <Label [text]="category.description"></Label>
+      </StackLayout>
+    </ng-template>
+  </ListView>
+  <ActivityIndicator [busy]="isLoading"></ActivityIndicator>
+</GridLayout>

@@ -7,7 +7,9 @@ const routes: Routes = [
     { path: "", redirectTo: "/login", pathMatch: "full" },
     { path: "login", component: LoginComponent },
     { path: "home", loadChildren: "~/app/home/home.module#HomeModule" },
-    { path: "cars", loadChildren: "~/app/cars/cars.module#CarsModule" }
+    { path: "cars", loadChildren: "~/app/cars/cars.module#CarsModule" },
+    { path: "misc", loadChildren: "~/app/misc/misc.module#MiscModule" },
+    { path: "categories", loadChildren: "~/app/categories/category.module#CategoryModule" }
 ];
 
 @NgModule({
