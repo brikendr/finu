@@ -7,61 +7,59 @@
     background-size: cover;
 }
 
-.center {
-    horizontal-align: center;
-}
-
 .center-text {
   text-align: center;
 }
 
 /* Home TOP Tile Design */
-.statustile {
-  border-radius: 15;
-  background: $finu-primary-dark;
-}
 
-.icon {
-  font-size: 45;
-  color: $finu-background;
+.icon-small {
+  font-size: 25;
+  color: $finu-primary-dark;
 }
 .hometile-icon {
   font-size: 50;
 }
-.icon-text {
-  color: white;
-  font-family: "Varela", "varela-regular";
-}
 
-.m-top-5 {
-  margin-top: 5;
-}
+
 /* Home Top Tile Desing */
 
 .progressbar {
-    height: 30;
-    margin: 10;
-    border-radius: 10;
-    background: $finu-primary-dark;
-}
-.progressbar-value {
-    background: $finu-yellowish;
+  height: 20;
+  margin: 5;
+  border-radius: 10;
+  background: $background2;
 }
 
-.progressbar-inner-text {
-  color: $finu-primary-dark;
+.progress-footnote, .progressbar-inner-text {
   font-size: 12;
-  padding: 10;
+  margin-left: 10;
+}
+
+.progressbar-value-spent {
+  background: $sunset-orange;
+}
+.progressbar-value-earned {
+  background: $zomp;
+}
+.progressbar-value-budget {
+  background: $green-sheen;
+}
+
+.progressbar-inner-text, .icon {
+  color: $background2;
+}
+.progressbar-text, .progress-footnote, .footer-date  {
+  color: $finu-primary-dark;
 }
 
 .action-icon {
   font-size: 30;
-  color: $finu-primary-dark;
+  color: $zomp;
 }
 
 .footer-date {
   text-align: center;
-  color: white;
 }
 
 .number {
@@ -71,51 +69,32 @@
 
 
 /***** CARDVIEW ****/
-.Material {
-  font-family: MaterialIcons-Regular, Material Icons;
-}
-
-button {
-  font-family: 'Roboto', Roboto;
-}
-
-.align-center {
-  vertical-align: center;
-  horizontal-align: center;
-}
-
 .title {
   font-size: 25;
   margin: 4;
 }
 
+.size12 {
+  font-size: 12;
+}
 .size16 {
   font-size: 16;
   margin: 2;
 }
-
-.blue {
-  color: #6a78c5;
+.size20 {
+  font-size: 20;
+  margin: 2;
 }
 
-.gray {
-  color: #666;
+.tileCard {
+  background-color: $foreground2;
 }
 
-.white {
-  color: #fff;
+.tileCard, .title {
+  color: $background1;
 }
 
-.blackCard {
-  background-color: #333;
-  color: white;
-}
-
-.blueCard {
-  background-color: #3489db;
-  color: white;
-}
-
-.whiteCard {
-  background-color: $finu-primary-dark;
+.logo {
+  font-weight: bold;
+  margin-left: 30%;
 }

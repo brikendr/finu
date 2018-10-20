@@ -6,13 +6,13 @@
   margin-bottom: -100;
 }
 .sidedrawer-list-item-icon,.sidedrawer-list-item{
-  color: $japanese-indigo;
+  color: $foreground2;
 }
 .sidedrawer.sidedrawer-left {
-  background-color: $japanese-indigo;
+  background-color: $foreground2;
 }
 .sidedrawer.sidedrawer-left .sidedrawer-header-image {
-  color: $japanese-indigo;
+  color: $foreground2;
   height: 60;
   width: 60;
   font-size: 60;
@@ -21,16 +21,16 @@
   margin-top: 20;
 }
 .sidedrawer.sidedrawer-left .footnote {
-  color: $ivory;
+  color: $background1;
 }
 .sidedrawer .sidedrawer-header {
-  background-color: $japanese-indigo;
+  background-color: $foreground2;
 }
 .sidedrawer .sidedrawer-header .sidedrawer-header-brand {
-  color: $ivory;
+  color: $background1;
 }
 .sidedrawer .sidedrawer-content{ 
-  background-color: $ivory;
+  background-color: $background1;
 }
 .sidedrawer .sidedrawer-content .sidedrawer-list-item{
   padding-left: 15;
@@ -38,7 +38,7 @@
 
 .sidedrawer .sidedrawer-content .sidedrawer-list-item Label {
   vertical-align: center;
-  color: $japanese-indigo;
+  color: $foreground2;
 }
 .sidedrawer .sidedrawer-content .sidedrawer-list-item .fa {
   width: 20;
