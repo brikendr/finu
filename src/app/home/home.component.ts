@@ -160,6 +160,7 @@ export class HomeComponent implements OnInit {
         curve: "ease"
       }
     }).catch(error => {
+      console.log(error);
       alert({
         title: "Route Failure!",
         okButtonText: "OK",

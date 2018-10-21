@@ -1,0 +1,30 @@
+@import '../../../_app-variables.scss';
+
+.category-box {
+  width: 100;
+  height: 100;
+  text-align: center;
+  padding: 5;
+}
+
+.category-box-title {
+  font-size: 18;
+  margin-bottom: 3;
+}
+
+.category-box-icon {
+  font-size: 35;
+}
+
+.category-box-number {
+  font-size: 15;
+}
+
+.category-box-title, .category-box-number {
+  font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+  color: $mountain-view4;
+}
+
+.tileCard {
+  margin: 5;
+}

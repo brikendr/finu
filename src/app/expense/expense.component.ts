@@ -4,7 +4,6 @@ import { SelectedIndexChangedEventData, ValueList } from "nativescript-drop-down
 import { alert } from "ui/dialogs";
 import { CategoryService } from "../categories/shared/category.service";
 import { Category } from "../categories/shared/cetegory.model";
-import { ObservableArray } from "tns-core-modules/data/observable-array/observable-array";
 import { Kinvey } from "kinvey-nativescript-sdk";
 import { Expense } from "./shared/expense.model";
 import { ExpenseService } from "./shared/expense.service";
@@ -71,6 +70,7 @@ export class ExpenseComponent implements OnInit {
       const expenseOpts = {
         userId: Kinvey.User.getActiveUser()._id,
         dateTime: dateTime.toString(),
+        month: new Date().getMonth() + 1,
         amount: parseInt(this.expenseAmount),
         isWithdraw: this.isWithdraw,
         categoryId: this.isWithdraw ? this._categories.getValue(this.selectedIndex): undefined
@@ -92,5 +92,24 @@ export class ExpenseComponent implements OnInit {
 
   get categories(): ValueList<string> {
     return this._categories;
+  }
+
+  goToOverviewScreen() {
+    this._routerExtensions.navigate(["/expense/expense-overview"], {
+      animated: true,
+      transition: {
+        name: "slide",
+        duration: 200,
+        curve: "ease"
+      }
+    });
+    // this._routerExtensions.navigate(["expense-overview"], {
+    //   animated: true,
+    //   transition: {
+    //     name: "slideLeft",
+    //     duration: 200,
+    //     curve: "ease"
+    //   }
+    // });
   }
 }

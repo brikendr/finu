@@ -6,6 +6,7 @@ import { DropDownModule } from "nativescript-drop-down/angular";
 import { CategoryService } from "../categories/shared/category.service";
 import { ExpenseService } from "./shared/expense.service";
 import { NativeScriptFormsModule } from "nativescript-angular/forms";
+import { ExpenseOverview } from "./overview/expense-overview.component";
 
 
 @NgModule({
@@ -16,7 +17,8 @@ import { NativeScriptFormsModule } from "nativescript-angular/forms";
     NativeScriptFormsModule
   ],
   declarations: [
-    ExpenseComponent
+    ExpenseComponent,
+    ExpenseOverview
   ],
   providers: [
     CategoryService,
