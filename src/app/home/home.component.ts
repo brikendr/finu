@@ -7,6 +7,8 @@ import { CardView } from "nativescript-cardview";
 
 import * as app from "application";
 import { RadSideDrawer } from "nativescript-ui-sidedrawer";
+
+import { RouterExtensions } from "nativescript-angular/router";
 registerElement("CardView", () => CardView);
 
 @Component({
@@ -16,33 +18,34 @@ registerElement("CardView", () => CardView);
   styleUrls: ["./home.component.scss"]
 })
 export class HomeComponent implements OnInit {
-  balanceProgressBar: string;
+  expenseProgressBar: string;
   budgetProgressBar: string;
 
   /* Collection Retrivable Data */
   totalExpenses: number;
   income: number;
+  _earned: number;
   _pendingBills: number;
   savingsGoal: number;
   _dailyBudget: number;
   _maintainedSavings: number;
-  menuIcon = String.fromCharCode(parseInt("f061", 16));
+  menuIcon = String.fromCharCode(parseInt("f0c9", 16));
 
   /* Progress bar values */
   expensesOnBalance: string;
   expensesOnBudget: string;
 
   constructor(
-    private page: Page
+    private page: Page,
+    private _routerExtensions: RouterExtensions
   ) {
-    this.page.backgroundSpanUnderStatusBar = true;
-    this.page.className = "homepage-container";
   }
 
   ngOnInit(): void {
     /* Initialize properties */
-    this.totalExpenses = 16500;
+    this.totalExpenses = 12500;
     this.income = 25400;
+    this._earned = this.income;
     this.savingsGoal = 10000;
     this._pendingBills = 3;
 
@@ -60,7 +63,7 @@ export class HomeComponent implements OnInit {
     progress = progress > 100 ? 100 : progress;
     let incExpense = 0;
     const intervalId = setInterval(() => {
-      this.animateBalanceProgressBar(percent);
+      this.animateExpenseProgressBar(percent);
       percent++;
       incExpense += (this.totalExpenses / progress);
       this.expensesOnBalance = `${Math.round(incExpense)} NOK`;
@@ -72,8 +75,8 @@ export class HomeComponent implements OnInit {
     }, 50);
   }
 
-  animateBalanceProgressBar(percent) {
-    this.balanceProgressBar = percent + "*," + (100 - percent) + "*";
+  animateExpenseProgressBar(percent) {
+    this.expenseProgressBar = percent + "*," + (100 - percent) + "*";
   }
 
   calculateMonthlyBudget() {
@@ -109,7 +112,11 @@ export class HomeComponent implements OnInit {
   }
 
   get monthlyBalance(): string {
-    return  `Balance: ${this.income - this.totalExpenses} NOK`;
+    return  `${this.income - this.totalExpenses} NOK`;
+  }
+
+  get totalEarned(): string {
+    return `${this._earned} NOK`;
   }
 
   get monthlyBudget(): string {
@@ -123,7 +130,7 @@ export class HomeComponent implements OnInit {
   }
 
   get maintainedSavings(): string {
-    return `${this._maintainedSavings} / ${this.savingsGoal} NOK`;
+    return `${this._maintainedSavings} NOK`;
   }
 
   get dailyBudget(): string {
@@ -143,5 +150,23 @@ export class HomeComponent implements OnInit {
   onDrawerButtonTap(): void {
     const sideDrawer = <RadSideDrawer>app.getRootView();
     sideDrawer.showDrawer();
+  }
+
+  navigate(route: string): void {
+    this._routerExtensions.navigate([route], {
+      animated: true,
+      transition: {
+        name: "slideLeft",
+        duration: 200,
+        curve: "ease"
+      }
+    }).catch((error) => {
+      console.log(error);
+      alert({
+        title: "Route Failure!",
+        okButtonText: "OK",
+        message: `Route [${route}] does not exist`
+      });
+    });
   }
 }

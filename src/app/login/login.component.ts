@@ -12,7 +12,7 @@ import { UserService } from "../shared/user.service";
   selector: "app-login",
   moduleId: module.id,
   templateUrl: "./login.component.html",
-  styleUrls: ["./login.component.css"]
+  styleUrls: ["./login.component.scss"]
 })
 export class LoginComponent implements OnInit {
   isLoggingIn = true;

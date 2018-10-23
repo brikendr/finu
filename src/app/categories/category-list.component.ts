@@ -1,6 +1,5 @@
 import { Component, OnInit } from "@angular/core";
 
-import { RouterExtensions } from "nativescript-angular/router";
 import { CategoryService } from "~/app/categories/shared/category.service";
 import { Category } from "~/app/categories/shared/cetegory.model";
 
@@ -16,8 +15,7 @@ export class CategoryListComponent implements OnInit {
   private _categories: ObservableArray<Category> = new ObservableArray<Category>([]);
 
   constructor(
-    private _categoryService: CategoryService,
-    private _routerExtensions: RouterExtensions
+    private _categoryService: CategoryService
   ) { }
 
   ngOnInit(): void {

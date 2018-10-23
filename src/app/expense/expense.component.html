@@ -1,0 +1,40 @@
+<ActionBar class="action-bar">
+  <ActionItem (tap)="goToOverviewScreen()" text="Overview" ios.position="right" android.position="popup"></ActionItem>
+</ActionBar>
+
+<FlexboxLayout class="page">
+  <StackLayout class="form">
+    <!-- <Image class="logo" src="~/images/logo.png"></Image> -->
+    <Label class="header" [text]="title"></Label>
+
+
+    <GridLayout rows="auto, auto, auto, auto">
+      <GridLayout row="0" rows="*" columns="*, 2*" class="input-field">
+        <Label row="0" col="0" text="Withdraw" class="booleanLabel"></Label>
+        <Switch row="0" col="1" checked="false" [(ngModel)]="isWithdraw" horizontalAlignment="right" class="switch"></Switch>
+      </GridLayout>
+
+      <GridLayout row="1" rows="2*, *" columns="*, 50" class="input-field">
+        <TextField [(ngModel)]="expenseAmount" row="0" col="0" hint="Enter amount" class="input" keyboardType="number"></TextField>
+        <Label class="currency" row="0" col="1" text="NOK"></Label>
+        <StackLayout col="0" row="1" colspan="2" class="hr-light"></StackLayout>
+      </GridLayout>
+
+      <StackLayout *ngIf="isWithdraw" row="2" class="input-field">
+        <DropDown #dd 
+          [items]="categories"
+          [(ngModel)]="selectedIndex"
+          (selectedIndexChanged)="onchange($event)"
+          (opened)="onopen()"
+          (closed)="onclose()"
+          row="0" 
+          colSpan="2"></DropDown>
+        <StackLayout class="hr-light"></StackLayout>
+      </StackLayout>
+
+      <ActivityIndicator rowSpan="3" [busy]="processing"></ActivityIndicator>
+    </GridLayout>
+
+    <Button text="Add Transaction" [isEnabled]="!processing" (tap)="submit()" class="btn btn-primary m-t-20"></Button>
+  </StackLayout>
+</FlexboxLayout>

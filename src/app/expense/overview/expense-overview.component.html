@@ -1,0 +1,16 @@
+<ActionBar title="Expense Overview" class="action-bar">
+  <ActionItem text="Home" ios.position="right" android.position="popup" [nsRouterLink]="['/home']" clearHistory="true"></ActionItem>
+</ActionBar>
+
+<WrapLayout orientation="horizontal" horizontalAlignment="center">
+  <CardView *ngFor="let categoryExpense of expenseOverview" col="1" row="0" class="tileCard" [background]="categoryExpense['bg_color']" shadowRadius="3" shadowOpacity="0.5" elevation="40" radius="10">
+    <GridLayout columns="*" rows="*, 2*, *, *" class="category-box">
+      <Label col="0" row="0" [text]="categoryExpense['description']" class="category-box-title"></Label>
+      <Label col="0" row="1" [text]="categoryExpense['icon']" class="fa category-box-icon"></Label>
+      <StackLayout col="0" row="2" class="hr-light hr-top"></StackLayout>
+      <Label col="0" row="3" [text]="categoryExpense['total']" class="category-box-number"></Label>
+    </GridLayout>
+  </CardView>
+  
+  <ActivityIndicator rowSpan="3" [busy]="_isLoading"></ActivityIndicator>
+</WrapLayout>
