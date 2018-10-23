@@ -23,7 +23,7 @@ import { UserService } from "~/app/shared/user.service";
     ],
     declarations: [
       AppComponent,
-      LoginComponent,
+      LoginComponent
     ],
     schemas: [
       NO_ERRORS_SCHEMA

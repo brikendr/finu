@@ -7,6 +7,7 @@ import { CardView } from "nativescript-cardview";
 
 import * as app from "application";
 import { RadSideDrawer } from "nativescript-ui-sidedrawer";
+
 import { RouterExtensions } from "nativescript-angular/router";
 registerElement("CardView", () => CardView);
 
@@ -159,7 +160,7 @@ export class HomeComponent implements OnInit {
         duration: 200,
         curve: "ease"
       }
-    }).catch(error => {
+    }).catch((error) => {
       console.log(error);
       alert({
         title: "Route Failure!",

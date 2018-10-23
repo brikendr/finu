@@ -4,25 +4,25 @@ import { SelectedIndexChangedEventData, ValueList } from "nativescript-drop-down
 import { alert } from "ui/dialogs";
 import { CategoryService } from "../categories/shared/category.service";
 import { Category } from "../categories/shared/cetegory.model";
-import { Kinvey } from "kinvey-nativescript-sdk";
 import { Expense } from "./shared/expense.model";
 import { ExpenseService } from "./shared/expense.service";
+
+import { Kinvey } from "kinvey-nativescript-sdk";
 import { RouterExtensions } from "nativescript-angular/router";
 
 @Component({
   selector: "Expense",
   moduleId: module.id,
   templateUrl: "./expense.component.html",
-  styleUrls: ['./expense.component.scss']
+  styleUrls: ["./expense.component.scss"]
 })
 export class ExpenseComponent implements OnInit {
-  private _isLoading: boolean = false;
-  private _categories: ValueList<string> = new ValueList<string>();
   title: string = "New Transaction";
   selectedIndex = 1;
   processing = false;
   expenseAmount: string = "";
   isWithdraw: boolean = true;
+  private _categories: ValueList<string> = new ValueList<string>();
 
   constructor(
     private _categoryService: CategoryService,
@@ -35,11 +35,11 @@ export class ExpenseComponent implements OnInit {
 
     this._categoryService.load()
       .then((categories: Array<Category>) => {
-        categories.forEach(category => {
+        categories.forEach((category) => {
           this._categories.push({
             value: category.id,
             display: category.description
-          })
+          });
         });
         this.processing = false;
       })
@@ -47,7 +47,7 @@ export class ExpenseComponent implements OnInit {
         this.processing = false;
       });
   }
-  
+
   onchange(args: SelectedIndexChangedEventData) {
     console.log(`Drop Down selected index changed from ${args.oldIndex} to ${args.newIndex}`);
   }
@@ -61,7 +61,7 @@ export class ExpenseComponent implements OnInit {
   }
 
   submit(): void {
-    if (isNaN(parseInt(this.expenseAmount))) {
+    if (isNaN(parseInt(this.expenseAmount, 10))) {
       alert(`The given amount [${this.expenseAmount}] must be a valid number!`);
 
       return;
@@ -71,9 +71,9 @@ export class ExpenseComponent implements OnInit {
         userId: Kinvey.User.getActiveUser()._id,
         dateTime: dateTime.toString(),
         month: new Date().getMonth() + 1,
-        amount: parseInt(this.expenseAmount),
+        amount: parseInt(this.expenseAmount, 10),
         isWithdraw: this.isWithdraw,
-        categoryId: this.isWithdraw ? this._categories.getValue(this.selectedIndex): undefined
+        categoryId: this.isWithdraw ? this._categories.getValue(this.selectedIndex) : undefined
       };
       console.log(expenseOpts);
       const newExpense = new Expense(expenseOpts);

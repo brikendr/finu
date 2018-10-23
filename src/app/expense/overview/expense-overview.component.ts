@@ -1,8 +1,11 @@
 import { Component, OnInit } from "@angular/core";
 import { ExpenseService } from "../shared/expense.service";
+
 import { CategoryService } from "~/app/categories/shared/category.service";
+
 import { Kinvey } from "kinvey-nativescript-sdk";
 import { Expense } from "../shared/expense.model";
+
 import { Category } from "~/app/categories/shared/cetegory.model";
 
 @Component({
@@ -11,12 +14,12 @@ import { Category } from "~/app/categories/shared/cetegory.model";
   templateUrl: "./expense-overview.component.html",
   styleUrls: ["./expense-overview.component.scss"]
 })
-export class ExpenseOverview implements OnInit {
+export class ExpenseOverviewComponent implements OnInit {
   _isLoading: boolean = false;
-  expenseOverview: Array<Object> = [];
+  expenseOverview: Array<object> = [];
   constructor(
     private _expenseService: ExpenseService,
-    private _categoryService: CategoryService,
+    private _categoryService: CategoryService
   ) { }
 
   ngOnInit(): void {
@@ -34,7 +37,7 @@ export class ExpenseOverview implements OnInit {
   }
 
   groupByExpenses(expenses: Array<Expense>, categories: Array<Category>) {
-    categories.forEach(category => {
+    categories.forEach((category) => {
       const sum = expenses.reduce((categorySum, expense) => {
         if (expense.categoryId === category.id && expense.isWithdraw) {
           return categorySum + expense.amount;

@@ -15,7 +15,7 @@ export class CategoryListComponent implements OnInit {
   private _categories: ObservableArray<Category> = new ObservableArray<Category>([]);
 
   constructor(
-    private _categoryService: CategoryService,
+    private _categoryService: CategoryService
   ) { }
 
   ngOnInit(): void {
