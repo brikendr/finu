@@ -25,10 +25,10 @@ export class ExpenseOverviewComponent implements OnInit {
   ngOnInit(): void {
     this._isLoading = true;
 
-    this._expenseService.groupByCategory(Kinvey.User.getActiveUser()._id)
-    .then((expenses: Array<Expense>) => {
+    this._expenseService.getUserExpenses(Kinvey.User.getActiveUser()._id)
+    .then((transactions: any) => {
       this._categoryService.load().then((categories: Array<Category>) => {
-        this.groupByExpenses(expenses, categories);
+        this.groupByExpenses(transactions.expenses, categories);
       })
       .catch(() => {
         this._isLoading = false;

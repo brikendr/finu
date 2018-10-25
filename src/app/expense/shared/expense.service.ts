@@ -7,27 +7,36 @@ import { Injectable } from "@angular/core";
 @Injectable()
 export class ExpenseService {
   private expenseStore = Kinvey.DataStore.collection("expense", Kinvey.DataStoreType.Cache);
-  private monthlyExpenses: Array<Expense> = [];
+  private monthlyTransactions: object = {};
 
-  groupByCategory(userId: string): Promise<Array<Expense>> {
+  getUserExpenses(userId: string): Promise<any> {
     const month = new Date().getMonth();
     const query = new Kinvey.Query();
-    query.equalTo("userId", userId).and().equalTo("isWithdraw", true).and().equalTo("month", (month + 1));
+    query.equalTo("userId", userId).and().equalTo("month", (month + 1));
 
     return new Promise((resolve, reject) => {
       this.expenseStore.find(query)
         .subscribe((data: any) => {
-          this.monthlyExpenses = [];
+          this.monthlyTransactions = {};
+          const expenses = [];
+          const deposits = [];
           data.forEach((expenseData: any) => {
             expenseData.id = expenseData._id;
             const expense = new Expense(expenseData);
-
-            this.monthlyExpenses.push(expense);
+            if (expense.isWithdraw) {
+              expenses.push(expense);
+            } else {
+              deposits.push(expense);
+            }
           });
+          this.monthlyTransactions = {
+            expenses,
+            deposits
+          };
         }, (error: Kinvey.BaseError) => {
-          throw new Error("Unable to fetch expenses!");
+          reject("Unable to fetch expenses!");
         }, () => {
-          resolve(this.monthlyExpenses);
+          resolve(this.monthlyTransactions);
         });
     });
   }

@@ -1,7 +1,4 @@
 import { Component, OnInit } from "@angular/core";
-
-import { Page } from "tns-core-modules/ui/page";
-
 import { registerElement } from "nativescript-angular/element-registry";
 import { CardView } from "nativescript-cardview";
 
@@ -9,6 +6,12 @@ import * as app from "application";
 import { RadSideDrawer } from "nativescript-ui-sidedrawer";
 
 import { RouterExtensions } from "nativescript-angular/router";
+import { BudgetPlan } from "../budgetplan/shared/budgetplan.model";
+import { BudgetPlanService } from "../budgetplan/shared/budgetplan.service";
+
+import { Kinvey } from "kinvey-nativescript-sdk";
+import { ExpenseService } from "../expense/shared/expense.service";
+import { UtilService } from "../shared/utils.service";
 registerElement("CardView", () => CardView);
 
 @Component({
@@ -18,17 +21,25 @@ registerElement("CardView", () => CardView);
   styleUrls: ["./home.component.scss"]
 })
 export class HomeComponent implements OnInit {
+  _isProcessing: boolean = false;
   expenseProgressBar: string;
   budgetProgressBar: string;
+  plannedExpenseArrow: string;
+  budgetStatus: object = {
+    description: "N/A",
+    status: "unavailable"
+  };
 
   /* Collection Retrivable Data */
-  totalExpenses: number;
-  income: number;
+  _totalExpenses: number;
+  _income: number;
   _earned: number;
   _pendingBills: number;
-  savingsGoal: number;
+  _savingsGoal: number;
   _dailyBudget: number;
   _maintainedSavings: number;
+  _overBudget: number;
+
   menuIcon = String.fromCharCode(parseInt("f0c9", 16));
 
   /* Progress bar values */
@@ -36,40 +47,59 @@ export class HomeComponent implements OnInit {
   expensesOnBudget: string;
 
   constructor(
-    private page: Page,
-    private _routerExtensions: RouterExtensions
+    private _routerExtensions: RouterExtensions,
+    private _budgetPlanService: BudgetPlanService,
+    private _expenseService: ExpenseService
   ) {
   }
 
   ngOnInit(): void {
-    /* Initialize properties */
-    this.totalExpenses = 12500;
-    this.income = 25400;
-    this._earned = this.income;
-    this.savingsGoal = 10000;
-    this._pendingBills = 3;
+    this._isProcessing = true;
+    const userId = Kinvey.User.getActiveUser()._id;
+    this._budgetPlanService.getUserBudgetPlan(userId)
+      .then((plan: BudgetPlan) => {
+        this._income = plan.netIncome;
+        this._savingsGoal = plan.savingsGoal;
+        this._pendingBills = 3; // combo of bills and billrecord
 
-    const d = this.totalExpenses + this.savingsGoal;
-    this._maintainedSavings = d > this.income ? this.savingsGoal - (d - this.income) : this.savingsGoal;
+        this._expenseService.getUserExpenses(userId)
+          .then((transactions: any) => {
+            this._isProcessing = false;
+            const sumExpenses = transactions.expenses.reduce((expenseSum, expense) => {
+              return expenseSum + expense.amount;
+            }, 0);
+            const sumDeposit = transactions.deposits.reduce((depositSum, expense) => {
+              return depositSum + expense.amount;
+            }, 0);
+            this._totalExpenses = sumExpenses;
+            this._earned = this._income + sumDeposit;
+            const d = this._totalExpenses + this._savingsGoal;
+            this._maintainedSavings = d > this._income ? this._savingsGoal - (d - this._income) : this._savingsGoal;
 
-    this.calculateMonthlyBalance();
-    this.calculateMonthlyBudget();
-    this.calculateDailyBudget();
+            this.calculateExpensesOnBalance();
+            this.calculateExpensesOnBudget();
+            this.calculateDailyBudget();
+            this.calculatePlannedExpenses();
+          });
+      })
+      .catch((error) => {
+        console.log("Error initializing home components!", error);
+        this._isProcessing = false;
+      });
   }
 
-  calculateMonthlyBalance() {
+  calculateExpensesOnBalance() {
     let percent = 0;
-    let progress = (this.totalExpenses / this.income) * 100;
+    let progress = (this._totalExpenses / this._income) * 100;
     progress = progress > 100 ? 100 : progress;
     let incExpense = 0;
     const intervalId = setInterval(() => {
       this.animateExpenseProgressBar(percent);
       percent++;
-      incExpense += (this.totalExpenses / progress);
+      incExpense += progress > 0 ? (this._totalExpenses / progress) : 0;
       this.expensesOnBalance = `${Math.round(incExpense)} NOK`;
-
       if (percent > progress) {
-        this.expensesOnBalance = `${Math.round(this.totalExpenses)} NOK`;
+        this.expensesOnBalance = `${Math.round(this._totalExpenses)} NOK`;
         clearInterval(intervalId);
       }
     }, 50);
@@ -79,20 +109,20 @@ export class HomeComponent implements OnInit {
     this.expenseProgressBar = percent + "*," + (100 - percent) + "*";
   }
 
-  calculateMonthlyBudget() {
+  calculateExpensesOnBudget() {
     let percent = 0;
-    const budget = this.income - this.savingsGoal;
-    let progress = (this.totalExpenses / budget) * 100;
+    const budget = this._income - this._savingsGoal;
+    let progress = (this._totalExpenses / budget) * 100;
     progress = progress > 100 ? 100 : progress;
     let incExpense = 0;
     const intervalId = setInterval(() => {
       this.animateBudgetProgressBar(percent);
       percent++;
-      incExpense += (this.totalExpenses / progress);
+      incExpense += (this._totalExpenses / progress);
       this.expensesOnBudget = `${Math.round(incExpense)} NOK`;
 
       if (percent > progress) {
-        this.expensesOnBudget = `${Math.round(this.totalExpenses)} NOK`;
+        this.expensesOnBudget = `${Math.round(this._totalExpenses)} NOK`;
         clearInterval(intervalId);
       }
     }, 30);
@@ -106,13 +136,42 @@ export class HomeComponent implements OnInit {
     const now = new Date();
     const daysInCurrentMonth = new Date(now.getFullYear(), now.getMonth() + 1, 0).getDate();
     const today = now.getDate();
-    const budgetTotal = Math.round(this.income - this.savingsGoal - this.totalExpenses);
+    const budgetTotal = Math.round(this._income - this._savingsGoal - this._totalExpenses);
     const daysLeft = daysInCurrentMonth - today;
     this._dailyBudget = Math.round(budgetTotal / daysLeft);
+    this.budgetStatus = UtilService.generateStatusLabel(this._dailyBudget);
+  }
+
+  calculatePlannedExpenses() {
+    const now = new Date();
+    const currentDay = now.getDate();
+    const daysInCurrentMonth = new Date(now.getFullYear(), now.getMonth() + 1, 0).getDate();
+    const budgetTotal = Math.round(this._earned - this._savingsGoal);
+
+    const plannedDailyBudget = budgetTotal / daysInCurrentMonth;
+    const plannedExpenses = currentDay * plannedDailyBudget;
+    this._overBudget = plannedExpenses - this._totalExpenses;
+
+    // Animation
+    let percent = 0;
+    let progress = (plannedExpenses / budgetTotal) * 100;
+    progress = progress > 100 ? 100 : progress;
+    const intervalId = setInterval(() => {
+      this.animatePlannedExpeseArrow(percent);
+      percent++;
+
+      if (percent > progress) {
+        clearInterval(intervalId);
+      }
+    }, 30);
+  }
+
+  animatePlannedExpeseArrow(percent) {
+    this.plannedExpenseArrow = percent + "*," + (100 - percent) + "*";
   }
 
   get monthlyBalance(): string {
-    return  `${this.income - this.totalExpenses} NOK`;
+    return  `${this._income - this._totalExpenses} NOK`;
   }
 
   get totalEarned(): string {
@@ -120,7 +179,7 @@ export class HomeComponent implements OnInit {
   }
 
   get monthlyBudget(): string {
-    const budgetTotal = Math.round(this.income - this.savingsGoal - this.totalExpenses);
+    const budgetTotal = Math.round(this._earned - this._savingsGoal - this._totalExpenses);
 
     return `Budget: ${budgetTotal} NOK`;
   }
@@ -145,6 +204,17 @@ export class HomeComponent implements OnInit {
     const now = new Date();
 
     return `${now.getDate()} ${monthNames[now.getMonth()]}`;
+  }
+
+  get overbudgetStatus(): object {
+    return this._overBudget > 0 ?
+      {
+        text: `Overbudget! +${this._overBudget}`, color: "#81F499"
+      }
+    :
+      {
+        text: `Underbudget! ${this._overBudget} NOK`, color: "#A71D31"
+      };
   }
 
   onDrawerButtonTap(): void {

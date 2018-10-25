@@ -25,15 +25,15 @@
 /* Home Top Tile Desing */
 
 .progressbar {
-  height: 20;
+  height: 18;
   margin: 5;
-  border-radius: 10;
+  border-radius: 2;
   background: $background2;
 }
 
 .progress-footnote, .progressbar-inner-text {
   font-size: 12;
-  margin-left: 10;
+  margin-left: 5;
 }
 
 .progressbar-value-spent {
@@ -51,6 +51,11 @@
 }
 .progressbar-text, .progress-footnote, .footer-date  {
   color: $finu-primary-dark;
+}
+
+.overbudget-note {
+  margin-bottom: 5;
+  margin-top: -10;
 }
 
 .action-icon {
@@ -86,12 +91,34 @@
   margin: 2;
 }
 
-.tileCard {
-  background-color: $foreground2;
+.tile {
+  border-radius: 3;
 }
 
-.tileCard, .title {
-  color: $background1;
+.tile-excellent {
+  background: linear-gradient(-30deg, #2D936C, #79BAA1,);
+  color: white;
+}
+
+.tile-verygood {
+  background: linear-gradient(-30deg, #067BC2, #60ABD8);
+  color: white;
+}
+.tile-good {
+  background: linear-gradient(-30deg, #006E90, #73AFC2);
+  color: white;
+}
+.tile-moderate {
+  background: linear-gradient(-30deg, #686F77, #BBC4CD);
+  color: white;
+}
+.tile-tight {
+  background: linear-gradient(-30deg, #F77F00, #FAB973);
+  color: white;
+}
+.tile-broke {
+  background: linear-gradient(-30deg, #FF3E41, #FF8486);
+  color: white;
 }
 
 .logo {

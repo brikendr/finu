@@ -75,12 +75,11 @@ export class ExpenseComponent implements OnInit {
         isWithdraw: this.isWithdraw,
         categoryId: this.isWithdraw ? this._categories.getValue(this.selectedIndex) : undefined
       };
-      console.log(expenseOpts);
       const newExpense = new Expense(expenseOpts);
       this.processing = true;
       this._expenseService.save(newExpense).then((expenseEntry) => {
         setTimeout(() => {
-          this._routerExtensions.back();
+          this._routerExtensions.navigate(["/home"], { clearHistory: true });
         }, 2000);
         this.title = "Transaction Completed";
       }).catch((error) => {
