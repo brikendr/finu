@@ -54,6 +54,10 @@ export class HomeComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    if (Kinvey.User.getActiveUser() === null) {
+      this.navigate("login", true);
+    }
+
     this._isProcessing = true;
     const userId = Kinvey.User.getActiveUser()._id;
     this._budgetPlanService.getUserBudgetPlan(userId)
@@ -222,9 +226,10 @@ export class HomeComponent implements OnInit {
     sideDrawer.showDrawer();
   }
 
-  navigate(route: string): void {
+  navigate(route: string, clearHistory: boolean = false): void {
     this._routerExtensions.navigate([route], {
       animated: true,
+      clearHistory,
       transition: {
         name: "slideLeft",
         duration: 200,

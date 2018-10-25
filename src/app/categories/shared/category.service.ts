@@ -23,7 +23,7 @@ export class CategoryService {
     return UtilService.isUserLoggedIn()
     .then(() => {
       const sortByDescription = new Kinvey.Query();
-      sortByDescription.ascending("description");
+      sortByDescription.ascending("name");
       const stream = this.categoryStore.find(sortByDescription);
 
       return stream.toPromise();
@@ -32,7 +32,6 @@ export class CategoryService {
       data.forEach((categoryData: any) => {
         categoryData.id = categoryData._id;
         const category = new Category(categoryData);
-
         this.allCategories.push(category);
       });
 

@@ -36,6 +36,7 @@ export class AppComponent implements OnInit  {
     this.hideSideDrawer();
     this._routerExtensions.navigate([route], {
       animated: true,
+      clearHistory: true,
       transition: {
         name: "slideLeft",
         duration: 200,

@@ -2,6 +2,25 @@ import { Kinvey } from "kinvey-nativescript-sdk";
 import { Config } from "~/app/shared/config";
 
 export class UtilService {
+  static COLORCLASSES: Array<string> = [
+    "tile-red",
+    "tile-purple",
+    "tile-yellow",
+    "tile-oceanblue",
+    "tile-darkblue",
+    "tile-lightgreen",
+    "tile-orange",
+    "tile-silver",
+    "tile-deeppurple",
+    "tile-limegreen",
+    "tile-excellent",
+    "tile-verygood",
+    "tile-good",
+    "tile-moderate",
+    "tile-tight",
+    "tile-broke"
+  ];
+
   static isUserLoggedIn(): Promise<any> {
     if (!!Kinvey.User.getActiveUser()) {
       return Promise.resolve();
@@ -24,8 +43,8 @@ export class UtilService {
         };
       case (dailyBudget >= 300 && dailyBudget < 400):
         return {
-          description: "- broke -",
-          status: "tile-broke"
+          description: "- Good -",
+          status: "tile-good"
         };
       case (dailyBudget >= 200 && dailyBudget < 300):
         return {
@@ -43,5 +62,9 @@ export class UtilService {
           status: "tile-broke"
         };
     }
+  }
+
+  static generateRandomTileColor(): string {
+    return this.COLORCLASSES[Math.floor(Math.random() * this.COLORCLASSES.length)];
   }
 }

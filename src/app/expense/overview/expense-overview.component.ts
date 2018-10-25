@@ -7,6 +7,7 @@ import { Kinvey } from "kinvey-nativescript-sdk";
 import { Expense } from "../shared/expense.model";
 
 import { Category } from "~/app/categories/shared/cetegory.model";
+import { UtilService } from "~/app/shared/utils.service";
 
 @Component({
   selector: "ExpenseOverview",
@@ -46,9 +47,9 @@ export class ExpenseOverviewComponent implements OnInit {
         }
       }, 0);
       this.expenseOverview.push({
-        description: category.description,
-        bg_color: category.color,
-        icon: String.fromCharCode(parseInt(category.logo, 16)),
+        name: category.name,
+        tileClass: UtilService.generateRandomTileColor(),
+        icon: category.logo,
         total: `${sum} NOK`
       });
     });

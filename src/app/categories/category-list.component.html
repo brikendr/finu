@@ -2,12 +2,16 @@
   <Label class="action-bar-title" text="Categories" horizontalAlignment="center"></Label>
 </ActionBar>
 
-<GridLayout class="page page-content">
-  <ListView [items]="categories" class="list-group">
+<GridLayout>
+  <ListView [items]="categories" class="list-group" separatorColor="white">
     <ng-template let-category="item" let-i="index" let-odd="odd" let-even="even">
-      <StackLayout orientation="horizontal" class="list-group-item">
-        <Label [text]="category.description"></Label>
-      </StackLayout>
+      <GridLayout [class]="category.colorClass + ' category-tile'" columns="*" rows="*, 2*">
+        <Label [text]="category.logo" col="0" row="0" class="category-tile-icon"></Label>
+        <StackLayout col="0" row="1">
+          <Label [text]="category.name" class="category-tile-name"></Label>
+          <Label [text]="category.description" textWrap="true" class="category-tile-description"></Label>
+        </StackLayout>
+      </GridLayout>
     </ng-template>
   </ListView>
   <ActivityIndicator [busy]="isLoading"></ActivityIndicator>

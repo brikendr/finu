@@ -38,7 +38,7 @@ export class ExpenseComponent implements OnInit {
         categories.forEach((category) => {
           this._categories.push({
             value: category.id,
-            display: category.description
+            display: category.name
           });
         });
         this.processing = false;
