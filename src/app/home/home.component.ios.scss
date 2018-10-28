@@ -25,15 +25,15 @@
 /* Home Top Tile Desing */
 
 .progressbar {
-  height: 20;
+  height: 18;
   margin: 5;
-  border-radius: 10;
+  border-radius: 2;
   background: $background2;
 }
 
 .progress-footnote, .progressbar-inner-text {
   font-size: 12;
-  margin-left: 10;
+  margin-left: 5;
 }
 
 .progressbar-value-spent {
@@ -53,6 +53,11 @@
   color: $finu-primary-dark;
 }
 
+.overbudget-note {
+  margin-bottom: 5;
+  margin-top: -10;
+}
+
 .action-icon {
   font-size: 30;
   color: $zomp;
@@ -66,9 +71,6 @@
   font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
 }
 
-
-
-/***** CARDVIEW ****/
 .title {
   font-size: 25;
   margin: 4;
@@ -86,15 +88,17 @@
   margin: 2;
 }
 
-.tileCard {
-  background-color: $foreground2;
-}
-
-.tileCard, .title {
-  color: $background1;
+.tile {
+  border-radius: 3;
 }
 
 .logo {
   font-weight: bold;
   margin-left: 30%;
+}
+
+.footer-tile {
+  color: white;
+  border-radius: 2;
+  margin: 5;
 }

@@ -15,17 +15,15 @@ import * as app from "application";
 })
 export class AppComponent implements OnInit  {
   isVisible: boolean = false;
-  private _sideDrawerTransition: DrawerTransitionBase;
 
   constructor(
     private router: Router,
     private _routerExtensions: RouterExtensions
-  ) {
-    // Use the component constructor to inject services.
-  }
+  ) { }
 
   ngOnInit(): void {
-    this._sideDrawerTransition = new SlideInOnTopTransition();
+    // Called after the constructor, initializing input properties, and the first call to ngOnChanges.
+    // Add 'implements OnInit' to the class.
   }
 
   get sideDrawerTransition(): DrawerTransitionBase {
@@ -47,6 +45,10 @@ export class AppComponent implements OnInit  {
   hideSideDrawer() {
     const sideDrawer = <RadSideDrawer>app.getRootView();
     sideDrawer.closeDrawer();
+  }
+
+  get email(): string {
+    return Kinvey.User.getActiveUser().email;
   }
 
   logout(): void {

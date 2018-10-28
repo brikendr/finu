@@ -1,0 +1,26 @@
+@import '../../_app-variables.scss';
+
+.category-tile {
+  height: 20%;
+  margin: 10 10 0 10;
+  padding: 10;
+  color:  white;
+  border-radius: 5;
+}
+
+.category-tile-icon {
+  font-family: "FontAwesome";
+  font-size: 30;
+}
+
+.category-tile-name {
+  font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+  font-size: 20;
+  font-weight: bold;
+  margin-top: 3;
+}
+
+.category-tile-description {
+  font-size: 15;
+}
+

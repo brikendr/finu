@@ -3,22 +3,20 @@
 		<StackLayout>
 			<Button class="fa" [text]="menuIcon" fontSize="18" (tap)="onDrawerButtonTap()"></Button>
 		</StackLayout>
-	</ActionItem>
+  </ActionItem>
+  <ActionItem [nsRouterLink]="['/expense/expense-overview']" text="Overview" ios.position="right" android.position="popup"></ActionItem>
 </ActionBar>
 
-<ScrollView marginTop="8%">
-  <GridLayout class="m-15" rows="150 auto 130 auto auto">
+<ScrollView marginTop="10%">
+  <GridLayout *ngIf="!_isProcessing" class="m-15" rows="150 auto 130 auto auto">
     <!-- Status tile -->
-    <CardView row="0" class="tileCard" shadowRadius="3" shadowOpacity="0.5" elevation="40"
-      radius="10">
-      <GridLayout columns="*" rows="*, *">
-        <StackLayout col="0" row="0" marginTop="5%">
-          <Label text="&#xf0d6;" col="0" row="0" class="fa center-text hometile-icon"></Label>
-          <Label [text]="currentDayMonth" col="0" row="1" class="center-text size16"></Label>
-        </StackLayout>
-        <Label text="- Stable -" col="0" row="1" class="center-text title"></Label>
-      </GridLayout>
-    </CardView>
+    <GridLayout row="0" [class]="budgetStatus['status'] + ' tile'" columns="*" rows="*, *">
+      <StackLayout col="0" row="0" marginTop="5%">
+        <Label text="&#xf0d6;" col="0" row="0" class="fa center-text hometile-icon"></Label>
+        <Label [text]="currentDayMonth" col="0" row="1" class="center-text size16"></Label>
+      </StackLayout>
+      <Label [text]="budgetStatus['description']" col="0" row="1" class="center-text title"></Label>
+    </GridLayout>
     <!-- End of status tile -->
 
     <!-- Balance ProgressBar Component -->
@@ -54,43 +52,37 @@
     <!-- Actions component -->
 
     <!-- Budget ProgressBar Component -->
-    <GridLayout row="3" columns="*" rows="*, 2*, *, *, *">
+    <GridLayout row="3" columns="*" rows="2*, 2*, 4*, *, 2*, *">
       <Label text="- Budget -" col="0" row="0" class="progressbar-text center-text"></Label>
       <Label [text]="monthlyBudget" col="0" row="1" class="progress-footnote number"></Label>
       <GridLayout col="0" row="2" [columns]="budgetProgressBar" class="progressbar">
-        <StackLayout col="0" class="progressbar-value-budget"></StackLayout>
+        <StackLayout col="0" class="progressbar-value-spent"></StackLayout>
         <Label [text]="expensesOnBudget" class="progressbar-inner-text number"></Label>
       </GridLayout>
-      <GridLayout col="0" row="3" [columns]="budgetProgressBar">
-        <Label text="&#xf0de;" col="0" horizontalAlignment="right" class="fa icon-small"></Label>
+      <GridLayout col="0" row="3" [columns]="plannedExpenseArrow">
+        <Label text="&#xf0de;" col="0" horizontalAlignment="right" [color]="overbudgetStatus['color']" class="fa icon-small"></Label>
       </GridLayout>
-      <StackLayout col="0" row="4" class="hr-light hr-top"></StackLayout>
+      <Label [text]="overbudgetStatus['text']" col="0" row="4" class="progress-footnote number overbudget-note"></Label>
+      <StackLayout col="0" row="5" class="hr-light hr-top"></StackLayout>
     </GridLayout>
     <!-- Budget Component -->
 
     <!-- Budget Component -->
     <GridLayout row="4" columns="3*, 2*" rows="*" >
-      <CardView col="0" row="0" class="tileCard" margin="10" shadowRadius="3" shadowOpacity="0.5" elevation="40"
-        radius="10">
-        <GridLayout rows="auto, auto, auto" columns="2*, *" padding="8">
+        <GridLayout col="0" row="0" rows="auto, auto, auto" columns="2*, *" padding="8" class="tile-oceanblue footer-tile">
           <Label text="Savings" class="size16" row="0" col="0" colspan="2"></Label>
           <Label [text]="maintainedSavings" row="1" col="0" class="size16 number"></Label>
           <Label text="(current)" row="1" col="1" class="size12"></Label>
-          <Label [text]="savingsGoal + ' NOK'" row="2" col="0" class="size16 number"></Label>
+          <Label [text]="_savingsGoal + ' NOK'" row="2" col="0" class="size16 number"></Label>
           <Label text="(goal)" row="2" col="1" class="size12"></Label>
         </GridLayout>
-      </CardView>
-      <CardView col="1" row="0" class="tileCard" margin="10" shadowRadius="3" shadowOpacity="0.5" elevation="40"
-        radius="10">
-        <GridLayout rows="auto, auto" columns="auto" padding="8">
+        <GridLayout col="1" row="0" rows="auto, auto" columns="auto" padding="8" class="tile-red footer-tile">
           <Label text="Daily Budget" class="size16" row="0"></Label>
           <Label [text]="dailyBudget" class="size16 number" row="1"></Label>
         </GridLayout>
-      </CardView>
     </GridLayout>
     <!-- Budget Component -->
   </GridLayout>
+
+  <ActivityIndicator [busy]="_isProcessing"></ActivityIndicator>
 </ScrollView>
-<!-- <GridLayout columns="*" rows="2*, *, 100, *, 2*, 30" width="100%" height="95%" marginTop="5">
-  
-</GridLayout> -->

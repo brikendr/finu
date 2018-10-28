@@ -7,6 +7,7 @@ import { Kinvey } from "kinvey-nativescript-sdk";
 import { Expense } from "../shared/expense.model";
 
 import { Category } from "~/app/categories/shared/cetegory.model";
+import { UtilService } from "~/app/shared/utils.service";
 
 @Component({
   selector: "ExpenseOverview",
@@ -16,7 +17,9 @@ import { Category } from "~/app/categories/shared/cetegory.model";
 })
 export class ExpenseOverviewComponent implements OnInit {
   _isLoading: boolean = false;
+  showDetails: boolean = false;
   expenseOverview: Array<object> = [];
+
   constructor(
     private _expenseService: ExpenseService,
     private _categoryService: CategoryService
@@ -25,10 +28,10 @@ export class ExpenseOverviewComponent implements OnInit {
   ngOnInit(): void {
     this._isLoading = true;
 
-    this._expenseService.groupByCategory(Kinvey.User.getActiveUser()._id)
-    .then((expenses: Array<Expense>) => {
+    this._expenseService.getUserTransactions(Kinvey.User.getActiveUser()._id)
+    .then((transactions: any) => {
       this._categoryService.load().then((categories: Array<Category>) => {
-        this.groupByExpenses(expenses, categories);
+        this.groupByExpenses(transactions.expenses, categories);
       })
       .catch(() => {
         this._isLoading = false;
@@ -45,12 +48,14 @@ export class ExpenseOverviewComponent implements OnInit {
           return categorySum;
         }
       }, 0);
-      this.expenseOverview.push({
-        description: category.description,
-        bg_color: category.color,
-        icon: String.fromCharCode(parseInt(category.logo, 16)),
-        total: `${sum} NOK`
-      });
+      if (sum > 0) {
+        this.expenseOverview.push({
+          name: category.name,
+          tileClass: UtilService.generateRandomTileColor(),
+          icon: category.logo,
+          total: `${sum} NOK`
+        });
+      }
     });
     this._isLoading = false;
   }

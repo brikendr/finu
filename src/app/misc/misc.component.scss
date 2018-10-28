@@ -1,17 +1,20 @@
 @import '../../_app-variables.scss';
 
-.card {
-  background-color: #fff;
-  color: #4d4d4d;
-  margin: 15 15 0;
+.misc-tile {
+  height: 80;
+  padding: 10;
+  margin: 10;
+  border-radius: 5;
 }
-.card-layout {
-  padding: 40;
+
+.misc-itemtitle {
+  font-size: 25;
+  font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+  color: white;
 }
+
 .misc-icon {
-  font-size: 30;
-  padding-right: 30;
-}
-.card-layout .h1 {
-  margin-bottom: 15;
+  font-family: "FontAwesome";
+  font-size: 40;
+  color: white;
 }

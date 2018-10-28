@@ -1,0 +1,31 @@
+@import '../../../_app-variables.scss';
+
+.details-tile {
+ margin: 3 5 3 5;
+ padding: 5;
+ border-radius: 2;
+}
+
+.transaction-category-icon {
+  font-family: "FontAwesome";
+  font-size: 25;
+  color: $foreground1;
+  text-align: center;
+}
+
+.transaction-category-name {
+  font-size: 12;
+  text-align: center;
+}
+
+.transaction-number {
+  font-size: 20;
+}
+
+.transaction-datetime, .transaction-comment {
+  font-size: 12;
+}
+
+.transaction-datetime, .transaction-comment, .transaction-category-name, .transaction-number {
+  font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+}

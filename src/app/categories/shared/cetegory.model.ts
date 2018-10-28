@@ -1,13 +1,15 @@
 export class Category {
   id: string;
-  description: string;
+  name: string;
   logo: string;
-  color: string;
+  description: string;
+  colorClass?: string;
 
   constructor(options: any) {
     this.id = options.id;
+    this.name = options.name;
+    this.logo = String.fromCharCode(parseInt(options.logo, 16));
     this.description = options.description;
-    this.logo = options.logo;
-    this.color = options.color;
+    this.colorClass = options.colorClass;
   }
 }
