@@ -3,13 +3,11 @@
 
 <GridLayout>
   <ListView [items]="data" class="list-group" separatorColor="white">
-    <ng-template let-item="item" let-i="index" >
-      <CardView class="card" elevation="40" radius="10" ios:shadowRadius="3" (tap)="navigate(item.path)">
-        <GridLayout class="card-layout" rows="*" columns="auto, *">
-          <Label [text]="item.icon" class="fa misc-icon"></Label>
-          <Label row="0" col="1" [text]="item.name"></Label>
-        </GridLayout>
-      </CardView>
+    <ng-template let-item="item" let-i="index">
+      <GridLayout [class]="item.className + ' misc-tile'" columns="3*, *" rows="*" (tap)="navigate(item.path)">
+        <Label row="0" col="0" [text]="item.name" class="misc-itemtitle"></Label>
+        <Label row="0" col="1" [text]="item.icon" horizontalAlignment="right" class="misc-icon"></Label>
+      </GridLayout>
     </ng-template>
   </ListView>
 </GridLayout>

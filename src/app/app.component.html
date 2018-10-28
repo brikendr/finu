@@ -7,8 +7,8 @@ http://docs.telerik.com/devtools/nativescript-ui/Controls/NativeScript/SideDrawe
   <GridLayout tkDrawerContent rows="auto, *" class="sidedrawer sidedrawer-left">
     <StackLayout row="0" class="sidedrawer-header">
       <Label class="sidedrawer-header-image fa" text="&#xf2bd;"></Label>
-      <Label class="sidedrawer-header-brand" text="User Name"></Label>
-      <Label class="footnote" text="username@mail.com"></Label>
+      <Label class="sidedrawer-header-brand" [text]="email"></Label>
+      <!-- <Label class="footnote" text="username@mail.com"></Label> -->
     </StackLayout>
 
     <ScrollView row="1">
@@ -17,11 +17,11 @@ http://docs.telerik.com/devtools/nativescript-ui/Controls/NativeScript/SideDrawe
           <Label col="1" text="Home" class="p-r-10"></Label>
         </GridLayout>
 
-        <GridLayout columns="auto, *" class="sidedrawer-list-item" (tap)="navigateToScreen('reports')">
+        <GridLayout columns="auto, *" class="sidedrawer-list-item" (tap)="navigateToScreen('/reports')">
           <Label col="1" text="Reports" class="p-r-10"></Label>
         </GridLayout>
 
-        <GridLayout columns="auto, *" class="sidedrawer-list-item" (tap)="navigateToScreen('misc')">
+        <GridLayout columns="auto, *" class="sidedrawer-list-item" (tap)="navigateToScreen('/misc')">
           <Label col="1" text="Misc" class="p-r-10"></Label>
         </GridLayout>
 

@@ -17,7 +17,9 @@ import { UtilService } from "~/app/shared/utils.service";
 })
 export class ExpenseOverviewComponent implements OnInit {
   _isLoading: boolean = false;
+  showDetails: boolean = false;
   expenseOverview: Array<object> = [];
+
   constructor(
     private _expenseService: ExpenseService,
     private _categoryService: CategoryService
@@ -26,7 +28,7 @@ export class ExpenseOverviewComponent implements OnInit {
   ngOnInit(): void {
     this._isLoading = true;
 
-    this._expenseService.getUserExpenses(Kinvey.User.getActiveUser()._id)
+    this._expenseService.getUserTransactions(Kinvey.User.getActiveUser()._id)
     .then((transactions: any) => {
       this._categoryService.load().then((categories: Array<Category>) => {
         this.groupByExpenses(transactions.expenses, categories);
@@ -46,12 +48,14 @@ export class ExpenseOverviewComponent implements OnInit {
           return categorySum;
         }
       }, 0);
-      this.expenseOverview.push({
-        name: category.name,
-        tileClass: UtilService.generateRandomTileColor(),
-        icon: category.logo,
-        total: `${sum} NOK`
-      });
+      if (sum > 0) {
+        this.expenseOverview.push({
+          name: category.name,
+          tileClass: UtilService.generateRandomTileColor(),
+          icon: category.logo,
+          total: `${sum} NOK`
+        });
+      }
     });
     this._isLoading = false;
   }

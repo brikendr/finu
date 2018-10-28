@@ -6,6 +6,7 @@ export class Expense {
   amount: number;
   isWithdraw: boolean;
   categoryId: string;
+  comment: string;
 
   constructor(options: any) {
     this.id = options.id;
@@ -15,5 +16,6 @@ export class Expense {
     this.amount = options.amount;
     this.isWithdraw = options.isWithdraw;
     this.categoryId = options.categoryId;
+    this.comment = options.comment;
   }
 }

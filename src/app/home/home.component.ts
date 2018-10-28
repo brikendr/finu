@@ -1,6 +1,4 @@
 import { Component, OnInit } from "@angular/core";
-import { registerElement } from "nativescript-angular/element-registry";
-import { CardView } from "nativescript-cardview";
 
 import * as app from "application";
 import { RadSideDrawer } from "nativescript-ui-sidedrawer";
@@ -12,7 +10,6 @@ import { BudgetPlanService } from "../budgetplan/shared/budgetplan.service";
 import { Kinvey } from "kinvey-nativescript-sdk";
 import { ExpenseService } from "../expense/shared/expense.service";
 import { UtilService } from "../shared/utils.service";
-registerElement("CardView", () => CardView);
 
 @Component({
   selector: "Home",
@@ -66,7 +63,7 @@ export class HomeComponent implements OnInit {
         this._savingsGoal = plan.savingsGoal;
         this._pendingBills = 3; // combo of bills and billrecord
 
-        this._expenseService.getUserExpenses(userId)
+        this._expenseService.getUserTransactions(userId)
           .then((transactions: any) => {
             this._isProcessing = false;
             const sumExpenses = transactions.expenses.reduce((expenseSum, expense) => {
@@ -213,11 +210,11 @@ export class HomeComponent implements OnInit {
   get overbudgetStatus(): object {
     return this._overBudget > 0 ?
       {
-        text: `Overbudget! +${this._overBudget}`, color: "#81F499"
+        text: `Overbudget! + ${this._overBudget.toFixed(2)} NOK`, color: "#81F499"
       }
     :
       {
-        text: `Underbudget! ${this._overBudget} NOK`, color: "#A71D31"
+        text: `Underbudget! ${this._overBudget.toFixed(2)} NOK`, color: "#A71D31"
       };
   }
 
@@ -236,7 +233,6 @@ export class HomeComponent implements OnInit {
         curve: "ease"
       }
     }).catch((error) => {
-      console.log(error);
       alert({
         title: "Route Failure!",
         okButtonText: "OK",

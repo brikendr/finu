@@ -1,5 +1,6 @@
 import { Component, OnInit } from "@angular/core";
 import { RouterExtensions } from "nativescript-angular/router";
+import { UtilService } from "../shared/utils.service";
 
 @Component({
   selector: "Misc",
@@ -15,11 +16,36 @@ export class MiscComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.data.push({ name: "Budget", path: "budgetConfig" , icon: String.fromCharCode(parseInt("f061", 16)) });
-    this.data.push({ name: "Reminders", path: "reminderConfig" , icon: String.fromCharCode(parseInt("f061", 16)) });
-    this.data.push({ name: "Categories", path: "categories" , icon: String.fromCharCode(parseInt("f061", 16)) });
-    this.data.push({ name: "Monthly Bills", path: "bills" , icon: String.fromCharCode(parseInt("f061", 16)) });
-    this.data.push({ name: "Avtale Giro", path: "avtaleGiro" , icon: String.fromCharCode(parseInt("f061", 16)) });
+    this.data.push({
+      name: "Budget",
+      path: "budgetConfig",
+      icon: String.fromCharCode(parseInt("f061", 16)),
+      className: UtilService.generateRandomTileColor()
+    });
+    this.data.push({
+      name: "Reminders",
+      path: "reminderConfig",
+      icon: String.fromCharCode(parseInt("f061", 16)),
+      className: UtilService.generateRandomTileColor()
+    });
+    this.data.push({
+      name: "Categories",
+      path: "categories",
+      icon: String.fromCharCode(parseInt("f061", 16)),
+      className: UtilService.generateRandomTileColor()
+    });
+    this.data.push({
+      name: "Monthly Bills",
+      path: "bills",
+      icon: String.fromCharCode(parseInt("f061", 16)),
+      className: UtilService.generateRandomTileColor()
+    });
+    this.data.push({
+      name: "Avtale Giro",
+      path: "avtaleGiro",
+      icon: String.fromCharCode(parseInt("f061", 16)),
+      className: UtilService.generateRandomTileColor()
+    });
   }
 
   navigate(route: string) {

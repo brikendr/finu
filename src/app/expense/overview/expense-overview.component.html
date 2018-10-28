@@ -11,5 +11,7 @@
     <Label col="0" row="1" [text]="categoryExpense['total']" class="category-box-number"></Label>
   </GridLayout>
 
-  <ActivityIndicator rowSpan="3" [busy]="_isLoading"></ActivityIndicator>
+  <StackLayout rowSpan="2" *ngIf="!_isLoading" class="hr-light"></StackLayout>
+  <Label text="View Details" rowSpan="2" *ngIf="!_isLoading" [nsRouterLink]="['/expense/details']" horizontalAlignment="center" class="btn details-link"></Label>
+  <ActivityIndicator [busy]="_isLoading"></ActivityIndicator>
 </WrapLayout>

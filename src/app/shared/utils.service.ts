@@ -20,6 +20,9 @@ export class UtilService {
     "tile-tight",
     "tile-broke"
   ];
+  static MONTHNAMES: Array<string> = ["January", "February", "March", "April", "May", "June",
+    "July", "August", "September", "October", "November", "December"
+  ];
 
   static isUserLoggedIn(): Promise<any> {
     if (!!Kinvey.User.getActiveUser()) {
@@ -66,5 +69,22 @@ export class UtilService {
 
   static generateRandomTileColor(): string {
     return this.COLORCLASSES[Math.floor(Math.random() * this.COLORCLASSES.length)];
+  }
+
+  static getMonthName(monthNr: number): string {
+    return this.MONTHNAMES[monthNr];
+  }
+
+  static parseTimeStamp(timestamp: string): string {
+    const date = new Date(parseInt(timestamp, 10));
+    let hours = date.getHours();
+    const minutes = date.getMinutes();
+    const ampm = hours >= 12 ? "pm" : "am";
+    hours = hours % 12;
+    hours = hours ? hours : 12;
+    const minStr = minutes < 10 ? "0" + minutes : minutes;
+    const strTime = hours + ":" + minStr + " " + ampm;
+
+    return date.getDate() + 1 + ". " + this.getMonthName(date.getMonth()) + " " + date.getFullYear() + " " + strTime;
   }
 }

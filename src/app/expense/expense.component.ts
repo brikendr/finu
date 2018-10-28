@@ -21,6 +21,7 @@ export class ExpenseComponent implements OnInit {
   selectedIndex = 1;
   processing = false;
   expenseAmount: string = "";
+  expenseComment: string = "";
   isWithdraw: boolean = true;
   private _categories: ValueList<string> = new ValueList<string>();
 
@@ -73,13 +74,17 @@ export class ExpenseComponent implements OnInit {
         month: new Date().getMonth() + 1,
         amount: parseInt(this.expenseAmount, 10),
         isWithdraw: this.isWithdraw,
+        comment: this.expenseComment,
         categoryId: this.isWithdraw ? this._categories.getValue(this.selectedIndex) : undefined
       };
       const newExpense = new Expense(expenseOpts);
       this.processing = true;
       this._expenseService.save(newExpense).then((expenseEntry) => {
         setTimeout(() => {
-          this._routerExtensions.navigate(["/home"], { clearHistory: true });
+          this.title = "New Transaction";
+          this.expenseAmount = "";
+          this.expenseComment = "";
+          this.processing = false;
         }, 2000);
         this.title = "Transaction Completed";
       }).catch((error) => {

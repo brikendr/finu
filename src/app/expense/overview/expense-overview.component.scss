@@ -1,10 +1,11 @@
 @import '../../../_app-variables.scss';
+@import '../../login/login.component.scss';
 
 .category-box {
   width: 45%;
-  height: 100;
+  height: 70;
   text-align: left;
-  margin: 5;
+  margin: 5 5 5 10;
   padding: 10;
   border-radius: 5;
 }
@@ -16,6 +17,7 @@
 .category-box-icon {
   font-family: "FontAwesome";
   font-size: 20;
+  color: white;
 }
 
 .category-box-number {
@@ -25,4 +27,14 @@
 .category-box-number, .category-box-description {
   font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
   color: white;
+}
+
+.details-link {
+  font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+  width: 90%;
+  text-align: center;
+  height: 30;
+  font-size: 20;
+  font-weight: 600;
+  color: $foreground2;
 }

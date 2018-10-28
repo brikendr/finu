@@ -8,6 +8,7 @@ import { CategoryService } from "../categories/shared/category.service";
 import { ExpenseService } from "./shared/expense.service";
 
 import { NativeScriptFormsModule } from "nativescript-angular/forms";
+import { ExpenseDetailsComponent } from "./details/expense-details.component";
 import { ExpenseOverviewComponent } from "./overview/expense-overview.component";
 
 @NgModule({
@@ -19,7 +20,8 @@ import { ExpenseOverviewComponent } from "./overview/expense-overview.component"
   ],
   declarations: [
     ExpenseComponent,
-    ExpenseOverviewComponent
+    ExpenseOverviewComponent,
+    ExpenseDetailsComponent
   ],
   providers: [
     CategoryService,
