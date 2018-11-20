@@ -243,4 +243,16 @@ export class HomeComponent implements OnInit {
       });
     });
   }
+
+  navigateWithParams(route: string, parameter: any): void {
+    this._routerExtensions.navigate([route, parameter],
+      {
+        animated: true,
+        transition: {
+          name: "slide",
+          duration: 200,
+          curve: "ease"
+        }
+      });
+  }
 }

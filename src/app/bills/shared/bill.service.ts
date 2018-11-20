@@ -45,7 +45,13 @@ export class BillService {
   }
 
   update(opts: any): Promise<any> {
-    return this.billStore.save(opts);
+    return this.billStore.save(opts)
+      .then((entity: {}) => {
+        return entity;
+      })
+      .catch((error: Kinvey.BaseError) => {
+        throw error;
+      });
   }
 
   save(bill: Bill): Promise<Bill> {
@@ -57,7 +63,8 @@ export class BillService {
         deadlineDay: bill.deadlineDay,
         isAvtale: bill.isAvtale,
         hasReminder: bill.hasReminder,
-        reminderId: bill.reminderId
+        reminderId: bill.reminderId,
+        categoryId: bill.categoryId
       }).then(() => {
         return bill;
       }).catch((error: Kinvey.BaseError) => {

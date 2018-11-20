@@ -7,6 +7,7 @@ export class Bill {
   isAvtale: boolean;
   hasReminder: boolean;
   reminderId: string;
+  categoryId: string;
   colorClass?: string;
 
   constructor(options: any) {
@@ -18,6 +19,7 @@ export class Bill {
     this.isAvtale = options.isAvtale;
     this.hasReminder = options.hasReminder;
     this.reminderId = options.reminderId;
+    this.categoryId = options.categoryId;
     this.colorClass = options.colorClass;
   }
 }

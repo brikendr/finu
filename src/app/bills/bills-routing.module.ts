@@ -6,6 +6,7 @@ import { BillDetailEditComponent } from "./edit-bills/edit-bill.component";
 
 const routes: Routes = [
   { path: "", component: BillListComponent },
+  { path: "list/:state", component: BillListComponent },
   { path: "bills-edit/:id", component: BillDetailEditComponent },
   { path: "new-bill", component: BillDetailEditComponent }
 ];

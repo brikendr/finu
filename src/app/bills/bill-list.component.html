@@ -1,18 +1,31 @@
 <ActionBar class="action-bar">
   <Label class="action-bar-title" text="Bills" horizontalAlignment="center"></Label>
-  <ActionItem (tap)="newBillScreen()" text="Add" ios.systemIcon="4" ios.position="right" android.position="popup"></ActionItem>
+  <ActionItem *ngIf="!pendingBillsView" (tap)="newBillScreen()" text="Add" ios.systemIcon="4" ios.position="right" android.position="popup"></ActionItem>
 </ActionBar>
 
 <GridLayout>
-  <ListView [items]="bills" class="list-group" separatorColor="white">
+  <ListView *ngIf="!pendingBillsView" [items]="bills" class="list-group" separatorColor="white">
     <ng-template let-bill="item" let-i="index" let-odd="odd" let-even="even">
       <GridLayout [class]="bill.colorClass + ' bill-tile'" columns="2*, *" rows="2*, *" (tap)="editBill(bill.id)">
         <Label [text]="bill.name" col="0" row="0" class="bill-name" ></Label>
         <Label [text]="bill.amount + ' NOK'" col="1" row="0" class="bill-amount" ></Label>
-        <GridLayout class="avtale-row" colspan="2" row="1" col="0" columns="*, *" rows="*" >
-          <Label text="Is Avtale: " col="0" row="0" class="avtale-text" horizontalAlignment="right"></Label>
-          <Label [text]="bill.isAvtale ? '&#xf0fe;': '&#xf2d3;'" col="1" row="0" class="avtale-icon" horizontalAlignment="left"></Label>
-        </GridLayout>
+        <WrapLayout orientation="horizontal" class="avtale-row" colspan="2" row="1" col="0">
+          <Label [text]="bill.isAvtale ? '&#xf05d;': '&#xf05c;'" class="avtale-icon"></Label>
+          <Label text="Avtale" class="avtale-text"></Label>
+          <Label *ngIf="!bill.isAvtale" [text]="' (' + bill.deadlineDay + ' day of the month)'" class="avtale-text"></Label>
+        </WrapLayout>
+      </GridLayout>
+    </ng-template>
+  </ListView>
+
+  <!-- Pending Bill List -->
+  <ListView *ngIf="pendingBillsView" [items]="bills" class="list-group" separatorColor="white">
+    <ng-template let-bill="item" let-i="index" let-odd="odd" let-even="even">
+      <GridLayout [class]="bill.colorClass + ' bill-tile'" columns="2*, *" rows="*, 2*, *">
+        <Label [text]="getBillDeadlineText(bill)" col="0" row="0" colSpan="2" class="bill-duedate"></Label>
+        <Label [text]="bill.name" col="0" row="1" class="bill-name"></Label>
+        <Label [text]="bill.amount + ' NOK'" col="1" row="1" class="bill-amount"></Label>
+        <Button [text]="'Pay ' + bill.name" (tap)="payBill(bill)" col="0" row="2" colSpan="2" class="btn paybtn"></Button>
       </GridLayout>
     </ng-template>
   </ListView>

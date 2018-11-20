@@ -107,13 +107,5 @@ export class ExpenseComponent implements OnInit {
         curve: "ease"
       }
     });
-    // this._routerExtensions.navigate(["expense-overview"], {
-    //   animated: true,
-    //   transition: {
-    //     name: "slideLeft",
-    //     duration: 200,
-    //     curve: "ease"
-    //   }
-    // });
   }
 }
