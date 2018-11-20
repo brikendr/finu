@@ -1,11 +1,11 @@
-@import '../../_app-variables.scss';
+@import "../../app-variables";
 
 .bill-tile {
-  height: 20%;
-  margin: 10 10 0 10;
-  padding: 10;
-  color:  white;
   border-radius: 5;
+  color: $whitecolor;
+  height: 20%;
+  margin: 10 10 0;
+  padding: 10;
 }
 
 .category-tile-icon {
@@ -13,7 +13,10 @@
   font-size: 30;
 }
 
-.avtale-text, .bill-name, .bill-amount, .bill-duedate {
+.avtale-text,
+.bill-name,
+.bill-amount,
+.bill-duedate {
   font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
   font-weight: bold;
 }
@@ -43,9 +46,9 @@
 }
 
 .bill-duedate {
- font-size: 13;
+  font-size: 13;
 }
 
 .paybtn {
-  color: white;
+  color: $whitecolor;
 }
