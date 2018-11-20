@@ -38,13 +38,13 @@
 
     <!-- Actions component -->
     <GridLayout row="2" columns="*, *" rows="2*, *, *">
-      <StackLayout col="0" row="0" (tap)="navigate('bills')">
+      <StackLayout col="0" row="0" (tap)="navigateWithParams('/bills/list', 'pendingBills')">
         <Label text="&#xf1f0;" width="50%" height="90%" class="fa icon center-text action-icon"></Label>
       </StackLayout>
       <StackLayout col="1" row="0" (tap)="navigate('expense')">
         <Label text="&#xf283;" width="50%" height="90%" class="fa center-text action-icon"></Label>
       </StackLayout>
-      <Label [text]="pendingBills" col="0" row="1" class="center-text progressbar-text" (tap)="navigate('bills')"></Label>
+      <Label [text]="pendingBills" col="0" row="1" class="center-text progressbar-text" (tap)="navigateWithParams('/bills/list', 'pendingBills')"></Label>
       <Label text="New Expense" col="1" row="1" class="center-text progressbar-text" (tap)="navigate('expense')"></Label>
     
       <StackLayout col="0" row="2" colspan="2" class="hr-light hr-top" ></StackLayout>

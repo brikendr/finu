@@ -1,0 +1,49 @@
+<ActionBar [title]="title" class="action-bar">
+</ActionBar>
+
+
+<StackLayout class="form" marginTop="20">
+  <GridLayout rows="auto, auto, auto, auto, auto, auto">
+
+    <StackLayout row="0" class="input-field">
+      <TextField [text]="bill.name" class="input" hint="Bill Name" [isEnabled]="!isProcessing" autocorrect="false" autocapitalizationType="none"
+        [(ngModel)]="bill.name" returnKeyType="next"></TextField>
+      <StackLayout class="hr-light"></StackLayout>
+      <Label text="Bill Description" class="input-description"></Label>
+    </StackLayout>
+
+    <GridLayout row="1" rows="2*, *, *" columns="*, 50" class="input-field">
+      <TextField [(ngModel)]="bill.amount" [text]="bill.amount" row="0" col="0" [isEnabled]="!isProcessing" hint="Enter amount" class="input" keyboardType="number"></TextField>
+      <Label class="currency" row="0" col="1" text="NOK"></Label>
+      <StackLayout col="0" row="1" colspan="2" class="hr-light"></StackLayout>
+      <Label col="0" row="2" colspan="2" text="Bill Expense Amount" class="input-description"></Label>
+    </GridLayout>
+
+    <GridLayout row="2" rows="2*, *" columns="*, 2*" class="input-field">
+      <Label row="0" col="0" text="Avtale" class="booleanLabel"></Label>
+      <Switch row="0" col="1" [checked]="bill.isAvtale" [(ngModel)]="bill.isAvtale" horizontalAlignment="right" class="switch"></Switch>
+      <Label row="1" col="0" colSpan="2" text="Is an automatic transaction?" class="input-description"></Label>
+    </GridLayout>
+
+    <StackLayout row="3" class="input-field">
+      <DropDown #dd
+      [items]="categories"
+      [(ngModel)]="selectedIndex"
+      (selectedIndexChanged)="onchange($event)"
+      (opened)="onopen()"
+      (closed)="onclose()"></DropDown>
+      <StackLayout class="hr-light"></StackLayout>
+      <Label text="Bill Category" class="input-description"></Label>
+    </StackLayout>
+
+    <StackLayout row="4" class="input-field">
+      <TextField [(ngModel)]="bill.deadlineDay" [text]="bill.deadlineDay" [isEnabled]="!isProcessing" class="input" keyboardType="number" hint="Bill deadline"></TextField>
+      <StackLayout class="hr-light"></StackLayout>
+      <Label text="Bill Deadline (Day of Month)" class="input-description"></Label>
+    </StackLayout>
+
+    <ActivityIndicator rowSpan="4" [busy]="isProcessing"></ActivityIndicator>
+  </GridLayout>
+
+  <Button [text]="buttonText" [isEnabled]="!isProcessing" (tap)="submit()" class="btn btn-primary m-t-20"></Button>
+</StackLayout>

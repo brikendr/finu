@@ -76,7 +76,6 @@ export class HomeComponent implements OnInit {
             this._earned = this._income + sumDeposit;
             const d = this._totalExpenses + this._savingsGoal;
             this._maintainedSavings = d > this._income ? this._savingsGoal - (d - this._income) : this._savingsGoal;
-
             this.calculateExpensesOnBalance();
             this.calculateExpensesOnBudget();
             this.calculateDailyBudget();
@@ -208,14 +207,18 @@ export class HomeComponent implements OnInit {
   }
 
   get overbudgetStatus(): object {
-    return this._overBudget > 0 ?
-      {
-        text: `Overbudget! + ${this._overBudget.toFixed(2)} NOK`, color: "#81F499"
-      }
-    :
-      {
-        text: `Underbudget! ${this._overBudget.toFixed(2)} NOK`, color: "#A71D31"
-      };
+    if (this._overBudget) {
+      return this._overBudget > 0 ?
+        {
+          text: `Overbudget! + ${this._overBudget.toFixed(2)} NOK`, color: "#81F499"
+        }
+        :
+        {
+          text: `Underbudget! ${this._overBudget.toFixed(2)} NOK`, color: "#A71D31"
+        };
+    }
+
+    return {text: "", color: ""};
   }
 
   onDrawerButtonTap(): void {
@@ -239,5 +242,17 @@ export class HomeComponent implements OnInit {
         message: `Route [${route}] does not exist`
       });
     });
+  }
+
+  navigateWithParams(route: string, parameter: any): void {
+    this._routerExtensions.navigate([route, parameter],
+      {
+        animated: true,
+        transition: {
+          name: "slide",
+          duration: 200,
+          curve: "ease"
+        }
+      });
   }
 }

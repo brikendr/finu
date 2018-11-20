@@ -1,0 +1,15 @@
+@import "../../../app-variables";
+@import "../../login/login.component";
+
+.currency {
+  color: $finu-primary-dark;
+  font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+}
+
+.input-description {
+  color: $foreground1;
+  font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+  font-size: 12;
+  margin-top: 5;
+  text-align: center;
+}

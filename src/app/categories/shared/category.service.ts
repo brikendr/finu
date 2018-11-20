@@ -19,7 +19,7 @@ export class CategoryService {
     })[0];
   }
 
-  load(): Promise<any> {
+  load(): Promise<Array<Category>> {
     return UtilService.isUserLoggedIn()
     .then(() => {
       const sortByDescription = new Kinvey.Query();
