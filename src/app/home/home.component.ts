@@ -7,6 +7,11 @@ import { RouterExtensions } from "nativescript-angular/router";
 import { BudgetPlan } from "../budgetplan/shared/budgetplan.model";
 import { BudgetPlanService } from "../budgetplan/shared/budgetplan.service";
 
+import { Bill } from "../bills/shared/bill.model";
+import { BillService } from "../bills/shared/bill.service";
+import { BillRecord } from "../bills/shared/billrecord.model";
+import { BillRecordService } from "../bills/shared/billrecord.service";
+
 import { Kinvey } from "kinvey-nativescript-sdk";
 import { ExpenseService } from "../expense/shared/expense.service";
 import { UtilService } from "../shared/utils.service";
@@ -31,7 +36,7 @@ export class HomeComponent implements OnInit {
   _totalExpenses: number;
   _income: number;
   _earned: number;
-  _pendingBills: number;
+  _pendingBillsLabelTxt: string = "Loading...";
   _savingsGoal: number;
   _dailyBudget: number;
   _maintainedSavings: number;
@@ -46,7 +51,9 @@ export class HomeComponent implements OnInit {
   constructor(
     private _routerExtensions: RouterExtensions,
     private _budgetPlanService: BudgetPlanService,
-    private _expenseService: ExpenseService
+    private _expenseService: ExpenseService,
+    private _billService: BillService,
+    private _billRecordSerivce: BillRecordService
   ) {
   }
 
@@ -61,7 +68,6 @@ export class HomeComponent implements OnInit {
       .then((plan: BudgetPlan) => {
         this._income = plan.netIncome;
         this._savingsGoal = plan.savingsGoal;
-        this._pendingBills = 3; // combo of bills and billrecord
 
         this._expenseService.getUserTransactions(userId)
           .then((transactions: any) => {
@@ -80,6 +86,7 @@ export class HomeComponent implements OnInit {
             this.calculateExpensesOnBudget();
             this.calculateDailyBudget();
             this.calculatePlannedExpenses();
+            this.calculateRemainingBills();
           });
       })
       .catch((error) => {
@@ -89,47 +96,18 @@ export class HomeComponent implements OnInit {
   }
 
   calculateExpensesOnBalance() {
-    let percent = 0;
     let progress = (this._totalExpenses / this._income) * 100;
     progress = progress > 100 ? 100 : progress;
-    let incExpense = 0;
-    const intervalId = setInterval(() => {
-      this.animateExpenseProgressBar(percent);
-      percent++;
-      incExpense += progress > 0 ? (this._totalExpenses / progress) : 0;
-      this.expensesOnBalance = `${Math.round(incExpense)} NOK`;
-      if (percent > progress) {
-        this.expensesOnBalance = `${Math.round(this._totalExpenses)} NOK`;
-        clearInterval(intervalId);
-      }
-    }, 50);
-  }
-
-  animateExpenseProgressBar(percent) {
-    this.expenseProgressBar = percent + "*," + (100 - percent) + "*";
+    this.expenseProgressBar = progress + "*," + (100 - progress) + "*";
+    this.expensesOnBalance = `${Math.round(this._totalExpenses)} NOK`;
   }
 
   calculateExpensesOnBudget() {
-    let percent = 0;
     const budget = this._income - this._savingsGoal;
     let progress = (this._totalExpenses / budget) * 100;
     progress = progress > 100 ? 100 : progress;
-    let incExpense = 0;
-    const intervalId = setInterval(() => {
-      this.animateBudgetProgressBar(percent);
-      percent++;
-      incExpense += (this._totalExpenses / progress);
-      this.expensesOnBudget = `${Math.round(incExpense)} NOK`;
-
-      if (percent > progress) {
-        this.expensesOnBudget = `${Math.round(this._totalExpenses)} NOK`;
-        clearInterval(intervalId);
-      }
-    }, 30);
-  }
-
-  animateBudgetProgressBar(percent) {
-    this.budgetProgressBar = percent + "*," + (100 - percent) + "*";
+    this.budgetProgressBar = progress + "*," + (100 - progress) + "*";
+    this.expensesOnBudget = `${Math.round(this._totalExpenses)} NOK`;
   }
 
   calculateDailyBudget() {
@@ -166,6 +144,33 @@ export class HomeComponent implements OnInit {
     }, 30);
   }
 
+  calculateRemainingBills() {
+    let unpaidBills = 0;
+    this._billService.loadUserBills(Kinvey.User.getActiveUser()._id)
+      .then((bills: Array<Bill>) => {
+        this._billRecordSerivce.getUserMonthlyBillRecords(Kinvey.User.getActiveUser()._id)
+          .then((billRecords: Array<BillRecord>) => {
+            bills.forEach((bill) => {
+              const paidBill = billRecords.find((record) => record.billId === bill.id);
+              if (!paidBill && !bill.isAvtale) {
+                // Unpaid bill that is not an avtale!
+                unpaidBills += 1;
+              }
+            });
+            if (unpaidBills > 0) {
+              this._pendingBillsLabelTxt = unpaidBills === 1 ?
+              `${unpaidBills} Pending Bill` : `${unpaidBills} Pending Bills`;
+            } else {
+              this._pendingBillsLabelTxt = "All Paid";
+            }
+          }).catch(() => {
+            this._pendingBillsLabelTxt = "Error!";
+          });
+      }).catch(() => {
+        this._pendingBillsLabelTxt = "Error!";
+      });
+  }
+
   animatePlannedExpeseArrow(percent) {
     this.plannedExpenseArrow = percent + "*," + (100 - percent) + "*";
   }
@@ -185,7 +190,7 @@ export class HomeComponent implements OnInit {
   }
 
   get pendingBills(): string {
-    return `${this._pendingBills} Pending Bills`;
+    return this._pendingBillsLabelTxt;
   }
 
   get maintainedSavings(): string {
