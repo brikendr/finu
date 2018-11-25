@@ -16,6 +16,9 @@ import { Kinvey } from "kinvey-nativescript-sdk";
 import { ExpenseService } from "../expense/shared/expense.service";
 import { UtilService } from "../shared/utils.service";
 
+import { registerElement } from "nativescript-angular/element-registry";
+registerElement("PullToRefresh", () => require("nativescript-pulltorefresh").PullToRefresh);
+
 @Component({
   selector: "Home",
   moduleId: module.id,
@@ -61,38 +64,46 @@ export class HomeComponent implements OnInit {
     if (Kinvey.User.getActiveUser() === null) {
       this.navigate("login", true);
     }
+    this.fetchDataAndPopulateView();
+  }
 
+  fetchDataAndPopulateView(): Promise<any> {
     this._isProcessing = true;
     const userId = Kinvey.User.getActiveUser()._id;
-    this._budgetPlanService.getUserBudgetPlan(userId)
-      .then((plan: BudgetPlan) => {
-        this._income = plan.netIncome;
-        this._savingsGoal = plan.savingsGoal;
 
-        this._expenseService.getUserTransactions(userId)
-          .then((transactions: any) => {
-            this._isProcessing = false;
-            const sumExpenses = transactions.expenses.reduce((expenseSum, expense) => {
-              return expenseSum + expense.amount;
-            }, 0);
-            const sumDeposit = transactions.deposits.reduce((depositSum, expense) => {
-              return depositSum + expense.amount;
-            }, 0);
-            this._totalExpenses = sumExpenses;
-            this._earned = this._income + sumDeposit;
-            const d = this._totalExpenses + this._savingsGoal;
-            this._maintainedSavings = d > this._income ? this._savingsGoal - (d - this._income) : this._savingsGoal;
-            this.calculateExpensesOnBalance();
-            this.calculateExpensesOnBudget();
-            this.calculateDailyBudget();
-            this.calculatePlannedExpenses();
-            this.calculateRemainingBills();
-          });
-      })
-      .catch((error) => {
-        console.log("Error initializing home components!", error);
-        this._isProcessing = false;
-      });
+    return new Promise((resolve, reject) => {
+      this._budgetPlanService.getUserBudgetPlan(userId)
+        .then((plan: BudgetPlan) => {
+          this._income = plan.netIncome;
+          this._savingsGoal = plan.savingsGoal;
+
+          this._expenseService.getUserTransactions(userId)
+            .then((transactions: any) => {
+              this._isProcessing = false;
+              const sumExpenses = transactions.expenses.reduce((expenseSum, expense) => {
+                return expenseSum + expense.amount;
+              }, 0);
+              const sumDeposit = transactions.deposits.reduce((depositSum, expense) => {
+                return depositSum + expense.amount;
+              }, 0);
+              this._totalExpenses = sumExpenses;
+              this._earned = this._income + sumDeposit;
+              const d = this._totalExpenses + this._savingsGoal;
+              this._maintainedSavings = d > this._income ? this._savingsGoal - (d - this._income) : this._savingsGoal;
+              this.calculateExpensesOnBalance();
+              this.calculateExpensesOnBudget();
+              this.calculateDailyBudget();
+              this.calculatePlannedExpenses();
+              this.calculateRemainingBills();
+              resolve();
+            });
+        })
+        .catch((error) => {
+          console.log("Error initializing home components!", error);
+          reject();
+          this._isProcessing = false;
+        });
+    });
   }
 
   calculateExpensesOnBalance() {
@@ -259,5 +270,14 @@ export class HomeComponent implements OnInit {
           curve: "ease"
         }
       });
+  }
+
+  refreshList(args) {
+    const pullRefresh = args.object;
+    this.fetchDataAndPopulateView().then(() => {
+      pullRefresh.refreshing = false;
+    }).catch((e) => {
+      pullRefresh.refreshing = false;
+    });
   }
 }
