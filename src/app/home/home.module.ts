@@ -6,6 +6,9 @@ import { ExpenseService } from "../expense/shared/expense.service";
 import { HomeRoutingModule } from "./home-routing.module";
 import { HomeComponent } from "./home.component";
 
+import { BillService } from "../bills/shared/bill.service";
+import { BillRecordService } from "../bills/shared/billrecord.service";
+
 @NgModule({
   imports: [
     HomeRoutingModule,
@@ -16,7 +19,9 @@ import { HomeComponent } from "./home.component";
   ],
   providers: [
     BudgetPlanService,
-    ExpenseService
+    ExpenseService,
+    BillService,
+    BillRecordService
   ],
   schemas: [
     NO_ERRORS_SCHEMA
