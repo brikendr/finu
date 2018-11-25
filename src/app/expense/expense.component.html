@@ -15,7 +15,7 @@
       </GridLayout>
   
       <GridLayout row="1" rows="2*, *" columns="*, 50" class="input-field">
-        <TextField [(ngModel)]="expenseAmount" row="0" col="0" hint="Enter amount" class="input" keyboardType="number"></TextField>
+        <TextField id="expenseInput" [(ngModel)]="expenseAmount" row="0" col="0" hint="Enter amount" class="input" keyboardType="number"></TextField>
         <Label class="currency" row="0" col="1" text="NOK"></Label>
         <StackLayout col="0" row="1" colspan="2" class="hr-light"></StackLayout>
       </GridLayout>

@@ -10,6 +10,10 @@ import { AppComponent } from "./app.component";
 import { LoginComponent } from "~/app/login/login.component";
 import { UserService } from "~/app/shared/user.service";
 
+import { registerElement } from "nativescript-angular";
+registerElement("NumericKeyboard", () => require("nativescript-numeric-keyboard").NumericKeyboardView);
+registerElement("PullToRefresh", () => require("nativescript-pulltorefresh").PullToRefresh);
+
 @NgModule({
     bootstrap: [
       AppComponent

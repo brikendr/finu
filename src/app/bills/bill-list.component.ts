@@ -12,6 +12,8 @@ import { PageRoute, RouterExtensions } from "nativescript-angular/router";
 import { switchMap } from "rxjs/operators";
 import { UtilService } from "../shared/utils.service";
 
+import { Feedback } from "nativescript-feedback";
+
 @Component({
   selector: "BillList",
   moduleId: module.id,
@@ -22,6 +24,7 @@ export class BillListComponent implements OnInit {
   _pendingBillsView: boolean = false;
   private _isLoading: boolean = false;
   private _bills: Array<Bill> = [];
+  private feedback: Feedback;
 
   constructor(
     private _billService: BillService,
@@ -29,7 +32,9 @@ export class BillListComponent implements OnInit {
     private _expenseService: ExpenseService,
     private _pageRoute: PageRoute,
     private _routerExtensions: RouterExtensions
-  ) { }
+  ) {
+    this.feedback = new Feedback();
+  }
 
   ngOnInit(): void {
     this._isLoading = true;
@@ -148,12 +153,24 @@ export class BillListComponent implements OnInit {
         dateTime: dateTime.toString()
       });
       this._billRecordSerivce.save(billRecord).then((record) => {
+        this.feedback.success({
+          title: "Paid!",
+          message: `Your bill for ${bill.name} has been added to the expense list!`
+        });
         this._bills = this._bills.filter((billItem) => billItem.id !== billRecord.billId);
         this._isLoading = false;
       }).catch((error) => {
+        this.feedback.error({
+          title: "Uh-oh!",
+          message: `Unable to create a bill record for the ${bill.name} bill!`
+        });
         this._isLoading = false;
       });
     }).catch((error) => {
+      this.feedback.error({
+        title: "Uh-oh!",
+        message: `Unable to add expense for the ${bill.name} bill!`
+      });
       this._isLoading = false;
     });
   }
