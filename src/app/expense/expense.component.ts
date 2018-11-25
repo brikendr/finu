@@ -1,5 +1,6 @@
 import { Component, OnInit } from "@angular/core";
 import { SelectedIndexChangedEventData, ValueList } from "nativescript-drop-down";
+import { Page } from "tns-core-modules/ui/page";
 
 import { alert } from "ui/dialogs";
 import { CategoryService } from "../categories/shared/category.service";
@@ -9,6 +10,11 @@ import { ExpenseService } from "./shared/expense.service";
 
 import { Kinvey } from "kinvey-nativescript-sdk";
 import { RouterExtensions } from "nativescript-angular/router";
+
+import { NumericKeyboard } from "nativescript-numeric-keyboard";
+import { TextField } from "tns-core-modules/ui/text-field/text-field";
+
+import { Feedback } from "nativescript-feedback";
 
 @Component({
   selector: "Expense",
@@ -24,12 +30,16 @@ export class ExpenseComponent implements OnInit {
   expenseComment: string = "";
   isWithdraw: boolean = true;
   private _categories: ValueList<string> = new ValueList<string>();
+  private feedback: Feedback;
 
   constructor(
     private _categoryService: CategoryService,
     private _expenseService: ExpenseService,
-    private _routerExtensions: RouterExtensions
-  ) {}
+    private _routerExtensions: RouterExtensions,
+    private page: Page
+  ) {
+    this.feedback = new Feedback();
+  }
 
   ngOnInit(): void {
     this.processing = true;
@@ -41,6 +51,15 @@ export class ExpenseComponent implements OnInit {
             value: category.id,
             display: category.name
           });
+        });
+        const textField = <TextField>this.page.getViewById("expenseInput");
+        new NumericKeyboard().decorate({
+          textField,
+          returnKeyTitle: "OK",
+          locale: "en_US", // or "nl_NL", or any valid locale really (to define the decimal char)
+          // noReturnKey: false,
+          noDecimals: true,
+          noIpadInputBar: true // suppress the bar with buttons iOS renders on iPad since iOS 9
         });
         this.processing = false;
       })
@@ -80,16 +99,21 @@ export class ExpenseComponent implements OnInit {
       const newExpense = new Expense(expenseOpts);
       this.processing = true;
       this._expenseService.save(newExpense).then((expenseEntry) => {
+        this.feedback.success({
+          title: "Success!",
+          message: "Transaction has been completed!"
+        });
         setTimeout(() => {
-          this.title = "New Transaction";
           this.expenseAmount = "";
           this.expenseComment = "";
           this.processing = false;
         }, 2000);
-        this.title = "Transaction Completed";
       }).catch((error) => {
+        this.feedback.error({
+          title: "Uh-oh!",
+          message: "Something went wrong while adding a new expense!"
+        });
         this.processing = false;
-        alert("Something went wrong while adding a new expense!");
       });
     }
   }

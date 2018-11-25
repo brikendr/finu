@@ -16,9 +16,6 @@ import { Kinvey } from "kinvey-nativescript-sdk";
 import { ExpenseService } from "../expense/shared/expense.service";
 import { UtilService } from "../shared/utils.service";
 
-import { registerElement } from "nativescript-angular/element-registry";
-registerElement("PullToRefresh", () => require("nativescript-pulltorefresh").PullToRefresh);
-
 @Component({
   selector: "Home",
   moduleId: module.id,

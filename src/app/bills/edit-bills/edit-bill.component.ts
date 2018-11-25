@@ -12,6 +12,7 @@ import { PageRoute, RouterExtensions } from "nativescript-angular/router";
 import { switchMap } from "rxjs/operators";
 
 import { SelectedIndexChangedEventData, ValueList } from "nativescript-drop-down";
+import { Feedback } from "nativescript-feedback";
 
 @Component({
   moduleId: module.id,
@@ -20,7 +21,7 @@ import { SelectedIndexChangedEventData, ValueList } from "nativescript-drop-down
   styleUrls: ["./edit-bill.component.scss"]
 })
 export class BillDetailEditComponent implements OnInit {
-  buttonText: string = "Edit Bill";
+  buttonText: string = "Save";
   title: string = "New Bill";
   selectedIndex = 1;
 
@@ -33,6 +34,7 @@ export class BillDetailEditComponent implements OnInit {
   private _isProcessing: boolean = false;
   private isAdding: boolean = false;
   private _categories: ValueList<string> = new ValueList<string>();
+  private feedback: Feedback;
 
   constructor(
     private _billEditService: BillEditService,
@@ -40,7 +42,9 @@ export class BillDetailEditComponent implements OnInit {
     private _pageRoute: PageRoute,
     private _routerExtensions: RouterExtensions,
     private _categoryService: CategoryService
-  ) {}
+  ) {
+    this.feedback = new Feedback();
+  }
 
   ngOnInit(): void {
     this._isProcessing = true;
@@ -74,7 +78,6 @@ export class BillDetailEditComponent implements OnInit {
             });
             this._isProcessing = false;
           } else {
-            this.buttonText = "New Bill";
             this.title = "Create New Bill";
             this.isAdding = true;
             this._isProcessing = false;
@@ -119,11 +122,20 @@ export class BillDetailEditComponent implements OnInit {
       this._bill.categoryId = this._categories.getValue(this.selectedIndex);
       this._bill.amount = parseInt(String(this._bill.amount), 10);
       this._billSerivce.save(this._bill).then((billEntry) => {
-        this.navigateToBillList();
+        this.feedback.success({
+          title: "Success!",
+          message: `New monthly bill for ${this._bill.name} has been added!`
+        });
+        const t = setTimeout(() => {
+          clearTimeout(t);
+          this.navigateToBillList();
+        }, 2000);
       }).catch((error) => {
-        console.log(error);
+        this.feedback.error({
+          title: "Uh-oh!",
+          message: `Unable to add monthly bill for ${this._bill.name}!`
+        });
         this._isProcessing = false;
-        alert({ title: "Oops!", message: "Something went wrong adding the bill.", okButtonText: "Ok" });
       });
     } else {
       opts._id = this._bill.id;
@@ -134,12 +146,20 @@ export class BillDetailEditComponent implements OnInit {
 
       this._billSerivce.update(opts)
         .then(() => {
-          this.navigateToBillList();
+          this.feedback.success({
+            title: "Update Completed!"
+          });
+          const t = setTimeout(() => {
+            clearTimeout(t);
+            this.navigateToBillList();
+          }, 2000);
         })
         .catch((errorMessage: any) => {
-          console.log(errorMessage);
+          this.feedback.error({
+            title: "Uh-oh!",
+            message: `Unable to edit data for ${opts.name}!`
+          });
           this._isProcessing = false;
-          alert({ title: "Oops!", message: "Something went wrong. Please try again.", okButtonText: "Ok" });
         });
     }
   }
