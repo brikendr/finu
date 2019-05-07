@@ -11,7 +11,8 @@ const routes: Routes = [
   { path: "misc", loadChildren: "~/app/misc/misc.module#MiscModule" },
   { path: "categories", loadChildren: "~/app/categories/category.module#CategoryModule" },
   { path: "expense", loadChildren: "~/app/expense/expense.module#ExpenseModule" },
-  { path: "bills", loadChildren: "~/app/bills/bills.module#BillsModule" }
+  { path: "bills", loadChildren: "~/app/bills/bills.module#BillsModule" },
+  { path: "reports", loadChildren: "~/app/reports/report.module#ReportModule" },
 ];
 
 @NgModule({

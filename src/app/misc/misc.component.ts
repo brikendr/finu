@@ -22,12 +22,12 @@ export class MiscComponent implements OnInit {
       icon: String.fromCharCode(parseInt("f061", 16)),
       className: UtilService.generateRandomTileColor()
     });
-    this.data.push({
-      name: "Reminders",
-      path: "reminderConfig",
-      icon: String.fromCharCode(parseInt("f061", 16)),
-      className: UtilService.generateRandomTileColor()
-    });
+    // this.data.push({
+    //   name: "Reminders",
+    //   path: "reminderConfig",
+    //   icon: String.fromCharCode(parseInt("f061", 16)),
+    //   className: UtilService.generateRandomTileColor()
+    // });
     this.data.push({
       name: "Categories",
       path: "categories",

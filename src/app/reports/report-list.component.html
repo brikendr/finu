@@ -1,0 +1,16 @@
+<ActionBar class="action-bar">
+  <Label class="action-bar-title" text="Report Types" horizontalAlignment="center"></Label>
+</ActionBar>
+
+<GridLayout>
+  <StackLayout orientation="vertical" class="report-wrapper">
+    <GridLayout class="tile-good" columns="*, 2*" rows="*">
+      <Label text="&#xf283;" col="0" row="0" class="fa center-text action-icon"></Label>
+      <Label text="Monthly Report" col="1" row="0" class="center-text progressbar-text" (tap)="navigateToReportPage('/monthly-reports')"></Label>
+    </GridLayout>
+    <GridLayout class="tile-excellent" columns="*, 2*" rows="*">
+      <Label text="&#xf283;" col="0" row="0" class="fa center-text action-icon"></Label>
+      <Label text="General Report" col="1" row="0" class="center-text progressbar-text" (tap)="navigateToReportPage('/monthly-reports')"></Label>
+    </GridLayout>
+  </StackLayout>
+</GridLayout>
