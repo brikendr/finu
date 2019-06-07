@@ -8,11 +8,16 @@ import { HomeComponent } from "./home.component";
 
 import { BillService } from "../bills/shared/bill.service";
 import { BillRecordService } from "../bills/shared/billrecord.service";
+import { SharedModule } from "../shared/shared.module";
 
 @NgModule({
   imports: [
     HomeRoutingModule,
-    NativeScriptCommonModule
+    NativeScriptCommonModule,
+
+
+
+    SharedModule
   ],
   declarations: [
     HomeComponent

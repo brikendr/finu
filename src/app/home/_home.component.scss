@@ -1,4 +1,4 @@
-@import '../../_app-variables.scss';
+@import '../../app-common';
 
 
 .page {
@@ -6,3 +6,185 @@
   background-position: center;
   background-size: cover;
 }
+
+.balance-wrapper {
+  .info-wrapper {
+    width: 100%;
+    .unpaidbill-alert {
+      margin-right: 20;
+
+      .bill-nr {
+        font-size: 20;
+        font-weight: 900;
+        color:  $budget-tracker-primary;
+        margin-top: -10;
+      }
+
+      .animate-wiggle {
+        color: $budget-tracker-primary;
+        font-size: 25;
+        animation-duration: 1.5s;
+        animation-timing-function: ease-in-out;
+        animation-name: heartbeat;
+        animation-delay: 3s;
+      }
+    }
+  }
+
+  .daily-budget-title {
+    font-size: 16;
+    font-weight: 500;
+    color: #c2c2c2;
+    text-align: center;
+  }
+  .bills-icon {
+    margin-right: 25;
+  }
+
+  .balance-elements {
+    text-align: center;
+    .daily-balance {
+      font-size: 30;
+      color: $white;
+      font-weight: 600;
+    }
+    .daily-balance-date {
+      font-size: 12;
+      color: #e9e9e9;
+      font-weight: 500;
+      letter-spacing: 0.08pt;
+    }
+  }
+}
+
+.balance-wrapper.tile-excellent {
+  background: linear-gradient(-180deg, rgb(255, 255, 255), rgb(16, 204, 110));
+}
+.balance-wrapper.tile-verygood {
+  background: linear-gradient(-180deg, rgb(255, 255, 255), rgb(16, 119, 204));
+}
+.balance-wrapper.tile-good {
+  background: linear-gradient(-180deg, rgb(255, 255, 255), rgb(10, 150, 185));
+}
+.balance-wrapper.tile-moderate {
+  background: linear-gradient(-180deg, rgb(255, 255, 255), rgb(111, 123, 126));
+}
+.balance-wrapper.tile-tight {
+  background: linear-gradient(-180deg, rgb(255, 255, 255), rgb(248, 139, 37));
+}
+.balance-wrapper.tile-broke {
+  background: linear-gradient(-180deg, rgb(255, 255, 255), rgb(248, 69, 37));
+}
+
+.BalanceCard {
+  width: 45%;
+  height: 80;
+  background-color: $white;
+  padding: 20;
+  margin-top: -30;
+
+  .Income-Summary-Nr {
+    font-size: 20;
+    color: $zomp;
+    font-weight: 500;
+  }
+  
+  .Expense-Summary-Nr {
+    font-size: 20;
+    color: $desire;
+    font-weight: 500;
+  }
+
+
+  .summary-title {
+    font-size: 12;
+    font-weight: 600;
+    color: $foreground1;
+  }
+}
+
+.ScrollContent {
+  padding-left: 10;
+  padding-right: 10;
+
+  .StatsCard {
+    width: 100%;
+    height: 120;
+    background-color: $white;
+    margin-bottom: 10;
+
+    .Stats-Content {
+      padding: 10;
+
+      .Stats-Card-Title {
+        font-size: 12;
+        color: $foreground1;
+        font-weight: 500;
+      }
+
+      .Stats-Nr-OverBudget {
+        font-size: 20;
+        font-weight: 500;
+        color: $zomp;
+      }
+      .Stats-Nr-UnderBudget {
+        font-size: 20;
+        font-weight: 500;
+        color: $desire;
+      }
+
+      .Stats-Explanation {
+        font-size: 12;
+        color: #dddddd;
+        font-weight: 400;
+      }
+
+      .ProgressBar {
+        background-color: rgba($color: #dddddd, $alpha: 0.3);
+        margin-top: 10;
+      }
+      .ProgressBar.Overbudget {
+        color: $zomp;
+      }
+      .ProgressBar.Underbudget {
+        color: $desire;
+      }
+      .ProgressBar.PreviousMonthProgress {
+        color: $budget-tracker-secondary;
+      }
+
+    }
+  }
+
+  .devider {
+    text-align: center;
+    margin-top: 10;
+    margin-bottom: 10;
+    font-weight: 500;
+  }
+}
+
+@keyframes heartbeat {
+  from {
+    transform: scale(1);
+    transform-origin: center center;
+    animation-timing-function: ease-out;
+  }
+  10% {
+    transform: scale(0.81);
+    animation-timing-function: ease-in;
+  }
+  17% {
+    transform: scale(0.98);
+    animation-timing-function: ease-out;
+  }
+  33% {
+    transform: scale(0.78);
+    animation-timing-function: ease-in;
+  }
+  45% {
+    transform: scale(1);
+    animation-timing-function: ease-out;
+  }
+}
+

@@ -7,6 +7,7 @@ export class Expense {
   isWithdraw: boolean;
   categoryId: string;
   comment: string;
+  kmd: any;
 
   constructor(options: any) {
     this.id = options.id;
@@ -17,5 +18,6 @@ export class Expense {
     this.isWithdraw = options.isWithdraw;
     this.categoryId = options.categoryId;
     this.comment = options.comment;
+    this.kmd = options._kmd;
   }
 }

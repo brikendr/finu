@@ -1,38 +1,52 @@
-<!--
-RadSideDrawer is a UI component part of the Progress NativeScript UI set of components.
-Learn more about the RadSideDrawer UI component and how it can be customized in this documentation article:
-http://docs.telerik.com/devtools/nativescript-ui/Controls/NativeScript/SideDrawer/getting-started
--->
-<RadSideDrawer [drawerTransition]="sideDrawerTransition">
-  <GridLayout tkDrawerContent rows="auto, *" class="sidedrawer sidedrawer-left">
+<!-- The side drawer -->
+<RadSideDrawer [drawerTransition]="sideDrawerTransition" drawerContentSize="280">
+  <GridLayout tkDrawerContent rows="auto, *" class="sidedrawer">
     <StackLayout row="0" class="sidedrawer-header">
-      <Label class="sidedrawer-header-image fa" text="&#xf2bd;"></Label>
-      <Label class="sidedrawer-header-brand" [text]="email"></Label>
-      <!-- <Label class="footnote" text="username@mail.com"></Label> -->
+      <Image class="sidedrawer-header-image" src="~/images/avatar.png"></Image>
+
+      <Label class="sidedrawer-header-name" text="Brikend Rama"></Label>
     </StackLayout>
 
-    <ScrollView row="1">
-      <StackLayout class="sidedrawer-content">
-        <GridLayout columns="auto, *" class="sidedrawer-list-item" (tap)="navigateToScreen('/')">
-          <Label col="1" text="Home" class="p-r-10"></Label>
-        </GridLayout>
+    <GridLayout row="1" rows="*, auto, 80" class="sidedrawer-body">
+      <ScrollView row="0">
+        <StackLayout class="sidedrawer-menu">
+          <GridLayout columns="auto, *" class="sidedrawer-list-item" [class.selected]="isComponentSelected('/home')"
+            (tap)="onNavItemTap('/home')">
+            <Label col="0" text="&#xec5e;" class="icon"></Label>
+            <Label col="1" text="Transactions" class="p-r-10"></Label>
+          </GridLayout>
 
-        <GridLayout columns="auto, *" class="sidedrawer-list-item" (tap)="navigateToScreen('/reports')">
-          <Label col="1" text="Reports" class="p-r-10"></Label>
-        </GridLayout>
+          <GridLayout columns="auto, *" class="sidedrawer-list-item" [class.selected]="isComponentSelected('/reports')"
+            (tap)="onNavItemTap('/reports')">
+            <Label col="0" text="&#xeeaf;" class="icon"></Label>
+            <Label col="1" text="Reports" class="p-r-10"></Label>
+          </GridLayout>
 
-        <GridLayout columns="auto, *" class="sidedrawer-list-item" (tap)="navigateToScreen('/misc')">
-          <Label col="1" text="Misc" class="p-r-10"></Label>
-        </GridLayout>
+          <GridLayout columns="auto, *" class="sidedrawer-list-item" [class.selected]="isComponentSelected('/bills')"
+            (tap)="onNavItemTap('/bills')">
+            <Label col="0" text="&#xecda;" class="icon"></Label>
+            <Label col="1" text="Bills" class="p-r-10"></Label>
+          </GridLayout>
 
-        <StackLayout class="hr-light"></StackLayout>
+          <GridLayout columns="auto, *" class="sidedrawer-list-item" [class.selected]="isComponentSelected('/profile')"
+            (tap)="onNavItemTap('/profile')">
+            <Label col="0" text="&#xef4a;" class="icon"></Label>
+            <Label col="1" text="Profile" class="p-r-10"></Label>
+          </GridLayout>
+        </StackLayout>
+      </ScrollView>
 
-        <GridLayout columns="auto, *" class="sidedrawer-list-item" (tap)="logout()">
-          <Label col="1" text="Logout" class="p-r-10"></Label>
-        </GridLayout>
-      </StackLayout>
-    </ScrollView>
+      <GridLayout row="2" columns="10, 130, 130, 10" class="sidedrawer-language">
+        <Label col="1" text="Logout" class="selected" (tap)="logout()"></Label>
+      </GridLayout>
+    </GridLayout>
   </GridLayout>
 
-  <page-router-outlet tkMainContent class="page page-content"></page-router-outlet>
+  <GridLayout rows="*, auto" class="page" tkMainContent>
+    <StackLayout row="0">
+      <page-router-outlet></page-router-outlet>
+    </StackLayout>
+
+    <app-bottom-navigation *ngIf="isUserLogged" row="1"></app-bottom-navigation>
+  </GridLayout>
 </RadSideDrawer>

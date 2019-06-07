@@ -21,6 +21,7 @@ export class ExpenseService {
           this.monthlyTransactions = {};
           const expenses = [];
           const deposits = [];
+          const all = [];
           data.forEach((expenseData: any) => {
             expenseData.id = expenseData._id;
             const expense = new Expense(expenseData);
@@ -29,10 +30,12 @@ export class ExpenseService {
             } else {
               deposits.push(expense);
             }
+            all.push(expense);
           });
           this.monthlyTransactions = {
             expenses,
-            deposits
+            deposits,
+            all
           };
         }, (error: Kinvey.BaseError) => {
           reject("Unable to fetch expenses!");

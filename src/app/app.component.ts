@@ -3,10 +3,11 @@ import { DrawerTransitionBase, RadSideDrawer, SlideInOnTopTransition } from "nat
 
 import { Kinvey } from "kinvey-nativescript-sdk";
 
-import { Router } from "@angular/router";
+import { Router, NavigationEnd } from "@angular/router";
 import { RouterExtensions } from "nativescript-angular/router";
 
 import * as app from "application";
+import { filter } from "rxjs/operators";
 
 @Component({
     moduleId: module.id,
@@ -14,7 +15,9 @@ import * as app from "application";
     templateUrl: "app.component.html"
 })
 export class AppComponent implements OnInit  {
-  isVisible: boolean = false;
+  isUserLogged: boolean = false;
+  private _activatedUrl: string;
+  private _sideDrawerTransition: DrawerTransitionBase;
 
   constructor(
     private router: Router,
@@ -22,24 +25,32 @@ export class AppComponent implements OnInit  {
   ) { }
 
   ngOnInit(): void {
-    // Called after the constructor, initializing input properties, and the first call to ngOnChanges.
-    // Add 'implements OnInit' to the class.
+    this.isUserLogged = Kinvey.User.getActiveUser() !== null
+    this._activatedUrl = "/home";
+    this._sideDrawerTransition = new SlideInOnTopTransition();
+
+    this.router.events
+      .pipe(filter((event: any) => event instanceof NavigationEnd))
+      .subscribe((event: NavigationEnd) => this._activatedUrl = event.urlAfterRedirects);
   }
 
   get sideDrawerTransition(): DrawerTransitionBase {
-    return null;
+    return this._sideDrawerTransition;
   }
 
-  navigateToScreen(route: string): void {
-    this.hideSideDrawer();
-    this._routerExtensions.navigate([route], {
-      animated: true,
+  isComponentSelected(url: string): boolean {
+    return this._activatedUrl === url;
+  }
+
+  onNavItemTap(navItemRoute: string): void {
+    this._routerExtensions.navigate([navItemRoute], {
       transition: {
-        name: "slideLeft",
-        duration: 200,
-        curve: "ease"
-      }
+        name: "fade"
+      },
+      clearHistory: true
     });
+
+    this.hideSideDrawer();
   }
 
   hideSideDrawer() {
@@ -53,6 +64,7 @@ export class AppComponent implements OnInit  {
 
   logout(): void {
     this.hideSideDrawer();
+    this.isUserLogged = false;
     Kinvey.User.logout()
       .then(() => {
         this._routerExtensions.navigate(["login"],

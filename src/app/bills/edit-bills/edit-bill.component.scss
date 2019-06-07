@@ -1,6 +1,10 @@
 @import "../../../app-variables";
 @import "../../login/login.component.scss";
 
+.action-bar {
+  background-color: $budget-tracker-primary;
+}
+
 .currency {
   color: $finu-primary-dark;
   font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;

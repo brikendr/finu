@@ -12,13 +12,16 @@ import { BillRecordService } from "./shared/billrecord.service";
 
 import { DropDownModule } from "nativescript-drop-down/angular";
 import { ExpenseService } from "../expense/shared/expense.service";
+import { SharedModule } from "../shared/shared.module";
 
 @NgModule({
   imports: [
     BillsRoutingModule,
     NativeScriptCommonModule,
     NativeScriptFormsModule,
-    DropDownModule
+    DropDownModule,
+
+    SharedModule
   ],
   declarations: [
     BillListComponent,

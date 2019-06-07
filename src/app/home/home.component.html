@@ -1,90 +1,74 @@
-<ActionBar class="action-bar">
-	<ActionItem ios.position="left" android.position="popup">
-		<StackLayout>
-			<Button class="fa" [text]="menuIcon" fontSize="18" (tap)="onDrawerButtonTap()"></Button>
-		</StackLayout>
-  </ActionItem>
-  <ActionItem [nsRouterLink]="['/expense/expense-overview']" text="Overview" ios.position="right" android.position="popup"></ActionItem>
-</ActionBar>
-
-<PullToRefresh (refresh)="refreshList($event)">
-  <ScrollView>
-    <GridLayout *ngIf="!_isProcessing" class="m-15" rows="150 auto 130 auto auto">
-      <!-- Status tile -->
-      <GridLayout row="0" [class]="budgetStatus['status'] + ' tile'" columns="*" rows="*, *">
-        <StackLayout col="0" row="0" marginTop="5%">
-          <Label text="&#xf0d6;" col="0" row="0" class="fa center-text hometile-icon"></Label>
-          <Label [text]="currentDayMonth" col="0" row="1" class="center-text size16"></Label>
-        </StackLayout>
-        <Label [text]="budgetStatus['description']" col="0" row="1" class="center-text title"></Label>
-      </GridLayout>
-      <!-- End of status tile -->
-  
-      <!-- Balance ProgressBar Component -->
-      <GridLayout row="1" columns="*" rows="2*, *, *, *, *, *" marginTop="10">
-        <Label text="- Cash Flow -" col="0" row="0" class="progressbar-text center-text"></Label>
-        <Label text="Earned" col="0" row="1" class="progress-footnote number"></Label>
-        <GridLayout col="0" row="2" columns="*" class="progressbar">
-          <StackLayout col="0" class="progressbar-value-earned"></StackLayout>
-          <Label [text]="totalEarned" class="progressbar-inner-text number"></Label>
-        </GridLayout>
-        <Label text="Spent" col="0" row="3" class="progress-footnote number"></Label>
-        <GridLayout col="0" row="4" [columns]="expenseProgressBar" class="progressbar" marginBottom="10">
-          <StackLayout col="0" class="progressbar-value-spent"></StackLayout>
-          <Label [text]="expensesOnBalance" class="progressbar-inner-text number"></Label>
-        </GridLayout>
-        <StackLayout col="0" row="5" class="hr-light hr-top"></StackLayout>
-      </GridLayout>
-      <!-- Balance Component -->
-  
-      <!-- Actions component -->
-      <GridLayout row="2" columns="*, *" rows="2*, *, *">
-        <StackLayout col="0" row="0" (tap)="navigateWithParams('/bills/list', 'pendingBills')">
-          <Label text="&#xf1f0;" width="50%" height="90%" class="fa icon center-text action-icon"></Label>
-        </StackLayout>
-        <StackLayout col="1" row="0" (tap)="navigate('expense')">
-          <Label text="&#xf283;" width="50%" height="90%" class="fa center-text action-icon"></Label>
-        </StackLayout>
-        <Label [text]="pendingBills" col="0" row="1" class="center-text progressbar-text" (tap)="navigateWithParams('/bills/list', 'pendingBills')"></Label>
-        <Label text="New Expense" col="1" row="1" class="center-text progressbar-text" (tap)="navigate('expense')"></Label>
-      
-        <StackLayout col="0" row="2" colspan="2" class="hr-light hr-top" ></StackLayout>
-      </GridLayout>
-      <!-- Actions component -->
-  
-      <!-- Budget ProgressBar Component -->
-      <GridLayout row="3" columns="*" rows="2*, 2*, 4*, *, 2*, *">
-        <Label text="- Budget -" col="0" row="0" class="progressbar-text center-text"></Label>
-        <Label [text]="monthlyBudget" col="0" row="1" class="progress-footnote number"></Label>
-        <GridLayout col="0" row="2" [columns]="budgetProgressBar" class="progressbar">
-          <StackLayout col="0" class="progressbar-value-spent"></StackLayout>
-          <Label [text]="expensesOnBudget" class="progressbar-inner-text number"></Label>
-        </GridLayout>
-        <GridLayout col="0" row="3" [columns]="plannedExpenseArrow">
-          <Label text="&#xf0de;" col="0" horizontalAlignment="right" [color]="overbudgetStatus['color']" class="fa icon-small"></Label>
-        </GridLayout>
-        <Label [text]="overbudgetStatus['text']" col="0" row="4" class="progress-footnote number overbudget-note"></Label>
-        <StackLayout col="0" row="5" class="hr-light hr-top"></StackLayout>
-      </GridLayout>
-      <!-- Budget Component -->
-  
-      <!-- Budget Component -->
-      <GridLayout row="4" columns="3*, 2*" rows="*" >
-          <GridLayout col="0" row="0" rows="auto, auto, auto" columns="2*, *" padding="8" class="tile-oceanblue footer-tile">
-            <Label text="Savings" class="size16" row="0" col="0" colspan="2"></Label>
-            <Label [text]="maintainedSavings" row="1" col="0" class="size16 number"></Label>
-            <Label text="(current)" row="1" col="1" class="size12"></Label>
-            <Label [text]="_savingsGoal + ' NOK'" row="2" col="0" class="size16 number"></Label>
-            <Label text="(goal)" row="2" col="1" class="size12"></Label>
-          </GridLayout>
-          <GridLayout col="1" row="0" rows="auto, auto" columns="auto" padding="8" class="tile-red footer-tile">
-            <Label text="Daily Budget" class="size16" row="0"></Label>
-            <Label [text]="dailyBudget" class="size16 number" row="1"></Label>
-          </GridLayout>
-      </GridLayout>
-      <!-- Budget Component -->
+<GridLayout class="page page-content home-page-content" [rows]="_isProcessing ? '*' : '160 80 *'">
+  <GridLayout row="0" rows="50 *" [class]="'balance-wrapper ' + budgetStatus['status']" *ngIf="!_isProcessing">
+    <GridLayout row="0" columns="* * *" class="info-wrapper">
+      <Label col="1" text="Daily Budget" class="daily-budget-title"></Label>
+      <StackLayout col="2" class="unpaidbill-alert" orientation="horizontal" horizontalAlignment="right"
+        *ngIf="unpaidBills > 0" (tap)="navigateWithParams('/bills/list', 'pendingBills')">
+        <Label text="&#xeacf;" class="icon animate-wiggle"></Label>
+        <Label [text]="unpaidBills" class="icon bill-nr"></Label>
+      </StackLayout>
     </GridLayout>
+    <StackLayout row="1" horizontalAlignment="center" class="balance-elements">
+      <Label class="daily-balance-date" [text]="currentDayMonth"></Label>
+      <Label class="daily-balance" [text]="dailyBudget"></Label>
+    </StackLayout>
+  </GridLayout>
+
+  <FlexboxLayout  row="1" class="balance-summary" flexDirection="row" alignItems="center" justifyContent="space-around" *ngIf="!_isProcessing">
+    <CardView class="BalanceCard" shadowColor="#43AA8B" shadowRadius="1" shadowOpacity="0.5" elevation="5" radius="5">
+      <FlexboxLayout flexDirection="column" alignItems="center" justifyContent="center">
+        <Label class="Income-Summary-Nr" [text]="totalEarned"></Label>
+        <Label class="summary-title" text="Gross Income"></Label>
+      </FlexboxLayout>
+    </CardView>
+    <CardView class="BalanceCard" shadowColor="#EF3054" shadowRadius="1" shadowOpacity="0.5" elevation="5" radius="5"
+      (tap)="navigate('/expense/details')">
+      <FlexboxLayout flexDirection="column" alignItems="center" justifyContent="center">
+        <Label class="Expense-Summary-Nr" [text]="'- '+ expensesOnBalance"></Label>
+        <Label class="summary-title" text="Expenses"></Label>
+      </FlexboxLayout>
+    </CardView>
+  </FlexboxLayout>
   
-    <ActivityIndicator [busy]="_isProcessing"></ActivityIndicator>
-  </ScrollView>
-</PullToRefresh>
+  <PullToRefresh row="2" (refresh)="refreshList($event)" *ngIf="!_isProcessing">
+    <ScrollView>
+      <StackLayout class="ScrollContent">
+        <CardView class="StatsCard" shadowColor="#f1f5f8" shadowRadius="1" shadowOpacity="1" elevation="5" radius="5">
+          <FlexboxLayout class="Stats-Content" flexDirection="column" alignItems="flex-start" justifyContent="space-around">
+            <Label class="Stats-Card-Title" text="Previous Month Stats"></Label>
+            <StackLayout>
+              <Label class="Stats-Nr-OverBudget" text="305 NOK"></Label>
+              <Label class="Stats-Explanation" text="more than last month"></Label>
+            </StackLayout>
+            <StackLayout class="Goal--Progress">
+              <Progress (loaded)="onExpensesLoaded($event)" class="ProgressBar PreviousMonthProgress">
+              </Progress>
+              <Progress (loaded)="onLastMonthExpensesLoaded($event)" class="ProgressBar Underbudget">
+              </Progress>
+            </StackLayout>
+          </FlexboxLayout>
+        </CardView>
+
+        <CardView class="StatsCard" shadowColor="#f1f5f8" shadowRadius="1" shadowOpacity="1" elevation="5" radius="5" height="80">
+          <GridLayout rows="* *" class="Stats-Content">
+            <FlexboxLayout row="0" flexDirection="row" alignItems="center" justifyContent="space-between">
+              <Label class="Stats-Card-Title" text="Savings Goal"></Label>
+              <Label class="Stats-Nr-OverBudget" [text]="maintainedSavings"></Label>
+            </FlexboxLayout>
+            <StackLayout row="1" class="Goal--Progress">
+              <Progress (loaded)="onSavingsLoaded($event)" class="ProgressBar Overbudget">
+              </Progress>
+            </StackLayout>
+          </GridLayout>
+        </CardView>
+
+        <Label class="devider" text="Recent Transactions"></Label>
+        <StackLayout>
+          <app-transactions-list [transactions]="transactions"></app-transactions-list>
+        </StackLayout>
+      </StackLayout>
+    </ScrollView>
+  </PullToRefresh>
+
+  <Loading *ngIf="_isProcessing"></Loading>
+</GridLayout>

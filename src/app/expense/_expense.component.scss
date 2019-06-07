@@ -1,0 +1,138 @@
+@import './../../app-variables';
+@import './../../transaction-list.scss';
+
+.page {
+  background-color: #FCFCFC;
+}
+.Title-Wrapper {
+  background-color: $white;
+  padding: 10;
+
+  .page-title {
+    font-size: 20;
+    font-weight: 600;
+    margin-left: 15;
+    margin-top: 10;
+  }
+
+  .icon {
+    font-size: 25;
+    margin-top: 10;
+  }
+
+  .Expense-Progress {
+    margin-top: 20;
+    margin-left: 5;
+    transition: all;
+    height: 5;
+    width: 90%;
+    border-radius: 10;
+    background-color: #F8F8F8;
+    .progressbar-value {
+      background: $budget-tracker-primary;
+    }
+  }
+}
+
+.Tab-Content {
+  padding: 10;
+
+  .Big-Text {
+    font-size: 25;
+    font-weight: 600;
+    color: $black;
+    text-align: center;
+  }
+
+  .FancyCard {
+    background-color: $white;
+
+    .FancyCard-Wrapper {
+      padding-left: 10;
+      padding-top: 20;
+      padding-bottom: 20;
+
+      .fancy-card-desc {
+        font-size: 18;
+        font-weight: 500;
+        color: $black;
+      }
+    }
+  }
+
+  .transaction-type-icon {
+    font-size: 30;
+    padding: 5;
+    border-radius: 25;
+  }
+
+  .red {
+    color: $white;
+    background-color: $budget-tracker-primary;
+  }
+  .blue {
+    color: $white;
+    background-color: $budget-tracker-secondary;
+  }
+  .grey {
+    color: $white;
+    background-color:#B0B2B6;
+  }
+
+
+  .Summary-Wrapper {
+    margin-left: 5;
+    margin-top: 10;
+  }
+  .Summary-Description {
+    font-size: 12;
+    color: #B0B2B6;
+    font-weight: 500;
+  }
+
+  .Summary-Value {
+    font-size: 20;
+    font-weight: 700;
+    color: $black;
+  }
+
+
+  .Expense-Amount-Wrapper {
+    height: 180;
+    border-bottom-width: 1;
+    border-bottom-color: #CFD4E6;
+  }
+
+  .input {
+    font-size: 22;
+    font-weight: 600;
+    margin-top: 15;
+  }
+
+  .comment {
+    font-size: 18;
+    font-weight: 400;
+    margin-top: 15;
+  }
+
+  .Next-Tab-Btn {
+    border-radius: 25;
+    height: 80;
+
+    .icon {
+      font-size: 30;
+      color: $white;
+    }
+  }
+
+  .Next-Tab-Btn.active {
+    background-color: $budget-tracker-secondary;
+  }
+  .Next-Tab-Btn.inactive {
+    background-color: #CFD4E6;
+  }
+}
+
+.hidden {
+  visibility: collapse;
+}

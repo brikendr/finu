@@ -1,115 +1,27 @@
-// Place any CSS rules you want to apply on both iOS and Android here.
-// This is where the vast majority of your CSS code goes.
+@import './app-variables';
+@import './bottom-navigation.scss';
+@import './side-drawer.scss';
+@import './transaction-list.scss';
 
-/*** SIDE DRAWER */
-.sidedrawer {
-  margin-bottom: -100;
-}
-.sidedrawer-list-item-icon,.sidedrawer-list-item{
-  color: $foreground2;
-}
-.sidedrawer.sidedrawer-left {
-  background-color: $foreground2;
-}
-.sidedrawer.sidedrawer-left .sidedrawer-header-image {
-  color: $foreground2;
-  height: 60;
-  width: 60;
-  font-size: 60;
-  padding: 0;
-  margin-bottom: 5;
-  margin-top: 20;
-}
-.sidedrawer.sidedrawer-left .footnote {
-  color: $background1;
-}
-.sidedrawer .sidedrawer-header {
-  background-color: $foreground2;
-}
-.sidedrawer .sidedrawer-header .sidedrawer-header-brand {
-  color: $background1;
-}
-.sidedrawer .sidedrawer-content{ 
-  background-color: $background1;
-}
-.sidedrawer .sidedrawer-content .sidedrawer-list-item{
-  padding-left: 15;
+.page {
+  background-color: #f1f5f8;
 }
 
-.sidedrawer .sidedrawer-content .sidedrawer-list-item Label {
-  vertical-align: center;
-  color: $foreground2;
-}
-.sidedrawer .sidedrawer-content .sidedrawer-list-item .fa {
-  width: 20;
-  margin-right: 10;
+.action-bar {
+  background-color: #f1f5f8;
+  border-width: 1;
+  border-color: transparent;
 }
 
-
-
-/** Gardient Tiles */
-.tile-red {
-  background: linear-gradient(-30deg, #EF233C, #F47382,);
+.action-bar .action-item {
+  color: black;
 }
 
-.tile-purple {
-  background: linear-gradient(-30deg, #9501EC, #C574F4,);
+.action-bar .action-bar-title {
+  color: #3d4852;
+  font-size: 20;
 }
 
-.tile-yellow {
-  background: linear-gradient(-30deg, #E6D001, #FDEB46,);
-}
-
-.tile-oceanblue {
-  background: linear-gradient(-30deg, #3E78B2, #84A9CE,);
-}
-
-.tile-darkblue {
-  background: linear-gradient(-30deg, #005FA3, #8BB6D5,);
-}
-
-.tile-lightgreen {
-  background: linear-gradient(-30deg, #80CE37, #AEDF7F,);
-}
-
-.tile-orange {
-  background: linear-gradient(-30deg, #FD7014, #FDA469,);
-}
-
-.tile-silver {
-  background: linear-gradient(-30deg, #7F7B82, #ADABAF,);
-}
-
-.tile-deeppurple {
-  background: linear-gradient(-30deg, #412953, #978AA1,);
-}
-
-.tile-limegreen {
-  background: linear-gradient(-30deg, #2D936C, #79BAA1,);
-}
-
-.tile-excellent {
-  background: linear-gradient(-30deg, #2D936C, #79BAA1,);
-  color: white;
-}
-
-.tile-verygood {
-  background: linear-gradient(-30deg, #067BC2, #60ABD8);
-  color: white;
-}
-.tile-good {
-  background: linear-gradient(-30deg, #006E90, #73AFC2);
-  color: white;
-}
-.tile-moderate {
-  background: linear-gradient(-30deg, #686F77, #BBC4CD);
-  color: white;
-}
-.tile-tight {
-  background: linear-gradient(-30deg, #F77F00, #FAB973);
-  color: white;
-}
-.tile-broke {
-  background: linear-gradient(-30deg, #FF3E41, #FF8486);
-  color: white;
+.icon {
+  font-family: "IcoFont";
 }

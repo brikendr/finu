@@ -10,13 +10,15 @@ import { ExpenseService } from "./shared/expense.service";
 import { NativeScriptFormsModule } from "nativescript-angular/forms";
 import { ExpenseDetailsComponent } from "./details/expense-details.component";
 import { ExpenseOverviewComponent } from "./overview/expense-overview.component";
+import { SharedModule } from "../shared/shared.module";
 
 @NgModule({
   imports: [
     ExpenseRoutingModule,
     NativeScriptCommonModule,
     DropDownModule,
-    NativeScriptFormsModule
+    NativeScriptFormsModule,
+    SharedModule
   ],
   declarations: [
     ExpenseComponent,

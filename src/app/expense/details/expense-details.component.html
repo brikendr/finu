@@ -1,21 +1,12 @@
-<ActionBar class="action-bar">
-  <Label class="action-bar-title" [text]="title" horizontalAlignment="center"></Label>
-</ActionBar>
-
-<GridLayout>
-  <ListView [items]="monthlyTransactions" class="list-group">
-    <ng-template let-transaction="item" let-i="index" let-odd="odd" let-even="even">
-      <GridLayout [class]="transaction.transactionColor + ' details-tile'" columns="3*, *" rows="*, 2*, *">
-        <Label [text]="transaction.dateTime" col="0" row="0" class="transaction-datetime"></Label>
-        <Label [text]="transaction.amount" col="0" row="1" class="transaction-number"></Label>
-        <Label *ngIf="transaction.comment" [text]="transaction.comment" col="0" row="2" class="transaction-comment"></Label>
-        
-        <StackLayout col="1" row="0" rowSpan="3">
-          <Label [text]="transaction.categoryIcon" class="transaction-category-icon"></Label>
-          <Label [text]="transaction.categoryName" class="transaction-category-name"></Label>
-        </StackLayout>
-      </GridLayout>
-    </ng-template>
-  </ListView>
-  <ActivityIndicator [busy]="_isLoading"></ActivityIndicator>
+<GridLayout class="page page-content" rows="80 *">
+  <GridLayout row="0" columns="* * *">
+    <Label col="0" text="&#xea74;" class="icon backIcon" (tap)="goBack()"></Label>
+    <StackLayout col="1" horizontalAlignment="center" verticalAlignment="center">
+      <Label class="title" [text]="title"></Label>
+    </StackLayout>
+  </GridLayout>
+  <StackLayout row="1" class="transaction-list">
+    <app-transactions-list *ngIf="!_isLoading" [transactions]="transactions"></app-transactions-list>
+    <Loading *ngIf="_isLoading"></Loading>
+  </StackLayout>
 </GridLayout>

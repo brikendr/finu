@@ -6,7 +6,8 @@ import { Expense } from "../shared/expense.model";
 import { ExpenseService } from "../shared/expense.service";
 
 import { Kinvey } from "kinvey-nativescript-sdk";
-import { UtilService } from "~/app/shared/utils.service";
+import { Page } from "tns-core-modules/ui/page/page";
+import { RouterExtensions } from "nativescript-angular";
 
 @Component({
   selector: "ExpenseDetails",
@@ -17,18 +18,27 @@ import { UtilService } from "~/app/shared/utils.service";
 export class ExpenseDetailsComponent implements OnInit {
   _isLoading: boolean = false;
   monthlyTransactions: Array<object> = [];
+  transactions: Array<any> = [];
 
   constructor(
     private _expenseService: ExpenseService,
-    private _categoryService: CategoryService
-  ) {}
+    private _categoryService: CategoryService,
+    private page: Page,
+    private router: RouterExtensions
+  ) {
+    this.page.actionBarHidden = true;
+  }
 
   ngOnInit(): void {
     this._isLoading = true;
     this._expenseService.getUserTransactionWithoutGrouping(Kinvey.User.getActiveUser()._id)
     .then((transactions: Array<Expense>) => {
       this._categoryService.load().then((categories: Array<Category>) => {
-        this.composeDetailList(transactions, categories);
+        this.perpareTransactions(transactions)
+        .then((groupedTransactions: Array<any>) => {
+          this.transactions = groupedTransactions;
+          this._isLoading = false;
+        })
       })
         .catch(() => {
           this._isLoading = false;
@@ -42,29 +52,51 @@ export class ExpenseDetailsComponent implements OnInit {
     ];
     const now = new Date();
 
-    return `${monthNames[now.getMonth()]} Transactions`;
+    return `${monthNames[now.getMonth()]} ${now.getFullYear()}`;
   }
 
-  composeDetailList(expenses: Array<Expense>, categories: Array<Category>): void {
+  perpareTransactions(expenses: Array<Expense>): Promise<Array<any>> {
+    const transactions = [];
+    let groupDate: Date;
+    return new Promise((resolve) => {
+      expenses.forEach((expense) => {
+        const transactionDate = new Date(expense.kmd.lmt);
+        console.log('Transaction date is ', transactionDate);
+        if (!groupDate) {
+          groupDate = transactionDate;
+          transactions.push({
+            itemType: 'header',
+            date: transactionDate
+          });
+          transactions.push({
+            itemType: 'transaction',
+            category: expense.categoryId,
+            ammount: expense.isWithdraw ? (expense.amount * -1) : expense.amount,
+            comment: expense.comment
+          })
+        } else {
+          console.log(transactionDate.getDate(), ' < ', groupDate.getDate());
+          if (transactionDate.getDate() < groupDate.getDate()) {
+            groupDate = transactionDate;
+            transactions.push({
+              itemType: 'header',
+              date: transactionDate
+            });
+          }
+          transactions.push({
+            itemType: 'transaction',
+            category: expense.categoryId,
+            ammount: expense.isWithdraw ? (expense.amount * -1) : expense.amount,
+            comment: expense.comment
+          })
+        }
+      });
 
-    expenses.forEach((expense) => {
-      const item: any = {
-        amount: `${expense.amount} NOK`,
-        transactionColor: expense.isWithdraw ? "tile-brokes" : "tile-excellesnt",
-        isWithdraw: expense.isWithdraw,
-        dateTime: UtilService.parseTimeStamp(expense.dateTime),
-        comment: expense.comment !== "" ? expense.comment : undefined
-      };
-      if (expense.isWithdraw) {
-        const category = categories.find((cat) => cat.id === expense.categoryId);
-        item.categoryName = category.name;
-        item.categoryIcon = category.logo;
-      } else {
-        item.categoryName = "Deposit";
-        item.categoryIcon = String.fromCharCode(parseInt("f0d6", 16));
-      }
-      this.monthlyTransactions.push(item);
+      resolve(transactions);
     });
-    this._isLoading = false;
+  }
+
+  goBack(): void {
+    this.router.back();
   }
 }

@@ -10,9 +10,13 @@ import { AppComponent } from "./app.component";
 import { LoginComponent } from "~/app/login/login.component";
 import { UserService } from "~/app/shared/user.service";
 
+import { BottomNavigationComponent } from "./shared/components/bottom-navigation.component";
+import { CardView } from "nativescript-cardview";
+
 import { registerElement } from "nativescript-angular";
 registerElement("NumericKeyboard", () => require("nativescript-numeric-keyboard").NumericKeyboardView);
 registerElement("PullToRefresh", () => require("nativescript-pulltorefresh").PullToRefresh);
+registerElement("CardView", () => CardView);
 
 @NgModule({
     bootstrap: [
@@ -27,7 +31,8 @@ registerElement("PullToRefresh", () => require("nativescript-pulltorefresh").Pul
     ],
     declarations: [
       AppComponent,
-      LoginComponent
+      LoginComponent,
+      BottomNavigationComponent
     ],
     schemas: [
       NO_ERRORS_SCHEMA

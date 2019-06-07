@@ -6,6 +6,7 @@ import { BillRecordService } from "./shared/billrecord.service";
 import { Component, OnInit } from "@angular/core";
 import { Expense } from "../expense/shared/expense.model";
 import { ExpenseService } from "../expense/shared/expense.service";
+import { Page } from "tns-core-modules/ui/page";
 
 import { Kinvey } from "kinvey-nativescript-sdk";
 import { PageRoute, RouterExtensions } from "nativescript-angular/router";
@@ -31,9 +32,11 @@ export class BillListComponent implements OnInit {
     private _billRecordSerivce: BillRecordService,
     private _expenseService: ExpenseService,
     private _pageRoute: PageRoute,
-    private _routerExtensions: RouterExtensions
+    private _routerExtensions: RouterExtensions,
+    private page: Page
   ) {
     this.feedback = new Feedback();
+    this.page.actionBarHidden = true;
   }
 
   ngOnInit(): void {

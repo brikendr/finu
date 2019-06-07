@@ -40,12 +40,6 @@ export class MiscComponent implements OnInit {
       icon: String.fromCharCode(parseInt("f061", 16)),
       className: UtilService.generateRandomTileColor()
     });
-    this.data.push({
-      name: "Avtale Giro",
-      path: "avtaleGiro",
-      icon: String.fromCharCode(parseInt("f061", 16)),
-      className: UtilService.generateRandomTileColor()
-    });
   }
 
   navigate(route: string) {

@@ -1,11 +1,174 @@
-<ActionBar class="action-bar">
-  <ActionItem (tap)="goToOverviewScreen()" text="Overview" ios.position="right" android.position="popup"></ActionItem>
-</ActionBar>
+<GridLayout class="page page-content" rows="60 *">
 
-<FlexboxLayout class="page">
+  <GridLayout class="Title-Wrapper" row="0" rows="2* *">
+    <StackLayout row="0" orientation="horizontal">
+      <Label text="Add Transaction" class="page-title"></Label>
+    </StackLayout>
+    <StackLayout row="1">
+      <GridLayout [columns]="expenseProgressCols" class="Expense-Progress">
+        <StackLayout col="0" class="progressbar-value"></StackLayout>
+      </GridLayout>
+    </StackLayout>
+  </GridLayout>
+
+
+  <!-- Transaction Type Tab -->
+  <GridLayout row="1" rows="2* 60 *" class="Tab-Content" *ngIf="activeTab === 1">
+    <Image row="0" src="~/assets/images/nice-screenshot.png"></Image>
+    <Label row="1" textWrap="true" class="Big-Text" text="Transaction Type?"></Label>
+    <FlexboxLayout row="2" flexDirection="row" alignItems="center" justifyContent="space-around">
+      <CardView class="FancyCard" shadowColor="#f1f5f8" shadowRadius="1" shadowOpacity="1" elevation="5" radius="5"
+      (tap)="transactionType('income')" width="140" height="150">
+        <FlexboxLayout class="FancyCard-Wrapper" flexDirection="column" alignItems="flex-start" justifyContent="space-between">
+          <Label class="icon transaction-type-icon blue" text="&#xeac0;"></Label>
+          <Label class="fancy-card-desc" text="Income"></Label>
+        </FlexboxLayout>
+      </CardView>
+      <CardView class="FancyCard" shadowColor="#f1f5f8" shadowRadius="1" shadowOpacity="1" elevation="5" radius="5"
+      (tap)="transactionType('expense')" width="140" height="150">
+        <FlexboxLayout class="FancyCard-Wrapper" flexDirection="column" alignItems="flex-start" justifyContent="space-between">
+          <Label class="icon transaction-type-icon red" text="&#xeabf;"></Label>
+          <Label class="fancy-card-desc" text="Expense"></Label>
+        </FlexboxLayout>
+      </CardView>
+    </FlexboxLayout>
+  </GridLayout>
+  <!-- Transaction Type Tab -->
+
+  <!-- Transaction Amount -->
+  <GridLayout row="1" rows="60 150" class="Tab-Content" *ngIf="activeTab === 2">
+    <GridLayout row="0" columns="50 *">
+      <StackLayout col="0" horizontalAlignment="center" verticalAlignment="center">
+        <Label class="icon transaction-type-icon blue" text="&#xeac0;" *ngIf="!isWithdraw"></Label>
+        <Label class="icon transaction-type-icon red" text="&#xeabf;" *ngIf="isWithdraw"></Label>
+      </StackLayout>
+
+      <StackLayout col="1" class="Summary-Wrapper">
+        <Label class="Summary-Description" text="Transaction Type"></Label>
+        <Label class="Summary-Value" [text]="isWithdraw ? 'Expense':'Income'"></Label>
+      </StackLayout>
+    </GridLayout>
+
+    <GridLayout row="1" columns="* 80" marginTop="10%" padding="10">
+      <StackLayout col="0" verticalAlignment="center" class="Expense-Amount-Wrapper">
+        <Label class="Summary-Description" text="Transaction Amount (NOK)"></Label>
+        <TextField id="expenseInput" [(ngModel)]="expenseAmount" hint="Enter amount" class="input"
+          keyboardType="number"></TextField>
+      </StackLayout>
+      <FlexboxLayout col="1" [class]="'Next-Tab-Btn ' + (expenseAmount.length > 0 ? 'active':'inactive')" alignItems="center"
+        justifyContent="center" (tap)="showCategoryTab()">
+        <Label class="icon" text="&#xeab8;"></Label>
+      </FlexboxLayout>
+    </GridLayout>
+  </GridLayout>
+  <!-- Transaction Amount -->
+
+  <!-- Category Selection Tab -->
+  <GridLayout row="1" rows="60 60 *" class="Tab-Content" *ngIf="activeTab === 3">
+    <GridLayout row="0" columns="50 *">
+      <StackLayout col="0" horizontalAlignment="center" verticalAlignment="center">
+        <Label class="icon transaction-type-icon blue" text="&#xeac0;" *ngIf="!isWithdraw"></Label>
+        <Label class="icon transaction-type-icon red" text="&#xeabf;" *ngIf="isWithdraw"></Label>
+      </StackLayout>
+  
+      <StackLayout col="1" class="Summary-Wrapper">
+        <Label class="Summary-Description" text="Transaction Type"></Label>
+        <Label class="Summary-Value" [text]="isWithdraw ? 'Expense':'Income'"></Label>
+      </StackLayout>
+    </GridLayout>
+
+    <GridLayout row="1" columns="50 *">
+      <StackLayout col="0" horizontalAlignment="center" verticalAlignment="center">
+        <Label class="icon transaction-type-icon grey" text="&#xe964;"></Label>
+      </StackLayout>
+  
+      <StackLayout col="1" class="Summary-Wrapper">
+        <Label class="Summary-Description" text="Amount"></Label>
+        <Label class="Summary-Value" [text]="expenseAmount + ' NOK'"></Label>
+      </StackLayout>
+    </GridLayout>
+    
+    <ScrollView row="2" orientation="horizontal">
+      <StackLayout orientation="horizontal">
+        <CardView *ngFor="let category of categories" class="FancyCard" shadowColor="#f1f5f8" shadowRadius="1" shadowOpacity="1"
+          elevation="5" radius="5" (tap)="selectCategory(category.id)" marginLeft="10" marginRight="10" width="150" height="200">
+          <FlexboxLayout class="FancyCard-Wrapper" flexDirection="column" alignItems="flex-start"
+            justifyContent="space-between">
+            <Label [class]="'icon transaction-type-icon badge ' + getCategoryKey(category.id)" [text]="getBadgeIcon(category.id)"></Label>
+            <Label class="fancy-card-desc" [text]="category.name"></Label>
+          </FlexboxLayout>
+        </CardView>
+      </StackLayout>
+    </ScrollView>
+  </GridLayout>
+  <!-- Category Selection Tab -->
+
+  <!-- Comment Tab -->
+  <GridLayout row="1" rows="60 60 60 150" class="Tab-Content" *ngIf="activeTab === 4">
+    <GridLayout row="0" columns="50 *">
+      <StackLayout col="0" horizontalAlignment="center" verticalAlignment="center">
+        <Label class="icon transaction-type-icon blue" text="&#xeac0;" *ngIf="!isWithdraw"></Label>
+        <Label class="icon transaction-type-icon red" text="&#xeabf;" *ngIf="isWithdraw"></Label>
+      </StackLayout>
+  
+      <StackLayout col="1" class="Summary-Wrapper">
+        <Label class="Summary-Description" text="Transaction Type"></Label>
+        <Label class="Summary-Value" [text]="isWithdraw ? 'Expense':'Income'"></Label>
+      </StackLayout>
+    </GridLayout>
+
+    <GridLayout row="1" columns="50 *">
+      <StackLayout col="0" horizontalAlignment="center" verticalAlignment="center">
+        <Label class="icon transaction-type-icon grey" text="&#xe964;"></Label>
+      </StackLayout>
+  
+      <StackLayout col="1" class="Summary-Wrapper">
+        <Label class="Summary-Description" text="Amount"></Label>
+        <Label class="Summary-Value" [text]="expenseAmount + ' NOK'"></Label>
+      </StackLayout>
+    </GridLayout>
+
+    <GridLayout row="2" columns="50 *">
+      <StackLayout col="0" horizontalAlignment="center" verticalAlignment="center">
+        <Label [class]="'icon transaction-type-icon badge ' + getCategoryKey(selectedCategory)" [text]="getBadgeIcon(selectedCategory)"></Label>
+      </StackLayout>
+  
+      <StackLayout col="1" class="Summary-Wrapper">
+        <Label class="Summary-Description" text="Transaction Category"></Label>
+        <Label class="Summary-Value" [text]="getCategoryName(selectedCategory)"></Label>
+      </StackLayout>
+    </GridLayout>
+
+    <GridLayout row="3" columns="* 100" padding="10">
+      <StackLayout col="0" verticalAlignment="center">
+        <Label class="Summary-Description" text="Transaction Comment"></Label>
+        <TextField id="commentInput" [(ngModel)]="expenseComment" maxLength="50" hint="Short Comment" class="comment"></TextField>
+      </StackLayout>
+      <FlexboxLayout col="1" [class]="'Next-Tab-Btn ' + (expenseComment.length > 0 ? 'active':'inactive')"
+        alignItems="center" justifyContent="center" (tap)="showSummaryTab()">
+        <Label class="Summary-Value" text="Finish" color="#FFFFFF"></Label>
+      </FlexboxLayout>
+    </GridLayout>
+  </GridLayout>
+  <!-- Comment Tab -->
+
+  <!-- Summary Tab -->
+  <FlexboxLayout row="1" class="Tab-Content" *ngIf="activeTab === 5" alignItems="center" justifyContent="center">
+    <StackLayout *ngIf="!_isLoading">
+      <Image [src]="'~/assets/images/' + summaryTxt.icon" width="50%"></Image>
+      <Label class="Big-Text" [text]="summaryTxt.title" marginTop="10%"></Label>
+      <Label textWrap="true" class="Summary-Description" marginTop="5%" [text]="summaryTxt.message"></Label>
+    </StackLayout>
+    <Loading *ngIf="_isLoading"></Loading>
+  </FlexboxLayout>
+  <!-- Summary Tab -->
+</GridLayout>
+
+
+<!-- <FlexboxLayout class="page">
   <StackLayout class="form" marginTop="20">
-    <!-- <Image class="logo" src="~/images/logo.png"></Image> -->
-    <Label class="header" [text]="title"></Label>
+    <Label text="&#xeee1;" class="icon"></Label>
+    <Image src="~/assets/images/nice-screenshot.png" width="100"></Image>
   
   
     <GridLayout rows="auto, auto, auto, auto, auto">
@@ -36,4 +199,4 @@
   
     <Button text="Add Transaction" [isEnabled]="!processing" (tap)="submit()" class="btn btn-primary m-t-20"></Button>
   </StackLayout>
-</FlexboxLayout>
+</FlexboxLayout> -->

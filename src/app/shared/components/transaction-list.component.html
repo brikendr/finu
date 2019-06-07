@@ -1,0 +1,27 @@
+<ListView [items]="transactions" separatorColor="transparent" [itemTemplateSelector]="templateSelector"
+  (itemTap)="onItemTap($event)" class="transactions-list">
+  <ng-template nsTemplateKey="header" let-item="item">
+    <Label class="transactions-list-header" [text]="getHeaderText(item.date)" textWrap="true"></Label>
+  </ng-template>
+
+  <ng-template nsTemplateKey="transaction" let-item="item">
+    <GridLayout columns="auto, *, auto" class="transactions-list-item">
+      <StackLayout col="0" class="mr-10" height="36" width="36" [class]="'badge ' + getCategoryKey(item.category)">
+        <Label [text]="getBadgeIcon(item.category)" class="icon"></Label>
+      </StackLayout>
+
+      <StackLayout col="1" verticalAlignment="center">
+        <Label [text]="getCategoryName(item.category)" class="title"></Label>
+        <Label class="category" [text]="item.comment"></Label>
+      </StackLayout>
+
+      <Label col="2" horizontal="right" class="ammount">
+        <FormattedString>
+          <Span [text]="item.ammount < 0 ? '- NOK ' : 'NOK '"
+            [class]="'quantity ' + (item.ammount < 0 ? 'red' : 'green')"></Span>
+          <Span [text]="mathAbs(item.ammount)" [class]="'quantity ' + (item.ammount < 0 ? 'red' : 'green')"></Span>
+        </FormattedString>
+      </Label>
+    </GridLayout>
+  </ng-template>
+</ListView>

@@ -1,0 +1,18 @@
+<GridLayout columns="*, *, *" height="54" row="1" class="bottom-navigation">
+  <GridLayout col="0" rows="auto, *" class="bottom-navigation-item" (tap)="onDrawerButtonTap()">
+    <Label row="0" text="&#xefa2;" class="icon"></Label>
+    <Label row="1" text="Menu" class="label"></Label>
+  </GridLayout>
+
+  <GridLayout col="1" rows="auto, *" class="bottom-navigation-item" [class.selected]="isComponentSelected('/home')"
+    (tap)="onNavItemTap('/home')">
+    <Label row="0" text="&#xec5e;" class="icon"></Label>
+    <Label row="1" text="Transactions" class="label"></Label>
+  </GridLayout>
+
+  <GridLayout col="2" rows="auto, *" class="bottom-navigation-item" [class.selected]="isComponentSelected('/expense')"
+    (tap)="onNavItemTap('/expense')">
+    <Label row="0" text="&#xec3e;" class="icon"></Label>
+    <Label row="1" text="New Expense" class="label"></Label>
+  </GridLayout>
+</GridLayout>

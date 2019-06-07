@@ -1,0 +1,49 @@
+@import "./../../app-common";
+
+.title {
+  font-size: 22;
+  font-weight: 600;
+}
+
+.Bill-Card {
+  width: 90%;
+  height: 80;
+  border-radius: 15;
+  background-color: $budget-tracker-primary;
+  margin-top: 20;
+
+  .Bill-Card-Wrapper {
+    padding-left: 20;
+    padding-right: 20;
+    .h3-txt {
+      font-size: 12;
+      color: white;
+      font-weight: 500;
+    }
+  
+    .h1-txt {
+      font-size: 22;
+      color: white;
+      font-weight: 700;
+    }
+  
+    .h2-txt {
+      font-size: 20;
+      color: white;
+      font-weight: 600;
+    }
+  
+    .calendar-icon {
+      color: white;
+      font-size: 30;
+    }
+  }
+
+  .Pay-Bill-Btn {
+    width: 80;
+    height: 40;
+    border-width: 1;
+    border-radius: 10;
+    border-color: white;
+  }
+}
