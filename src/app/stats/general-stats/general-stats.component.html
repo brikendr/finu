@@ -1,0 +1,52 @@
+<GridLayout class="page page-content" [rows]="_isLoading? '*' : '60 60 *'">
+
+  <GridLayout  class="Title-Wrapper" row="0" columns="* * *" *ngIf="!_isLoading">
+    <Label col="0" text="&#xea74;" class="icon backIcon" (tap)="goBack()"></Label>
+    <StackLayout col="1" horizontalAlignment="center" verticalAlignment="center">
+      <Label text="General" class="page-title"></Label>
+    </StackLayout>
+  </GridLayout>
+
+  <FlexboxLayout class="Month-Navigator" row="1" alignItems="center" justifyContent="space-around" *ngIf="!_isLoading">
+    <Label text="&#xeac9;" class="icon navigation-icon" (tap)="prevMonthStats()"></Label>
+    <Label [text]="getSelectedPeriod" class="Navigator-Title"></Label>
+    <Label text="&#xeaca;" class="icon navigation-icon" (tap)="nextMonthStats()"></Label>
+  </FlexboxLayout>
+
+  <GridLayout row="2" rows="* *" class="Chart-Content" *ngIf="!_isLoading">
+    <StackLayout row="0" class="expenses-chart">
+      <RadPieChart height="230" allowAnimation="true" row="1">
+        <DonutSeries tkPieSeries seriesName="donut" selectionMode="DataPoint" expandRadius="0.4" outerRadiusFactor="0.7"
+          innerRadiusFactor="0.4" [items]="pieChartData" valueProperty="ammount" legendLabel="name">
+        </DonutSeries>
+        <Palette tkPiePalette seriesName="donut">
+          <PaletteEntry *ngFor="let item of donutColorData" tkPiePaletteEntry
+            [fillColor]="getCategoryColor(item.category)" [strokeColor]="getCategoryColor(item.category)">
+          </PaletteEntry>
+        </Palette>
+        <RadLegendView tkPieLegend position="Right" offsetOrigin="TopLeft" enableSelection="true">
+        </RadLegendView>
+      </RadPieChart>
+
+    </StackLayout>
+    <StackLayout row="1">
+      <ListView [items]="expenseOverview" separatorColor="transparent" class="legend-list" height="100%">
+        <ng-template nsTemplateKey="transaction" let-item="item">
+          <GridLayout columns="auto, *, auto" class="legend-list-item">
+            <StackLayout col="0" class="mr-10" height="36" width="36"
+              [class]="'badge ' + getCategoryKey(item.category)">
+              <Label [text]="getBadgeIcon(item.category)" class="icon"></Label>
+            </StackLayout>
+
+            <StackLayout col="1" verticalAlignment="center">
+              <Label [text]="getCategoryName(item.category)" class="title"></Label>
+            </StackLayout>
+
+            <Label col="2" horizontal="right" class="ammount" [text]="item.description"></Label>
+          </GridLayout>
+        </ng-template>
+      </ListView>
+    </StackLayout>
+  </GridLayout>
+  <Loading *ngIf="_isLoading"></Loading>
+</GridLayout>

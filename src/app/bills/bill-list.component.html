@@ -8,6 +8,9 @@
     <StackLayout col="1" horizontalAlignment="center" verticalAlignment="center">
       <Label class="title" text="Bills"></Label>
     </StackLayout>
+    <FlexboxLayout col="2" alignItems="center" justifyContent="flex-end">
+      <Label col="2" class="icon Add-Bill-Btn" text="&#xec3e;" (tap)="newBillScreen()"></Label>
+    </FlexboxLayout>
   </GridLayout>
   <GridLayout row="1" rows="*" backgroundColor="yellow">
     <ListView row="0" *ngIf="!pendingBillsView" [items]="bills" separatorColor="white">

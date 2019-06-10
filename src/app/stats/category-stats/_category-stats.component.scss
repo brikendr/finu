@@ -1,0 +1,36 @@
+@import './../../../app-variables';
+@import './../stats.component';
+
+.Chart-Content {
+  margin: 10;
+
+  .expenses-chart {
+    border-bottom-color: #f1f5f8;
+    border-bottom-width: 1;
+    margin-bottom: 15;
+  }
+}
+
+.Filters {
+  margin: 10;
+
+  .Radio-Wrapper {
+    width: 50%;
+    margin-bottom: 10;
+    .RadioBtn {
+      font-size: 30;
+      color: rgba($color: #000000, $alpha: 0.3)
+    }
+
+    .RadioBtn.Selected {
+      color: $budget-tracker-optional;
+    }
+
+    .RadioBtn-Value {
+      font-size: 12;
+      color: $black;
+      font-weight: 200;
+      margin-left: 5;
+    }
+  }
+}

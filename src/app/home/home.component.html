@@ -15,17 +15,26 @@
   </GridLayout>
 
   <FlexboxLayout  row="1" class="balance-summary" flexDirection="row" alignItems="center" justifyContent="space-around" *ngIf="!_isProcessing">
-    <CardView class="BalanceCard" shadowColor="#43AA8B" shadowRadius="1" shadowOpacity="0.5" elevation="5" radius="5">
-      <FlexboxLayout flexDirection="column" alignItems="center" justifyContent="center">
-        <Label class="Income-Summary-Nr" [text]="totalEarned"></Label>
-        <Label class="summary-title" text="Gross Income"></Label>
+    <CardView class="BalanceCard" shadowColor="#41E94B" shadowRadius="8" shadowOpacity="0.4" elevation="5"
+      radius="5">
+      <FlexboxLayout class="CashFlowStats" flexDirection="row" alignItems="center" justifyContent="space-between"
+        backgroundColor="#41E94B">
+        <StackLayout width="70%">
+          <Label class="Income-Summary-Nr" [text]="totalEarned"></Label>
+          <Label class="summary-title" text="Gross Income"></Label>
+        </StackLayout>
+        <Label text="&#xe961;" class="icon stats-item-icon"></Label>
       </FlexboxLayout>
     </CardView>
-    <CardView class="BalanceCard" shadowColor="#EF3054" shadowRadius="1" shadowOpacity="0.5" elevation="5" radius="5"
-      (tap)="navigate('/expense/details')">
-      <FlexboxLayout flexDirection="column" alignItems="center" justifyContent="center">
-        <Label class="Expense-Summary-Nr" [text]="'- '+ expensesOnBalance"></Label>
-        <Label class="summary-title" text="Expenses"></Label>
+    <CardView class="BalanceCard" shadowColor="#FF3378" shadowRadius="8" shadowOpacity="0.4" elevation="5" radius="5"
+    (tap)="navigate('/expense/details')">
+      <FlexboxLayout class="CashFlowStats" flexDirection="row" alignItems="center" justifyContent="space-between"
+        backgroundColor="#FF3378">
+        <StackLayout width="70%">
+          <Label class="Expense-Summary-Nr" [text]="'-'+ expensesOnBalance"></Label>
+          <Label class="summary-title" text="Expenses"></Label>
+        </StackLayout>
+        <Label text="&#xefcf;" class="icon stats-item-icon"></Label>
       </FlexboxLayout>
     </CardView>
   </FlexboxLayout>
@@ -35,15 +44,17 @@
       <StackLayout class="ScrollContent">
         <CardView class="StatsCard" shadowColor="#f1f5f8" shadowRadius="1" shadowOpacity="1" elevation="5" radius="5">
           <FlexboxLayout class="Stats-Content" flexDirection="column" alignItems="flex-start" justifyContent="space-around">
-            <Label class="Stats-Card-Title" text="Previous Month Stats"></Label>
+            <Label class="Stats-Card-Title" text="You spent:"></Label>
             <StackLayout>
-              <Label class="Stats-Nr-OverBudget" text="305 NOK"></Label>
-              <Label class="Stats-Explanation" text="more than last month"></Label>
+              <Label [class]="spentMoreThanLastMonth ? 'Stats-Nr-UnderBudget':'Stats-Nr-OverBudget'" [text]="balanceWithLastMonth"></Label>
+              <Label class="Stats-Card-Title" [text]="spentMoreThanLastMonth ? 'more than last month':'less than last month'"></Label>
             </StackLayout>
             <StackLayout class="Goal--Progress">
-              <Progress (loaded)="onExpensesLoaded($event)" class="ProgressBar PreviousMonthProgress">
+              <Progress (loaded)="onLastMonthExpensesLoaded($event)" class="ProgressBar PreviousMonthProgress">
               </Progress>
-              <Progress (loaded)="onLastMonthExpensesLoaded($event)" class="ProgressBar Underbudget">
+              <Progress (loaded)="onExpensesLoaded($event)"
+              [class]="spentMoreThanLastMonth ? 'ProgressBar Underbudget' : 'ProgressBar Overbudget'"
+              >
               </Progress>
             </StackLayout>
           </FlexboxLayout>

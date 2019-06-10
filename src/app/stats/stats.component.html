@@ -1,0 +1,43 @@
+<GridLayout class="page page-content" rows="150 *">
+
+  <FlexboxLayout class="Stats-List-Title" row="0" flexDirection="column" alignItems="flex-start" justifyContent="space-around">
+    <Label text="&#xe982;" class="icon cool-icon"></Label>
+    <Label text="Statistics Report Types" class="Title"></Label>
+  </FlexboxLayout>
+
+  <StackLayout row="2" class="Stats-List-Content">
+    <CardView class="Stats-List-ItemCard" shadowColor="#FF3378" shadowRadius="8" shadowOpacity="0.4" elevation="5" radius="5">
+      <FlexboxLayout class="Stats-List-ItemWrapper" flexDirection="row" alignItems="center" justifyContent="space-between"
+        (tap)="goToStats('stats/general-stats')" backgroundColor="#FF3378">
+        <StackLayout width="70%">
+          <Label class="header" text="General Statistics"></Label>
+          <Label class="description" textWrap="true" text="Pie chart of total expenses each month"></Label>
+        </StackLayout>
+        <Label text="&#xe983;" class="icon stats-item-icon"></Label>
+      </FlexboxLayout>
+    </CardView>
+    <CardView class="Stats-List-ItemCard" shadowColor="#41E94B" shadowRadius="8" shadowOpacity="0.4" elevation="5" radius="5">
+      <FlexboxLayout class="Stats-List-ItemWrapper" flexDirection="row" alignItems="center" justifyContent="space-between"
+        (tap)="goToStats('stats/category-stats')" backgroundColor="#41E94B">
+        <StackLayout width="70%">
+          <Label class="header" text="Category Statistics"></Label>
+          <Label class="description" textWrap="true" text="Line chart of monthly category expeses"></Label>
+        </StackLayout>
+        <Label text="&#xe981;" class="icon stats-item-icon"></Label>
+      </FlexboxLayout>
+    </CardView>
+    <CardView class="Stats-List-ItemCard" shadowColor="#33C9FF" shadowRadius="8" shadowOpacity="0.4" elevation="5" radius="5">
+      <FlexboxLayout class="Stats-List-ItemWrapper" flexDirection="row" alignItems="center" justifyContent="space-between"
+        (tap)="goToStats('stats/saving-stats')" backgroundColor="#33C9FF">
+        <StackLayout width="70%">
+          <Label class="header" text="Savings Statistics"></Label>
+          <Label class="description" textWrap="true" text="Bar chart of savings each year"></Label>
+        </StackLayout>
+        <Label text="&#xe979;" class="icon stats-item-icon"></Label>
+      </FlexboxLayout>
+    </CardView>
+  </StackLayout>
+</GridLayout>
+
+
+

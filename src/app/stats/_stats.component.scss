@@ -1,0 +1,81 @@
+@import './../../app-variables';
+
+.page {
+  background-color: white;
+}
+
+.Title-Wrapper {
+  .page-title {
+    font-size: 16;
+    font-weight: 600;
+  }
+  .backIcon {
+    font-size: 35;
+  }
+}
+
+.Month-Navigator {
+  .navigation-icon {
+    font-size: 35;
+    color: #B0B2B6;
+  }
+
+  .Navigator-Title {
+    color: #B0B2B6;
+    font-size: 16;
+    font-weight: 100;
+  }
+}
+
+.Stats-List-Title {
+  margin: 25;
+
+  .cool-icon {
+    width: 50;
+    height: 50;
+    background-color: $budget-tracker-primary;
+    color: white;
+    border-radius: 50;
+    text-align: center;
+    font-size: 30;
+  }
+  .Title {
+    margin-top: 10;
+    font-size: 22;
+    font-weight: 600;
+    color: #22264B;
+  }
+}
+
+.Stats-List-Content {
+  margin: 25;
+
+  .Stats-List-ItemCard {
+    margin-bottom: 30;
+    .Stats-List-ItemWrapper {
+      width: 100%;
+      height: 100;
+      border-radius: 30%;
+
+      .header {
+        margin-left: 25;
+        font-size: 18;
+        font-weight: 600;
+        color: white;
+      }
+
+      .description {
+        margin-left: 25;
+        font-size: 10;
+        font-weight: 600;
+        color: rgba($color: #FFFFFF, $alpha: 0.8);
+      }
+
+      .stats-item-icon {
+        margin-right: 25;
+        font-size: 50;
+        color: rgba($color: #FFFFFF, $alpha: 0.6);
+      }
+    }
+  }
+}

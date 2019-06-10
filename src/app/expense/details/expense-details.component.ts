@@ -61,7 +61,6 @@ export class ExpenseDetailsComponent implements OnInit {
     return new Promise((resolve) => {
       expenses.forEach((expense) => {
         const transactionDate = new Date(expense.kmd.lmt);
-        console.log('Transaction date is ', transactionDate);
         if (!groupDate) {
           groupDate = transactionDate;
           transactions.push({
@@ -75,7 +74,6 @@ export class ExpenseDetailsComponent implements OnInit {
             comment: expense.comment
           })
         } else {
-          console.log(transactionDate.getDate(), ' < ', groupDate.getDate());
           if (transactionDate.getDate() < groupDate.getDate()) {
             groupDate = transactionDate;
             transactions.push({

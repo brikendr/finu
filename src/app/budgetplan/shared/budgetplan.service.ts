@@ -19,12 +19,12 @@ export class BudgetPlanService {
             const opts = data[0];
             opts.id = data._id;
             budgetPlan = new BudgetPlan(opts);
-            resolve(budgetPlan);
-          } else {
-            reject("No registered budget plan for this user!");
           }
         }, (error: Kinvey.BaseError) => {
+          console.log(error);
           reject("Unable to fetch users' budget plan!");
+        }, () => {
+          resolve(budgetPlan);
         });
     });
   }

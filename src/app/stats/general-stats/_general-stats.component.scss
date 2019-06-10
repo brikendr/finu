@@ -1,0 +1,41 @@
+@import './../../../app-variables';
+@import './../stats.component';
+
+.Chart-Content {
+  margin: 10;
+
+  .expenses-chart {
+    border-bottom-color: #f1f5f8;
+    border-bottom-width: 1;
+    margin-bottom: 15;
+  }
+
+  .legend-list {
+    .legend-list-item {
+      background-color: #ffffff;
+      padding-left: 15;
+      padding-right: 15;
+      padding-top: 5;
+      padding-bottom: 5;
+      margin-bottom: 5;
+
+      .badge {
+        border-radius: 50%;
+        margin-right: 15;
+        vertical-align: middle;
+        text-align: center;
+      }
+
+      .title {
+        font-size: 16;
+        font-weight: 600;
+      }
+
+      .ammount {
+        font-size: 10;
+        font-weight: 600;
+        color: $mountain-view3;
+      }
+    }
+  }
+}

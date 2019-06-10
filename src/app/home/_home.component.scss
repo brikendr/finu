@@ -79,27 +79,32 @@
 .BalanceCard {
   width: 45%;
   height: 80;
-  background-color: $white;
   padding: 20;
   margin-top: -30;
 
-  .Income-Summary-Nr {
-    font-size: 20;
-    color: $zomp;
-    font-weight: 500;
+  .CashFlowStats {
+    border-radius: 15%;
   }
-  
-  .Expense-Summary-Nr {
-    font-size: 20;
-    color: $desire;
-    font-weight: 500;
+
+  .Income-Summary-Nr, .Expense-Summary-Nr {
+    font-size: 16;
+    color: $white;
+    font-weight: 600;
+    margin-left: 15;
   }
 
 
   .summary-title {
-    font-size: 12;
+    font-size: 10;
     font-weight: 600;
-    color: $foreground1;
+    color: rgba($color: #FFFFFF, $alpha: 0.8);
+    margin-left: 15;
+  }
+
+  .stats-item-icon {
+    margin-right: 5;
+    font-size: 35;
+    color: rgba($color: #FFFFFF, $alpha: 0.6);
   }
 }
 

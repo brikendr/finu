@@ -140,6 +140,7 @@ export class BillListComponent implements OnInit {
       userId: Kinvey.User.getActiveUser()._id,
       dateTime: dateTime.toString(),
       month: new Date().getMonth() + 1,
+      year: new Date().getFullYear(),
       amount: bill.amount,
       isWithdraw: true,
       comment: `Bill Expense for ${bill.name}`,

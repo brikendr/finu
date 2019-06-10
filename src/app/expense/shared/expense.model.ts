@@ -2,7 +2,8 @@ export class Expense {
   id: string;
   userId: string;
   dateTime: string;
-  month: string;
+  month: number;
+  year: number;
   amount: number;
   isWithdraw: boolean;
   categoryId: string;
@@ -14,6 +15,7 @@ export class Expense {
     this.userId = options.userId;
     this.dateTime = options.dateTime;
     this.month = options.month;
+    this.year = options.year;
     this.amount = options.amount;
     this.isWithdraw = options.isWithdraw;
     this.categoryId = options.categoryId;

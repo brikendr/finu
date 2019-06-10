@@ -1,0 +1,52 @@
+<GridLayout class="page page-content" [rows]="_isLoading? '*' : '40 40 *'">
+
+  <GridLayout class="Title-Wrapper" row="0" columns="* * *" *ngIf="!_isLoading">
+    <Label col="0" text="&#xea74;" class="icon backIcon" (tap)="goBack()"></Label>
+    <StackLayout col="1" horizontalAlignment="center" verticalAlignment="center">
+      <Label text="Category" class="page-title"></Label>
+    </StackLayout>
+  </GridLayout>
+
+  <FlexboxLayout class="Month-Navigator" row="1" alignItems="center" justifyContent="space-around" *ngIf="!_isLoading">
+    <Label text="&#xeac9;" class="icon navigation-icon" (tap)="prevYearStats()"></Label>
+    <Label [text]="getSelectedPeriod" class="Navigator-Title"></Label>
+    <Label text="&#xeaca;" class="icon navigation-icon" (tap)="nextYearStats()"></Label>
+  </FlexboxLayout>
+
+  <ScrollView row="2">
+    <GridLayout rows="230 *" class="Chart-Content" *ngIf="!_isLoading">
+      <RadCartesianChart tkExampleTitle tkToggleNavButton row="0">
+        <CategoricalAxis tkCartesianHorizontalAxis></CategoricalAxis>
+        <LinearAxis tkCartesianVerticalAxis></LinearAxis>
+    
+        <SplineAreaSeries tkCartesianSeries [items]="lineData" categoryProperty="month" valueProperty="amount" showLabels="true">
+        </SplineAreaSeries>
+        <RadLegendView tkSplineLegend position="Right" offsetOrigin="TopLeft" enableSelection="true">
+        </RadLegendView>
+      </RadCartesianChart>
+      <FlexboxLayout flexWrap="wrap" justifyContent="flex-start" row="1" class="Filters">
+        <StackLayout class="Radio-Wrapper" orientation="horizontal">
+          <Label
+          [text]=" selectedCategory === 'all' ? '&#xeed7;' : '&#xeff7;'"
+          [class]="selectedCategory === 'all' ? 'icon RadioBtn Selected': 'icon RadioBtn'"
+          (tap)="filterByCategory('all')"
+          ></Label>
+          <Label text="All" class="RadioBtn-Value"></Label>
+        </StackLayout>
+        <StackLayout
+        class="Radio-Wrapper"
+        orientation="horizontal"
+        *ngFor="let category of categoryList"
+        >
+          <Label
+          [text]="selectedCategory === category.id ? '&#xeed7;' : '&#xeff7;'"
+          [class]="selectedCategory === category.id ? 'icon RadioBtn Selected': 'icon RadioBtn'"
+          (tap)="filterByCategory(category.id)"
+          ></Label>
+          <Label [text]="category.name" class="RadioBtn-Value"></Label>
+        </StackLayout>
+      </FlexboxLayout>
+    </GridLayout>
+  </ScrollView>
+  <Loading *ngIf="_isLoading"></Loading>
+</GridLayout>

@@ -1,5 +1,4 @@
 import { Component, OnInit } from "@angular/core";
-import { SelectedIndexChangedEventData, ValueList } from "nativescript-drop-down";
 import { Page } from "tns-core-modules/ui/page";
 
 import { alert } from "ui/dialogs";
@@ -14,8 +13,6 @@ import { RouterExtensions } from "nativescript-angular/router";
 import { NumericKeyboard } from "nativescript-numeric-keyboard";
 import { TextField } from "tns-core-modules/ui/text-field/text-field";
 
-import { Feedback } from "nativescript-feedback";
-import { Progress } from "tns-core-modules/ui/progress";
 import { DataService } from "../shared/data.service";
 
 @Component({
@@ -38,7 +35,6 @@ export class ExpenseComponent implements OnInit {
 
   private data: DataService;
   private _categories: Array<Category> = [];
-  private feedback: Feedback;
   private categoriesIcons: {};
   private categoryNames: {}
   private categoryKeys: {}
@@ -49,7 +45,6 @@ export class ExpenseComponent implements OnInit {
     private router: RouterExtensions,
     private page: Page
   ) {
-    this.feedback = new Feedback();
     this.data = new DataService();
     this.categoriesIcons = this.data.getCategoriesIcons()
     this.categoryNames = this.data.getCategoryNames();
@@ -97,6 +92,7 @@ export class ExpenseComponent implements OnInit {
         userId: Kinvey.User.getActiveUser()._id,
         dateTime: dateTime.toString(),
         month: new Date().getMonth() + 1,
+        year: new Date().getFullYear(),
         amount: parseInt(this.expenseAmount, 10),
         isWithdraw: this.isWithdraw,
         comment: this.expenseComment,

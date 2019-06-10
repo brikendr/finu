@@ -1,8 +1,18 @@
 @import "./../../app-common";
 
+.page {
+  background-color: $white;
+}
 .title {
   font-size: 22;
   font-weight: 600;
+  color:  $budget-tracker-primary;
+}
+
+.Add-Bill-Btn {
+  color:  $budget-tracker-primary;
+  margin-right: 20;
+  font-size: 25;
 }
 
 .Bill-Card {

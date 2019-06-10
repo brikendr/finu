@@ -29,8 +29,6 @@ import { Feedback, FeedbackPosition, FeedbackType } from "nativescript-feedback"
   styleUrls: ["./home.component.scss"]
 })
 export class HomeComponent implements OnInit {
-  private feedback: Feedback;
-
   _isProcessing: boolean = false;
   expenseProgressBar: string;
   budgetProgressBar: string;
@@ -49,11 +47,14 @@ export class HomeComponent implements OnInit {
   _maintainedSavings: number;
   _overBudget: number;
   _unpaidBills: number;
+  _totalExpensesLastMonth: number;
 
 
   expensesOnBalance: string;
   expensesOnBudget: string;
   transactions: Array<any> = [];
+
+  private feedback: Feedback;
 
   constructor(
     private _routerExtensions: RouterExtensions,
@@ -100,6 +101,19 @@ export class HomeComponent implements OnInit {
     return `${now.getDate()} ${monthNames[now.getMonth()]}`;
   }
 
+  get totalExpensesLastMonth(): number {
+    return this._totalExpensesLastMonth;
+  }
+
+  get balanceWithLastMonth(): string {
+    const diff = Math.abs(this._totalExpensesLastMonth - this._totalExpenses);
+    return `${diff} NOK`;
+  }
+
+  get spentMoreThanLastMonth(): boolean {
+    return this._totalExpenses > this._totalExpensesLastMonth;
+  }
+
   ngOnInit(): void {
     if (Kinvey.User.getActiveUser() === null) {
       this.navigate("login", true);
@@ -121,28 +135,34 @@ export class HomeComponent implements OnInit {
             .then((transactions: any) => {
               this.perpareTransactions(transactions.all)
               .then((groupedTransactions: Array<any>) => {
-                this.transactions = groupedTransactions;
-                this._isProcessing = false;
-                const sumExpenses = transactions.expenses.reduce((expenseSum, expense) => {
-                  return expenseSum + expense.amount;
-                }, 0);
-                const sumDeposit = transactions.deposits.reduce((depositSum, expense) => {
-                  return depositSum + expense.amount;
-                }, 0);
-                this._totalExpenses = sumExpenses;
-                this._earned = this._income + sumDeposit;
-                const d = this._totalExpenses + this._savingsGoal;
-                this._maintainedSavings = d > this._income ? this._savingsGoal - (d - this._income) : this._savingsGoal;
-                this.expensesOnBalance = `${Math.round(this._totalExpenses)} NOK`;
-                this.calculateDailyBudget();
-                // this.calculatePlannedExpenses();
-                this.calculateRemainingBills();
-                resolve();
-              })
+                this._expenseService.getTotalExpensesUpUntilToday(userId, new Date().getMonth())
+                .then((prevMonthExpenses: number) => {
+                  this._totalExpensesLastMonth = prevMonthExpenses;
+                  this.transactions = groupedTransactions;
+                  this._isProcessing = false;
+                  const sumExpenses = transactions.expenses.reduce((expenseSum, expense) => {
+                    return expenseSum + expense.amount;
+                  }, 0);
+                  const sumDeposit = transactions.deposits.reduce((depositSum, expense) => {
+                    return depositSum + expense.amount;
+                  }, 0);
+                  this._totalExpenses = sumExpenses;
+                  this._earned = this._income + sumDeposit;
+                  const d = this._totalExpenses + this._savingsGoal;
+                  this._maintainedSavings = d > this._income ? this._savingsGoal - (d - this._income) : this._savingsGoal;
+                  this.expensesOnBalance = `${Math.round(this._totalExpenses)} NOK`;
+                  this.calculateDailyBudget();
+                  this.calculateRemainingBills();
+                  resolve();
+                })
+              });
             });
         })
         .catch((error) => {
-          console.log("Error initializing home components!", error);
+          this.feedback.error({
+            title: "Uh-oh!",
+            message: "Error initializing home components!"
+          });
           reject();
           this._isProcessing = false;
         });
@@ -158,17 +178,6 @@ export class HomeComponent implements OnInit {
     this._dailyBudget = Math.round(budgetTotal / daysLeft);
     this.budgetStatus = UtilService.generateStatusLabel(this._dailyBudget);
   }
-
-  // calculatePlannedExpenses() {
-  //   const now = new Date();
-  //   const currentDay = now.getDate();
-  //   const daysInCurrentMonth = new Date(now.getFullYear(), now.getMonth() + 1, 0).getDate();
-  //   const budgetTotal = Math.round(this._earned - this._savingsGoal);
-
-  //   const plannedDailyBudget = budgetTotal / daysInCurrentMonth;
-  //   const plannedExpenses = currentDay * plannedDailyBudget;
-  //   this._overBudget = plannedExpenses - this._totalExpenses;
-  // }
 
   calculateRemainingBills() {
     let unpaidBills = 0;
@@ -307,6 +316,7 @@ export class HomeComponent implements OnInit {
         userId: Kinvey.User.getActiveUser()._id,
         dateTime: billDate.getTime().toString(),
         month: billDate.getMonth() + 1,
+        year: new Date().getFullYear(),
         amount: bill.amount,
         isWithdraw: true,
         comment: `Bill Expense for ${bill.name}`,
@@ -347,9 +357,10 @@ export class HomeComponent implements OnInit {
 
   onLastMonthExpensesLoaded(args: any) {
     const myProgressBar = <Progress>args.object;
-    myProgressBar.value = 35;
+    myProgressBar.value = Math.floor(((this._totalExpensesLastMonth / this._income) * 100));
     myProgressBar.maxValue = 100;
   }
+
   onSavingsLoaded(args: any) {
     const myProgressBar = <Progress>args.object;
     myProgressBar.value = Math.floor((this._maintainedSavings / this._savingsGoal) * 100);

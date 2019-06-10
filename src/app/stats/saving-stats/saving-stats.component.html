@@ -1,0 +1,50 @@
+<GridLayout class="page page-content" [rows]="_isLoading? '*' : '40 40 *'">
+
+  <GridLayout class="Title-Wrapper" row="0" columns="* * *" *ngIf="!_isLoading">
+    <Label col="0" text="&#xea74;" class="icon backIcon" (tap)="goBack()"></Label>
+    <StackLayout col="1" horizontalAlignment="center" verticalAlignment="center">
+      <Label text="Savings" class="page-title"></Label>
+    </StackLayout>
+  </GridLayout>
+
+  <FlexboxLayout class="Month-Navigator" row="1" alignItems="center" justifyContent="space-around" *ngIf="!_isLoading">
+    <Label text="&#xeac9;" class="icon navigation-icon" (tap)="prevYearStats()"></Label>
+    <Label [text]="getSelectedPeriod" class="Navigator-Title"></Label>
+    <Label text="&#xeaca;" class="icon navigation-icon" (tap)="nextYearStats()"></Label>
+  </FlexboxLayout>
+
+  <ScrollView row="2">
+    <GridLayout rows="230 *" class="Chart-Content" *ngIf="!_isLoading">
+      <RadCartesianChart tkExampleTitle tkToggleNavButton row="0">
+        <CategoricalAxis tkCartesianHorizontalAxis></CategoricalAxis>
+        <LinearAxis tkCartesianVerticalAxis></LinearAxis>
+      
+        <BarSeries tkCartesianSeries seriesName="Bar" [items]="barData" paletteMode="Item" categoryProperty="month" valueProperty="amount" showLabels="true">
+        </BarSeries>
+
+        <Palette tkCartesianPalette seriesName="Bar">
+          <PaletteEntry
+          tkCartesianPaletteEntry
+          *ngFor="let data of barData"
+          [fillColor]="data.amount > savingsGoal ? '#41E94B' : '#FF3378'"
+          [strokeColor]="data.amount > savingsGoal ? '#41E94B' : '#FF3378'"
+        ></PaletteEntry>
+        </Palette>
+      </RadCartesianChart>
+
+      <StackLayout row="1" class="Summary-Wrapper">
+        <CardView class="FancyCard" shadowColor="#33C9FF" shadowRadius="8" shadowOpacity="0.4" elevation="5" radius="5">
+          <FlexboxLayout class="FancyCard-Wrapper" flexDirection="column" alignItems="flex-start"
+            justifyContent="space-between" backgroundColor="#33C9FF">
+            <Label class="icon savings-icon" text="&#xf024;"></Label>
+            <StackLayout>
+              <Label [text]="'Savings for ' + getSelectedPeriod + ':'" class="Savings-Desc"></Label>
+              <Label [text]="yearlySavings" class="Savings-Value"></Label>
+            </StackLayout>
+          </FlexboxLayout>
+        </CardView>
+      </StackLayout>
+    </GridLayout>
+  </ScrollView>
+  <Loading *ngIf="_isLoading"></Loading>
+</GridLayout>
